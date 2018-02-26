@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 
@@ -35,7 +36,7 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, LoginActivity.class);
+        final Intent intent = new Intent(mContext, AdminMainActivity.class);
         intent.putExtra(LoginActivity.ARG_ACCOUNT_TYPE, accountType);
         intent.putExtra(LoginActivity.ARG_AUTH_TYPE, authTokenType);
         intent.putExtra(LoginActivity.ARG_IS_ADDING_NEW_ACCOUNT, true);
@@ -93,7 +94,7 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
         }
 
         //when don't have anything dispatch user to LoginActivity (i.e like first time login)
-        final Intent intent = new Intent(mContext,LoginActivity.class);
+        final Intent intent = new Intent(mContext,AdminMainActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE,response);
         intent.putExtra(LoginActivity.ARG_ACCOUNT_TYPE,account.type);
         intent.putExtra(LoginActivity.ARG_AUTH_TYPE,authTokenType);

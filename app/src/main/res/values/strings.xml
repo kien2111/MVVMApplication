@@ -15,4 +15,9 @@
     </string>
     <string name="label">MVVMApplication</string>
     <string name="prompt_username">Username</string>
+
+
+
+    <string name="label_administrator">Admin</string>
+
 </resources>

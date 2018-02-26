@@ -1,6 +1,8 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
 import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainModule;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginModule;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpActivity;
@@ -28,4 +30,8 @@ public abstract class ActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector(modules = {UniversalModule.class,FragmentBuilder.class})
     abstract UniversalActivity bindUniversalActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = {AdminMainModule.class})
+    abstract  AdminMainActivity bindAdminMainActivity();
 }
