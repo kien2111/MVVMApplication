@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.mvvm.kien2111.mvvmapplication.AppViewModelFactory;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
@@ -63,6 +64,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavouriteProfileViewModel.class)
     abstract ViewModel bindFavouriteProfileViewModel(FavouriteProfileViewModel favouriteProfileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AdminMainViewModel.class)
+    abstract ViewModel bindAdminViewModel(AdminMainViewModel adminMainViewModel);
 
     @Binds
     @Singleton
