@@ -1,4 +1,0 @@
-#Mon Feb 26 10:15:27 KRAT 2018
-base.0=D\:\\DOANTOTNGHIEP\\MVVMApplication\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\6
-path.0=classes.dex
-renamed.0=classes.dex
