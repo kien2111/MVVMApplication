@@ -10,10 +10,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
+import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 
 import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by WhoAmI on 28/01/2018.
@@ -52,43 +58,44 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-        if (!authTokenType.equals(AccountAuthenticator.AUTHTOKEN_TYPE_BEARER)) {
+        if (!authTokenType.equals(AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER)) {
             final Bundle result = new Bundle();
             result.putString(AccountManager.KEY_ERROR_MESSAGE, "invalid authTokenType");
             return result;
         }
 
         final AccountManager mAccountManager = AccountManager.get(mContext);
-        final Credential credential = new Credential.Builder().build();
-        credential.setToken(mAccountManager.peekAuthToken(account, authTokenType));
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setAccessToken(mAccountManager.peekAuthToken(account, authTokenType));
 
         //when don't have authtoken but account name and password request 1 token up to date from server
-        if(credential.getToken() ==null || credential.getToken().isEmpty()){
+        if(loginResponse.getAccessToken()==null
+                || loginResponse.getAccessToken().isEmpty()){
             final String password = mAccountManager.getPassword(account);
             if(password!=null){
-                credential.setUsername(account.name);
-                credential.setPassword(password);
-                credential.setToken(userRepository.requestLogin(credential).getValue().getData().getToken());
-            }
-            /*if(password!=null){
-                userRepository.requestLogin(new Credential.Builder()
-                        .setUsername(account.name)
-                        .setPassword(password).build())
+                //get authtokentype and token from server
+                userRepository.loginServer(new LoginRequest.ExpressLoginRequest(account.name,password))
                         .observeOn(Schedulers.io())
                         .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                result->credential.setToken(result.getToken()),
-                                RxDefault::onErrorHandler
+                        .subscribe(resp->{
+                            loginResponse.setAccessToken(resp.getData().getAccessToken());
+                            loginResponse.setAuth_token_type(resp.getData().getAuth_token_type());
+                            userRepository.updateInfo(loginResponse.getUserId()
+                                    ,loginResponse.getAccessToken()
+                                    ,loginResponse.getUserName()
+                                    ,loginResponse.getServerProfilePicUrl()
+                                    ,loginResponse.getAuth_token_type()
+                                    , LoggedInMode.LOGGED_IN_MODE_EXPRESS);}
                         ).dispose();
-            }*/
+            }
         }
         final Bundle bundle = new Bundle();
 
         //When have token already save it and return bundle to use later
-        if(credential.getToken() !=null && !credential.getToken().equals("")){
+        if(loginResponse.getAccessToken() !=null && !loginResponse.getAccessToken().equals("")){
             bundle.putString(AccountManager.KEY_ACCOUNT_NAME,account.name);
             bundle.putString(AccountManager.KEY_ACCOUNT_TYPE,account.type);
-            bundle.putString(AccountManager.KEY_AUTHTOKEN, credential.getToken());
+            bundle.putString(AccountManager.KEY_AUTHTOKEN,loginResponse.getAccessToken());
             return bundle;
         }
 

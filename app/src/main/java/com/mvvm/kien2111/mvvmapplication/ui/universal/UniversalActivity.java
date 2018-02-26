@@ -47,7 +47,8 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountManager = AccountManager.get(this);
-        getTokenForAccountCreateIfNeeded(AccountAuthenticator.ACCOUNT_TYPE,AccountAuthenticator.AUTHTOKEN_TYPE_BEARER);
+        getTokenForAccountCreateIfNeeded(AccountAuthenticator.ACCOUNT_TYPE,
+                AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER);
     }
     private void getExistingAccountAuthToken(Account account, String authTokenType) {
         final AccountManagerFuture<Bundle> future = mAccountManager.getAuthToken(account, authTokenType, null, this, null, null);
@@ -68,7 +69,7 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
                     public void run(AccountManagerFuture<Bundle> future) {
                         try {
                             final String authtoken = future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-
+                            mViewModel.updateAccessToken(authTokenType,authtoken);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

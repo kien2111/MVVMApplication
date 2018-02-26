@@ -49,7 +49,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        bind();
         mAccountAuthenticatorResponse =
                 getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
 
@@ -57,7 +57,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
             mAccountAuthenticatorResponse.onRequestContinued();
         }
         //mApplication = getApplication();
-        bind();
+
     }
 
     public final void setAccountAuthenticatorResult(Bundle result) {

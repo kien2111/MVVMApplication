@@ -21,7 +21,7 @@ import butterknife.OnClick;*/
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBinding>{
+public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBinding> implements LoginNavigator{
     public final static String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public final static String ARG_AUTH_TYPE = "AUTH_TYPE";
     public final static String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
@@ -36,24 +36,14 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
-    /*@BindView(R.id.email_sign_in_button)
-    Button button;
-
-    @BindView(R.id.username)
-    EditText username;
-
-    @BindView(R.id.password)
-    EditText password;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        mViewModel.getCredentialMutableLiveData().observe(this,this::onChangeCredential);
         String accountName = getIntent().getStringExtra(ARG_ACCOUNT_NAME);
         mAuthTokenType = getIntent().getStringExtra(ARG_AUTH_TYPE);
         if (mAuthTokenType == null)
-            mAuthTokenType = AccountAuthenticator.AUTHTOKEN_TYPE_BEARER;
+            mAuthTokenType = AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER;
         if (accountName != null) {
             //username.setText(accountName);
         }
@@ -128,6 +118,16 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK,intent);
         finish();
+
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+
+    }
+
+    @Override
+    public void openMainActivity() {
 
     }
 }

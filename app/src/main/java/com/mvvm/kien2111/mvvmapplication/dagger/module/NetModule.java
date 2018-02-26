@@ -7,9 +7,9 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.db.UserDao;
-import com.mvvm.kien2111.mvvmapplication.interfaces.UserService;
-import com.mvvm.kien2111.mvvmapplication.retrofit.LiveDataCallAdapterFactory;
+import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.retrofit.interceptor.AttachTokenLoggingInterceptor;
 import com.mvvm.kien2111.mvvmapplication.util.Config;
 
@@ -29,6 +29,7 @@ import okhttp3.Response;
 import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -66,9 +67,12 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache) {
+    OkHttpClient provideOkHttpClient(Cache cache, PreferenceHelper preferenceHelper) {
         return new OkHttpClient.Builder()
-                .addInterceptor(new AttachTokenLoggingInterceptor.Builder().build())
+                .addInterceptor(new AttachTokenLoggingInterceptor.Builder()
+                        .setTokenType(preferenceHelper.getAccessTokenType())
+                        .setToken(preferenceHelper.getAccessToken())
+                        .build())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .connectTimeout(Config.ConnectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(Config.ReadTimeOut,TimeUnit.MILLISECONDS)
@@ -98,7 +102,7 @@ public class NetModule {
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(LiveDataCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(Config.apiUrl)
                 .client(okHttpClient)

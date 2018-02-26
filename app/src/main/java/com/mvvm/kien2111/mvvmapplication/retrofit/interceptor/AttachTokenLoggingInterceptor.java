@@ -12,21 +12,31 @@ import okhttp3.Response;
 
 public class AttachTokenLoggingInterceptor implements Interceptor {
     private String authToken;
+    private String authTokenType;
     private AttachTokenLoggingInterceptor(Builder builder) {
         this.authToken = builder.authToken;
+        this.authTokenType = builder.authTokenType;
     }
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request original = chain.request().newBuilder().header("Authorization",authToken).build();
+        Request original = chain.request().newBuilder()
+                .header("TokenType",authTokenType)
+                .header("Authorization",authTokenType)
+                .build();
         return chain.proceed(original);
     }
     public static class Builder{
         String authToken;
+        String authTokenType;
         public AttachTokenLoggingInterceptor build(){
             return new AttachTokenLoggingInterceptor(this);
         }
         public Builder setToken(String token){
             this.authToken = token;
+            return this;
+        }
+        public Builder setTokenType(String tokenType){
+            this.authTokenType = tokenType;
             return this;
         }
     }
