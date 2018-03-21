@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+        <data>
+            <variable
+                name="vm"
+                type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel"/>
+        </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:background="@drawable/icon_admin_home"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Manager account"
+                    android:gravity="center"
+                    android:textSize="@dimen/admin_textsize_18dp"
+                    android:textColor="#000000"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="40dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:background="@drawable/icon_admin_add_new"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:paddingTop="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/mbottom_navigation"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/mtab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/mbottom_navigation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                app:itemIconTint="#FFFFFF"
+                app:itemTextColor="@color/admin_color_textbottomnagivation"
+                app:menu="@menu/menu_addmin_bottom"/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

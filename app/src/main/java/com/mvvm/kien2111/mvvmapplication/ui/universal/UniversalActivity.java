@@ -27,9 +27,11 @@ import javax.inject.Inject;
  */
 
 public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityUniversalBinding> {
+    AccountManager mAccountManager;
 
     @Inject
     NavigationController navigationController;
+
 
     @Override
     protected int getLayoutRes() {
@@ -43,7 +45,6 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message){
-
     }
 
     @Override

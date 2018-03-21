@@ -5,6 +5,12 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.mvvm.kien2111.mvvmapplication.AppViewModelFactory;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
@@ -77,6 +83,29 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ManageUserViewModel.class)
+    abstract ViewModel bindManageUserViewModel(ManageUserViewModel manageUserViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllUserViewModel.class)
+    abstract ViewModel bindAllUserViewModel(AllUserViewModel allUserViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UngradeUserViewModel.class)
+    abstract ViewModel bindUngradeUserViewModel(UngradeUserViewModel allUngradeUserViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AdminStatisticalViewModel.class)
+    abstract ViewModel bindAdminStatisticalViewModel(AdminStatisticalViewModel allAdminStatisticalViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AdminManageProfileViewModel.class)
+    abstract ViewModel bindAdminManageProfileViewModel(AdminManageProfileViewModel allAdminManageProfileViewModel);
+
     @ViewModelKey(CategoryViewModel.class)
     abstract ViewModel bindCatogoryViewModel(CategoryViewModel categoryViewModel);
 
@@ -95,7 +124,9 @@ public abstract class ViewModelModule {
     @ViewModelKey(DetailProfileViewModel.class)
     abstract ViewModel bindDetailProfileViewModel(DetailProfileViewModel detailProfileViewModel);
 
+
     @Binds
     @Singleton
     abstract ViewModelProvider.Factory createViewModelFactory(AppViewModelFactory appViewModelFactory);
+
 }

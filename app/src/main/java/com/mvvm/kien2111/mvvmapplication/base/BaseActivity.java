@@ -65,7 +65,6 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
             }
         }
         //mApplication = getApplication();
-
     }
 
     public final void setAccountAuthenticatorResult(Bundle result) {

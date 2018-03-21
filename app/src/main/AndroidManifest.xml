@@ -40,6 +40,9 @@
         <activity android:name=".ui.login.LoginActivity"></activity>
         <activity android:name=".ui.admin.main.AdminMainActivity"></activity>
         <activity android:name=".ui.signup.SignUpActivity"></activity>
+        <activity android:name=".ui.admin.user.ManageUserActivity"></activity>
+        <activity android:name=".ui.admin.statistical.AdminStatisticalActivity"></activity>
+        <activity android:name=".ui.admin.profile.AdminManageProfileActivity"></activity>
 
     </application>
 
