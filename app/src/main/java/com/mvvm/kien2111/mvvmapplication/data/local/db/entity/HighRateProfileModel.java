@@ -1,15 +1,18 @@
 package com.mvvm.kien2111.mvvmapplication.data.local.db.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.converter.AppConverter;
 import com.mvvm.kien2111.mvvmapplication.model.Profile;
 
 /**
  * Created by WhoAmI on 17/03/2018.
  */
 @Entity(primaryKeys = {"idprofile"})
+@TypeConverters(AppConverter.class)
 public class HighRateProfileModel extends Profile {
     @Expose
     @SerializedName("avatar")

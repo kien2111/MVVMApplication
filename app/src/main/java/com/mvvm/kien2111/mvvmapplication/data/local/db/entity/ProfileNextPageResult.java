@@ -5,7 +5,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.mvvm.kien2111.mvvmapplication.data.local.db.converter.ConverterListIntToString;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.converter.AppConverter;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by WhoAmI on 20/03/2018.
  */
 @Entity(primaryKeys = {"query"})
-@TypeConverters(ConverterListIntToString.class)
+@TypeConverters(AppConverter.class)
 public class ProfileNextPageResult {
     @NonNull
     public final String query;
