@@ -106,6 +106,8 @@ public abstract class ViewModelModule {
     @ViewModelKey(AdminManageProfileViewModel.class)
     abstract ViewModel bindAdminManageProfileViewModel(AdminManageProfileViewModel allAdminManageProfileViewModel);
 
+    @Binds
+    @IntoMap
     @ViewModelKey(CategoryViewModel.class)
     abstract ViewModel bindCatogoryViewModel(CategoryViewModel categoryViewModel);
 

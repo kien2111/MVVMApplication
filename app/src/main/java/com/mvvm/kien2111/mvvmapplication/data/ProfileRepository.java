@@ -65,18 +65,12 @@ public class ProfileRepository {
                     }
                 })
                 .toFlowable()
-                .flatMap(new Function<HighRateProfileWrapper, Publisher<List<HighRateProfileModel>>>() {
-                    @Override
-                    public Publisher<List<HighRateProfileModel>> apply(HighRateProfileWrapper highRateProfileWrapper) throws Exception {
-                        return roomDb.profileDao()
-                                .findNextPageResultFlowable(idcategory)
-                                .switchMap(result -> {return roomDb.profileDao().loadOrdered(result.idprofiles);});
-                    }
-                }).map(new Function<List<HighRateProfileModel>, Resource<List<HighRateProfileModel>>>() {
-                    @Override
-                    public Resource<List<HighRateProfileModel>> apply(List<HighRateProfileModel> highRateProfileModelList) throws Exception {
-                        return Resource.success(highRateProfileModelList);
-                    }
+                .flatMap(highRateProfileWrapper -> {
+                    return roomDb.profileDao()
+                            .findNextPageResultFlowable(idcategory)
+                            .switchMap(result -> {return roomDb.profileDao().loadOrdered(result.idprofiles);});
+                }).map(highRateProfileModelList -> {
+                    return Resource.success(highRateProfileModelList);
                 });
     }
     public LiveData<Resource<Boolean>> fetchNextPageHighRateProfile(String idcategory){

@@ -62,9 +62,9 @@ public class HighRateViewModel extends BaseViewModel {
         mutableCategoryIdLiveData.setValue(idCategory);
     }
 
-    static class LoadMoreState{
-        private final boolean isRunning;
-        private final String errorMessage;
+    public static class LoadMoreState{
+        public final boolean isRunning;
+        public final String errorMessage;
         public LoadMoreState(boolean isRunning,String errorMessage){
             this.isRunning = isRunning;
             this.errorMessage = errorMessage;

@@ -86,10 +86,11 @@ public class HighRateFragment extends BaseFragment<HighRateViewModel,FragmentHig
         });
         mViewModel.getLoadMoreStateLiveData().observe(this,loadMoreState -> {
             if(loadMoreState==null){
-
+                mFragmentBinding.setLoadingMoreState(false);
             }else{
-
+                mFragmentBinding.setLoadingMoreState(loadMoreState.isRunning);
             }
+            mFragmentBinding.executePendingBindings();
         });
     }
 
