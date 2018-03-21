@@ -4,9 +4,15 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+
+    <color name="color_admin_background_title">#303F9F</color>
+    <color name="color_admin_text_title">#FFFFFF</color>
+    <color name="color_admin_black">#000000</color>
+
     <color name="admin_background_notibar">#39347f</color>
     <color name="admin_color_text_screen_notibar">#FFFFFF</color>
     <color name="admin_background_notibar_second">#342f71</color>
     <color name="admin_background_content">#f5f6fb</color>
     <color name="admin_color_text_grid">#797a7d</color>
+    <color name="admin_color_textbottomnagivation">#FFFFFFFF</color>
 </resources>

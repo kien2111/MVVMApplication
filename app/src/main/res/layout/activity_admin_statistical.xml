@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="vm"
+            type="com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalViewModel"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:background="@color/color_admin_background_title">
+
+            <ImageView
+                android:id="@+id/imv_back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_admin_home"
+                android:layout_alignParentLeft="true"
+                android:onClick="@{() -> vm.finishActivity()}"
+                android:paddingRight="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistical"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/spinner_select_date"
+                android:layout_toRightOf="@+id/imv_back_home"
+                android:textColor="@color/color_admin_text_title"
+                android:paddingLeft="20dp"
+                android:textSize="@dimen/admin_textsize_20dp"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_select_date"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tab_view_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>
+

@@ -33,8 +33,6 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
-
-
     /*@Inject
     protected Class<VM> clazz;*/
 
@@ -57,7 +55,6 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
             mAccountAuthenticatorResponse.onRequestContinued();
         }
         //mApplication = getApplication();
-
     }
 
     public final void setAccountAuthenticatorResult(Bundle result) {

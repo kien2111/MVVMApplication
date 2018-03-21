@@ -18,6 +18,32 @@
 
 
 
+    <string name="admin_add_newuser">Add new Account</string>
     <string name="label_administrator">Admin</string>
+
+    add new user
+    <string name="admin_add_newuser_username">Username</string>
+    <string name="admin_add_newuser__email">Email</string>
+    <string name="admin_add_newuser_uplaypassword">Uplay Password</string>
+    <string name="admin_add_newuser_confirmpassword">Confirm Password</string>
+    <string name="admin_add_newuser_age">Age</string>
+    <string name="admin_add_newuser_picture">Avatar</string>
+
+    edit account
+    <string name="admin_edit_myinfo">Change Profile</string>
+    edit file
+    <string name="admin_manage_file">Manage File</string>
+
+    upadate profile user
+    <string name="admin_title_update_profile_user">Update User</string>
+    <string name="admin_password_update_user">Password</string>
+    <string name="admin_show">Show</string>
+    <string name="admin_button_update_acount">Update Account</string>
+
+    <string-array name="arr_admin_shortby">
+        <item>By day</item>
+        <item>By month</item>
+        <item>By year</item>
+    </string-array>
 
 </resources>

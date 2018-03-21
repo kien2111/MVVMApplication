@@ -27,6 +27,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityUniversalBinding> {
     AccountManager mAccountManager;
+    UniversalActivity createViewModel;
 
     @Override
     protected int getLayoutRes() {
@@ -35,7 +36,7 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
 
     @Override
     protected UniversalViewModel createViewModel() {
-        return ViewModelProviders.of(this).get(UniversalViewModel.class);
+        return ViewModelProviders.of(this,viewModelFactory).get(UniversalViewModel.class);
     }
 
     @Override

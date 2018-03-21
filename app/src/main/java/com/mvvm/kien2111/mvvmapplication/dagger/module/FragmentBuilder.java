@@ -1,6 +1,10 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
+import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerActivity;
 import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserModule;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedFragment;
@@ -40,4 +44,6 @@ public abstract class FragmentBuilder {
     @PerFragment
     @ContributesAndroidInjector(modules = {FeedModule.class})
     abstract FeedFragment bindFeedFragment();
+
+
 }

@@ -12,7 +12,7 @@ import com.mvvm.kien2111.mvvmapplication.databinding.FragmentFavouriteprofileBin
  * Created by WhoAmI on 08/02/2018.
  */
 
-public class FavouriteProfileFragment extends BaseFragment<FavouriteProfileViewModel,FragmentFavouriteprofileBinding> implements Injectable {
+public class FavouriteProfileFragment extends BaseFragment<FavouriteProfileViewModel,FragmentFavouriteprofileBinding>  {
 
     @Override
     protected FavouriteProfileViewModel createViewModel() {

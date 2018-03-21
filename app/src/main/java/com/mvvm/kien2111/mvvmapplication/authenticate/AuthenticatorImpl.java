@@ -13,6 +13,8 @@ import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 
@@ -41,7 +43,7 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, LoginActivity.class);
+        final Intent intent = new Intent(mContext, AdminMainActivity.class);
         intent.putExtra(LoginActivity.ARG_ACCOUNT_TYPE, accountType);
         intent.putExtra(LoginActivity.ARG_AUTH_TYPE, authTokenType);
         intent.putExtra(LoginActivity.ARG_IS_ADDING_NEW_ACCOUNT, true);
