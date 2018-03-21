@@ -78,6 +78,6 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel.setmNavigator(this);
+        //mViewModel.setmNavigator(this);
     }
 }

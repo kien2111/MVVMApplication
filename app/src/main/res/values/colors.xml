@@ -15,4 +15,7 @@
     <color name="admin_background_content">#f5f6fb</color>
     <color name="admin_color_text_grid">#797a7d</color>
     <color name="admin_color_textbottomnagivation">#FFFFFFFF</color>
+
+    <color name="bottombar_icon">#342f71</color>
+    <color name="cardview_category_item_background_color">#FFFFFF</color>
 </resources>
