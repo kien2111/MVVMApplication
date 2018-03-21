@@ -1,5 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Profile {
+    @NonNull
     @Expose
     @SerializedName("idprofile")
     private String idprofile;

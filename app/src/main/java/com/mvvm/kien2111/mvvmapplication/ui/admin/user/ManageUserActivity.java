@@ -52,7 +52,7 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel.setmNavigator(this);
+        //mViewModel.setmNavigator(this);
         setupBottomnagivation();
         setupTabLayout();
 
