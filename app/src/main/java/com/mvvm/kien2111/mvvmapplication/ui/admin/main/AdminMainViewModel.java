@@ -8,10 +8,13 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.util.Log;
 
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
+import com.mvvm.kien2111.mvvmapplication.data.AdminRepository;
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,25 +29,45 @@ import javax.inject.Inject;
 
 public class AdminMainViewModel extends BaseViewModel {
     public ObservableField<String> mObservableString = new ObservableField("vbmbvnvb");
+    private MutableLiveData<Resource<List<User>>> resourceMutableLiveData = new MutableLiveData<>();
     private UserRepository userRepository;
-
+    private final AdminRepository adminRepository;
     @Inject
-    public  AdminMainViewModel(UserRepository userRepository){
+    public AdminMainViewModel(EventBus eventBus,AdminRepository adminRepository) {
+        super(eventBus);
+        this.adminRepository = adminRepository;
+        getData();
     }
+
+    private void getData() {
+        resourceMutableLiveData.setValue(Resource.loading(null));
+        compositeDisposable.add(adminRepository
+                .getAllUser()
+                .subscribe(listResource -> {
+                    resourceMutableLiveData.postValue(listResource);
+                },error->{
+                    resourceMutableLiveData.postValue(Resource.error(error.getMessage(),null));
+                })
+        );
+    }
+
+    public MutableLiveData<Resource<List<User>>> getResourceMutableLiveData() {
+        return resourceMutableLiveData;
+    }
+
     public  void onclickManagerAccount()
     {
-        getNavigator().gotomanagerAccount();
+        //getNavigator().gotomanagerAccount();
     }
-    public void onclicStatistical()
-    {
+    public void onclicStatistical() {
         //getNavigator().gotoSatisticalActivity();
-    public AdminMainViewModel(EventBus eventBus, UserRepository userRepository){
-        super(eventBus);
     }
 
     public  void onclickManageMyProfile()
     {
         //getNavigator().gotoManageMyProfile();
     }
+    static class Message extends BaseMessage{
 
+    }
 }

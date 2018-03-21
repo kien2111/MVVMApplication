@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
+import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
@@ -120,5 +121,10 @@ public class NetModule {
                 .executorService(Executors.newFixedThreadPool(NUM_THREADS))
                 .eventInheritance(true)
                 .build();
+    }
+    @Provides
+    @Singleton
+    AdminService provideAdminService(Retrofit retrofit){
+        return retrofit.create(AdminService.class);
     }
 }
