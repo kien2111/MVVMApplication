@@ -72,6 +72,7 @@ ext{
     dagger2LibraryVersion = '2.11'
     databindingCompilerVersion = '3.0.1'
     multidexVersion = '1.0.1'
+    chartVersion = 'v2.2.4'
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -92,6 +93,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit2LibraryVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidLibraryVersion"
 
+    implementation "com.github.PhilJay:MPAndroidChart:$chartVersion"
     /**/
     implementation "com.android.support:multidex:$multidexVersion"
 

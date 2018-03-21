@@ -29,17 +29,15 @@ public class AdminMainViewModel extends BaseViewModel {
     private UserRepository userRepository;
 
     @Inject
-    public  AdminMainViewModel(UserRepository userRepository){
+    public  AdminMainViewModel(EventBus eventBus,UserRepository userRepository){
+        super(eventBus);
     }
     public  void onclickManagerAccount()
     {
-        getNavigator().gotomanagerAccount();
+        //getNavigator().gotomanagerAccount();
     }
-    public void onclicStatistical()
-    {
+    public void onclicStatistical() {
         //getNavigator().gotoSatisticalActivity();
-    public AdminMainViewModel(EventBus eventBus, UserRepository userRepository){
-        super(eventBus);
     }
 
     public  void onclickManageMyProfile()
