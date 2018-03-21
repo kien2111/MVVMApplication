@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
+import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.util.NetworkUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -27,13 +30,15 @@ import dagger.android.support.DaggerAppCompatActivity;
  */
 
 public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBinding> extends DaggerAppCompatActivity{
-
+    protected AccountManager mAccountManager;
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
     private Bundle mResultBundle = null;
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
 
+    @Inject
+    protected EventBus eventBus;
 
     /*@Inject
     protected Class<VM> clazz;*/
@@ -49,12 +54,15 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAccountManager = AccountManager.get(this);
         bind();
-        mAccountAuthenticatorResponse =
-                getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
+        if(this instanceof LoginActivity){
+            mAccountAuthenticatorResponse =
+                    getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
 
-        if (mAccountAuthenticatorResponse != null) {
-            mAccountAuthenticatorResponse.onRequestContinued();
+            if (mAccountAuthenticatorResponse != null) {
+                mAccountAuthenticatorResponse.onRequestContinued();
+            }
         }
         //mApplication = getApplication();
 
@@ -88,11 +96,17 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onStop() {
         super.onStop();
+        if(eventBus.isRegistered(this)){
+            eventBus.unregister(this);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if(!eventBus.isRegistered(this)){
+            eventBus.register(this);
+        }
     }
 
     abstract protected int getLayoutRes();

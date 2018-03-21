@@ -28,4 +28,6 @@ public class FavouriteProfileFragment extends BaseFragment<FavouriteProfileViewM
     protected int getBindVariable() {
         return BR.VMfavouriteprofile;
     }
+
+
 }

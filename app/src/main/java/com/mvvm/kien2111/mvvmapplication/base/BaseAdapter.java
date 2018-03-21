@@ -1,6 +1,9 @@
 package com.mvvm.kien2111.mvvmapplication.base;
 
 import android.databinding.ViewDataBinding;
+import android.os.AsyncTask;
+import android.support.annotation.MainThread;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +28,7 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
         this.lstData = lstData;
         notifyDataSetChanged();
     }
-
+    private int dataVersion = 0;
     @Override
     public int getItemCount() {
         return lstData==null?0:lstData.size();
@@ -36,8 +39,7 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
         VB binding = createBinding(parent);
         return instantiateViewHolder(binding);
     }
-    abstract int getItemViewId();
-    abstract BaseViewHolder<VB> instantiateViewHolder(VB mBinding);
+    protected abstract BaseViewHolder<VB> instantiateViewHolder(VB mBinding);
     protected abstract VB createBinding(ViewGroup parent);
     protected abstract void bind(VB mBinding,T item);
 
@@ -49,4 +51,64 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
     T getItem(int position){
         return lstData.get(position);
     }
+
+    @MainThread
+    public void changeDataSet(List<T> updatelist){
+        dataVersion++;
+        if(lstData==null){
+            if(updatelist==null){
+                return;
+            }
+            lstData = updatelist;
+            notifyDataSetChanged();
+        }else if(updatelist==null){
+            int oldsize = lstData.size();
+            lstData = null;
+            notifyItemRangeRemoved(0,oldsize);
+        }else{
+            final int startversion = dataVersion;
+            final List<T> oldItems = lstData;
+            new AsyncTask<Void,Void,DiffUtil.DiffResult>(){
+
+                @Override
+                protected DiffUtil.DiffResult doInBackground(Void... voids) {
+                    return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                        @Override
+                        public int getOldListSize() {
+                            return oldItems.size();
+                        }
+                        @Override
+                        public int getNewListSize() {
+                            return updatelist.size();
+                        }
+                        @Override
+                        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                            T olditem = oldItems.get(oldItemPosition);
+                            T newitem = updatelist.get(newItemPosition);
+                            return BaseAdapter.this.areItemsTheSame(olditem,newitem);
+                        }
+
+                        @Override
+                        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                            T olditem = oldItems.get(oldItemPosition);
+                            T newitem = updatelist.get(newItemPosition);
+                            return BaseAdapter.this.areContentsTheSame(olditem,newitem);
+                        }
+                    });
+                }
+                @Override
+                protected void onPostExecute(DiffUtil.DiffResult diffresult){
+                    if(startversion!=dataVersion){
+                        return;
+                    }
+                    lstData=updatelist;
+                    diffresult.dispatchUpdatesTo(BaseAdapter.this);
+                };
+            }.execute();
+        }
+    }
+
+    protected abstract boolean areContentsTheSame(T olditem, T newitem);
+
+    protected abstract boolean areItemsTheSame(T olditem, T newitem);
 }

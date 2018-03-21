@@ -1,19 +1,19 @@
 package com.mvvm.kien2111.mvvmapplication.data;
 
 
-import android.content.SharedPreferences;
-
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
-import com.mvvm.kien2111.mvvmapplication.db.UserDao;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
-import com.mvvm.kien2111.mvvmapplication.model.Resource;
+import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
 import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -38,27 +38,23 @@ public class UserRepository {
         this.appExecutors = appExecutors;
         this.preferenceHelper = preferenceHelper;
     }
-    public Single<Envelope<LoginResponse>> loginServer(LoginRequest.ExpressLoginRequest expressLoginRequest){
+    public Single<LoginResponse> loginServer(LoginRequest.ExpressLoginRequest expressLoginRequest){
         return userService.loginExpress(expressLoginRequest);
     }
-    public Single<Envelope<LoginResponse>> loginFb(LoginRequest.FacebookLoginRequest facebookLoginRequest){
+    public Single<LoginResponse> loginFb(LoginRequest.FacebookLoginRequest facebookLoginRequest){
         return userService.loginFacebook(facebookLoginRequest);
     }
-    public Single<Envelope<LoginResponse>> loginGoogle(LoginRequest.GoogleLoginRequest googleLoginRequest){
+    public Single<LoginResponse> loginGoogle(LoginRequest.GoogleLoginRequest googleLoginRequest){
         return userService.loginGoogle(googleLoginRequest);
     }
-
-    public void updateInfo(int userId,String accessToken,String username,String urlAvatar,String accessTokenType,LoggedInMode mode){
-        preferenceHelper.setCurrentUserId(userId);
-        preferenceHelper.setAccessToken(accessToken);
-        preferenceHelper.setCurrentUsername(username);
+    public void updateInfo(LoginResponse response,
+                           LoggedInMode mode){
+        preferenceHelper.setUserData(response);
         preferenceHelper.setCurrentLoggedInMode(mode);
-        preferenceHelper.setAccessTokenType(accessTokenType);
-        preferenceHelper.setCurrentUserProfilePicUrl(urlAvatar);
+
     }
-    public void updateAccessTokenOnly(String accessTokenType,String accessToken){
-        preferenceHelper.setAccessToken(accessToken);
-        preferenceHelper.setAccessTokenType(accessTokenType);
+    public void updateAccessTokenOnly(String accessTokenType,String accessToken,Priority priority,List<Role> roleList){
+
     }
 
 }

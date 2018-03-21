@@ -13,11 +13,12 @@ import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
+import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
-import com.mvvm.kien2111.mvvmapplication.model.Credential;
 
 import javax.inject.Inject;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -68,6 +69,7 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setAccessToken(mAccountManager.peekAuthToken(account, authTokenType));
 
+
         //when don't have authtoken but account name and password request 1 token up to date from server
         if(loginResponse.getAccessToken()==null
                 || loginResponse.getAccessToken().isEmpty()){
@@ -75,17 +77,13 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
             if(password!=null){
                 //get authtokentype and token from server
                 userRepository.loginServer(new LoginRequest.ExpressLoginRequest(account.name,password))
-                        .observeOn(Schedulers.io())
-                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
                         .subscribe(resp->{
-                            loginResponse.setAccessToken(resp.getData().getAccessToken());
-                            loginResponse.setAuth_token_type(resp.getData().getAuth_token_type());
-                            userRepository.updateInfo(loginResponse.getUserId()
-                                    ,loginResponse.getAccessToken()
-                                    ,loginResponse.getUserName()
-                                    ,loginResponse.getServerProfilePicUrl()
-                                    ,loginResponse.getAuth_token_type()
-                                    , LoggedInMode.LOGGED_IN_MODE_EXPRESS);}
+                            loginResponse.setAccessToken(resp.getAccessToken());
+                            loginResponse.setAuth_token_type(resp.getAuth_token_type());
+                            userRepository.updateInfo(resp
+                                    ,LoggedInMode.LOGGED_IN_MODE_EXPRESS);}
                         ).dispose();
             }
         }
