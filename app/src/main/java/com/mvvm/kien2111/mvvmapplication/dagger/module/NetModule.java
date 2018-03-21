@@ -10,6 +10,7 @@ import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
@@ -126,5 +127,10 @@ public class NetModule {
     @Singleton
     AdminService provideAdminService(Retrofit retrofit){
         return retrofit.create(AdminService.class);
+    }
+    @Provides
+    @Singleton
+    ProfileService provideProfileService(Retrofit retrofit){
+        return retrofit.create(ProfileService.class);
     }
 }
