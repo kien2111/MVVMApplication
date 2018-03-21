@@ -1,11 +1,18 @@
 package com.mvvm.kien2111.mvvmapplication.data.remote;
 
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
-import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.SignUpRequest;
 import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
 
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -13,15 +20,22 @@ import retrofit2.http.POST;
  */
 
 public interface UserService {
-    @POST("/login")
-    Single<Envelope<LoginResponse>> loginExpress(LoginRequest.ExpressLoginRequest expressLoginRequest);
+    @POST("/Accounts/Login")
+    Single<LoginResponse> loginExpress(@Body LoginRequest.ExpressLoginRequest expressLoginRequest);
 
     @POST("/google")
-    Single<Envelope<LoginResponse>> loginGoogle(LoginRequest.GoogleLoginRequest googleLoginRequest);
+    Single<LoginResponse> loginGoogle(@Body LoginRequest.GoogleLoginRequest googleLoginRequest);
 
     @POST("/facebook")
-    Single<Envelope<LoginResponse>> loginFacebook(LoginRequest.FacebookLoginRequest facebookLoginRequest);
+    Single<LoginResponse> loginFacebook(@Body LoginRequest.FacebookLoginRequest facebookLoginRequest);
 
-    @POST("/signup")
-    Single<Envelope> SignUp(User user);
+    @POST("/Accounts/signupemployer")
+    Completable SignUpEmployer(@Body SignUpRequest mSignUpEmployer);
+
+    @POST("/Accounts/signupemployee")
+    Completable SignUpEmployee(@Body SignUpRequest mSignUpEmployee);
+
+    @GET("/Categories/GetAllCategories")
+    Single<List<Category>> getListCategory();
+
 }

@@ -15,6 +15,6 @@ public class AdminStatisticalViewModel extends BaseViewModel<IAdminStatisticalNa
     }
     public  void finishActivity()
     {
-        getNavigator().finishActivity();
+        //getNavigator().finishActivity();
     }
 }

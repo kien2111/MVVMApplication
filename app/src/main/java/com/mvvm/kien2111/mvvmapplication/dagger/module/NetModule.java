@@ -6,14 +6,19 @@ import android.preference.PreferenceManager;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
-import com.mvvm.kien2111.mvvmapplication.db.UserDao;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
-import com.mvvm.kien2111.mvvmapplication.retrofit.interceptor.AttachTokenLoggingInterceptor;
-import com.mvvm.kien2111.mvvmapplication.util.Config;
+import com.mvvm.kien2111.mvvmapplication.model.Gender;
+import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
+import com.mvvm.kien2111.mvvmapplication.retrofit.serialize.EnumTypeDeserialize;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Logger;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
@@ -60,23 +65,20 @@ public class NetModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        return gsonBuilder.create();
+        return new GsonBuilder()
+                .registerTypeAdapter(Gender.class,new EnumTypeDeserialize())
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
     }
 
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(Cache cache, PreferenceHelper preferenceHelper) {
         return new OkHttpClient.Builder()
-                .addInterceptor(new AttachTokenLoggingInterceptor.Builder()
-                        .setTokenType(preferenceHelper.getAccessTokenType())
-                        .setToken(preferenceHelper.getAccessToken())
-                        .build())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .connectTimeout(Config.ConnectTimeOut, TimeUnit.MILLISECONDS)
-                .readTimeout(Config.ReadTimeOut,TimeUnit.MILLISECONDS)
-                .writeTimeout(Config.WriteTimeOut,TimeUnit.MILLISECONDS)
+                .connectTimeout(BuildConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+                .readTimeout(BuildConfig.READ_TIMEOUT,TimeUnit.MILLISECONDS)
+                .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)
                 .authenticator(new Authenticator() {
                     @Nullable
                     @Override
@@ -94,19 +96,29 @@ public class NetModule {
         return retrofit.create(UserService.class);
     }
 
-    @Provides
-    @Singleton
-    UserDao provideUserDao(){return new UserDao();}
 
     @Provides
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(new EnvelopeConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(Config.apiUrl)
+                .baseUrl(BuildConfig.API_URL)
                 .client(okHttpClient)
                 .build();
         return retrofit;
+    }
+
+    private final static int NUM_THREADS = 2;
+
+    @Provides
+    @Singleton
+    EventBus provideEventBus(){
+        return EventBus.builder()
+                .logger(new Logger.AndroidLogger("EventBus::logger: "))
+                .executorService(Executors.newFixedThreadPool(NUM_THREADS))
+                .eventInheritance(true)
+                .build();
     }
 }

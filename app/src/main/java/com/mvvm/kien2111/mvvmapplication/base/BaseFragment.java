@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 
@@ -31,6 +33,9 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewDataBindi
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
+
+    @Inject
+    protected EventBus eventBus;
 
     protected VM mViewModel;
     protected View rootView;
@@ -81,6 +86,22 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewDataBindi
     public void hideKeyBoard(){
         if(mActivity!=null){
             mActivity.hideKeyBoard();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(!eventBus.isRegistered(this)){
+            eventBus.register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(eventBus.isRegistered(this)){
+            eventBus.unregister(this);
         }
     }
 

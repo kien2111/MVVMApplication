@@ -6,6 +6,7 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
+import android.util.Log;
 
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
@@ -13,13 +14,17 @@ import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
 
 import java.util.Objects;
 
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by WhoAmI on 06/02/2018.
  */
 
-public abstract class EnvelopeBoundResource<ResultType,RequestType> extends EnvelopeBound<ResultType> {
+public abstract class EnvelopeBoundResource<ResultType,RequestType> {
     private AppExecutors appExecutors;
-
+    protected final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
     @MainThread
     EnvelopeBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
@@ -36,45 +41,44 @@ public abstract class EnvelopeBoundResource<ResultType,RequestType> extends Enve
     }
 
 
-
+    @MainThread
+    protected void setValue(Resource<ResultType> newValue) {
+        if (!Objects.equals(result.getValue(), newValue)) {//check whether newValue is new or old
+            result.setValue(newValue);//if yes do this
+        }
+    }
+    public LiveData<Resource<ResultType>> toLiveData() {
+        return result;
+    }//convert mediatorlivedata to live data
 
 
     private void fetchFromNetwork(final LiveData<ResultType> roomSource) {
-        LiveData<Envelope<RequestType>> networkResponse = createCall();//create call with retrofit2
         // we re-attach dbSource as a new source, it will dispatch its latest value quickly
         result.addSource(roomSource, newData -> setValue(Resource.loading(newData)));//this line means we want to get the lastest value of livedata roomSource
-        result.addSource(networkResponse, response -> {//this response is Envelope<RequestType>
-            result.removeSource(networkResponse);//stop listen livedata networkResponse
-            result.removeSource(roomSource);//stop listen livedata roomSource
-            //noinspection ConstantConditions
-            if (response.isSuccessful()) {//check call network is success or not
-                appExecutors.getDiskIO().execute(() -> {//execute diskIO in another thread
-                    saveCallResult(processResponse(response));//save it to room database
-                    appExecutors.getMainThread().execute(() ->//begin do something in main thread
-                            // we specially request a new live data,
-                            // otherwise we will get immediately last cached value,
-                            // which may not be updated with latest results received from network.
-                            result.addSource(loadFromDb(),//load from room database
-                                    newData -> setValue(Resource.success(newData)))//set data from local to livedata
-                    );
+        createCall()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(res->{
+
+            appExecutors.getDiskIO().execute(()->{
+                saveCallResult(res.getData());
+                appExecutors.getMainThread().execute(()->{
+                    result.removeSource(roomSource);
+                    result.addSource(loadFromDb(),newdata->result.setValue(Resource.success(newdata)));
                 });
-            } else {
-                onFetchFailed();//if fail call this method
-                result.addSource(roomSource,//get lastest value from roomSource
-                        newData -> setValue(Resource.error(response.getErrorMessage(), newData)));//
-            }
+            });
+        },err->{
+            onFetchFailed();
+            appExecutors.getMainThread().execute(()->{
+                result.removeSource(roomSource);
+                result.addSource(roomSource,newdata->result.setValue(Resource.error(err.getMessage(),newdata)));
+            });
         });
     }
 
     protected void onFetchFailed() {
     }
 
-
-
-    @WorkerThread
-    protected RequestType processResponse(Envelope<RequestType> response) {
-        return response.getData();//get core data
-    }
 
     @WorkerThread
     protected abstract void saveCallResult(@NonNull RequestType item);//save the result from network to room database
@@ -88,7 +92,7 @@ public abstract class EnvelopeBoundResource<ResultType,RequestType> extends Enve
 
     @NonNull
     @MainThread
-    protected abstract LiveData<Envelope<RequestType>> createCall();//create call with retrofit2
+    protected abstract Single<Envelope<RequestType>> createCall();//create call with retrofit2
 
 
 }

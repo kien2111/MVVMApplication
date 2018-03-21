@@ -36,11 +36,11 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R,LiveData<Envelope<R
                     call.enqueue(new Callback<R>() {
                         @Override
                         public void onResponse(Call<R> call, Response<R> response) {
-                            postValue(new Envelope<>(response));
+                            //postValue(new Envelope<>(response));
                         }
                         @Override
                         public void onFailure(Call<R> call, Throwable throwable) {
-                            postValue(new Envelope<>(throwable));
+                            //postValue(new Envelope<>(throwable));
                         }
                     });
                 }

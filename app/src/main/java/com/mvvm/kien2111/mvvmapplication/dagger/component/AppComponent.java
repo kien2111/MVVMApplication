@@ -5,6 +5,8 @@ import com.mvvm.kien2111.mvvmapplication.dagger.module.ActivityBuilder;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.AppModule;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.NetModule;
 import javax.inject.Singleton;
+
+import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
@@ -17,6 +19,16 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityBuilder.class,
         AppModule.class,
         NetModule.class})
-public interface AppComponent extends AndroidInjector<MyApplication>{
-    @Component.Builder abstract class Builder extends AndroidInjector.Builder<MyApplication>{}
+public interface AppComponent {
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        Builder application(MyApplication application);
+
+        Builder appModule(AppModule appModule); // add this
+
+        AppComponent build();
+    }
+
+    void inject(MyApplication myApplication);
 }

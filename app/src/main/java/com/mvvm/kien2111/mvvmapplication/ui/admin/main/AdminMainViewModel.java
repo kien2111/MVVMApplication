@@ -13,6 +13,8 @@ import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,7 +23,8 @@ import javax.inject.Inject;
  * Created by VAKHANHPR on 2/26/2018.
  */
 
-public class AdminMainViewModel extends BaseViewModel<IAdminMainNavigator> {
+
+public class AdminMainViewModel extends BaseViewModel {
     public ObservableField<String> mObservableString = new ObservableField("vbmbvnvb");
     private UserRepository userRepository;
 
@@ -34,12 +37,14 @@ public class AdminMainViewModel extends BaseViewModel<IAdminMainNavigator> {
     }
     public void onclicStatistical()
     {
-        getNavigator().gotoSatisticalActivity();
+        //getNavigator().gotoSatisticalActivity();
+    public AdminMainViewModel(EventBus eventBus, UserRepository userRepository){
+        super(eventBus);
     }
 
     public  void onclickManageMyProfile()
     {
-        getNavigator().gotoManageMyProfile();
+        //getNavigator().gotoManageMyProfile();
     }
 
 }

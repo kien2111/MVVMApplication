@@ -5,6 +5,10 @@ import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryModule;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedFragment;
@@ -42,8 +46,14 @@ public abstract class FragmentBuilder {
     abstract NotificationFragment bindNotificationFragment();
 
     @PerFragment
-    @ContributesAndroidInjector(modules = {FeedModule.class})
+    @ContributesAndroidInjector(modules = {FeedModule.class,ChildFragmentBuilder.class})
     abstract FeedFragment bindFeedFragment();
 
+    @PerFragment
+    @ContributesAndroidInjector(modules = {DetailCategoryModule.class,ChildFragmentBuilder.class})
+    abstract DetailCategoryFragment bindDetailCategoryFragment();
 
+    @PerFragment
+    @ContributesAndroidInjector(modules = {DetailProfileModule.class})
+    abstract DetailProfileFragment bindDetailProfileFragment();
 }

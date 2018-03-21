@@ -5,7 +5,21 @@ package com.mvvm.kien2111.mvvmapplication.data.remote.model;
  */
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mvvm.kien2111.mvvmapplication.model.Employee;
+import com.mvvm.kien2111.mvvmapplication.model.Employer;
+import com.mvvm.kien2111.mvvmapplication.model.Role;
+
+import java.util.List;
+
 public class LoginResponse {
+
+    @Expose
+    @SerializedName("employee")
+    private Employee employee;
+
+    @Expose
+    @SerializedName("employer")
+    private Employer employer;
 
     @Expose
     @SerializedName("access_token")
@@ -24,8 +38,24 @@ public class LoginResponse {
     private String message;
 
     @Expose
-    @SerializedName("server_profile_pic_url")
+    @SerializedName("avatar")
     private String serverProfilePicUrl;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
 
     @Expose
     @SerializedName("email")
@@ -35,6 +65,17 @@ public class LoginResponse {
     @SerializedName("user_id")
     private int userId;
 
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    @Expose
+    @SerializedName("role_list")
+    private List<Role> roleList;
 
     public void setFbProfilePicUrl(String fbProfilePicUrl) {
         this.fbProfilePicUrl = fbProfilePicUrl;
@@ -69,7 +110,7 @@ public class LoginResponse {
     private String auth_token_type;
 
     @Expose
-    @SerializedName("user_name")
+    @SerializedName("username")
     private String userName;
 
     public String getAccessToken() {

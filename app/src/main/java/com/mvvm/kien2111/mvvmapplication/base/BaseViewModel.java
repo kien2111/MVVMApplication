@@ -3,18 +3,24 @@ package com.mvvm.kien2111.mvvmapplication.base;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 
+import org.greenrobot.eventbus.EventBus;
+
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by WhoAmI on 24/02/2018.
  */
 
-public class BaseViewModel<N> extends ViewModel{
-    private final ObservableBoolean mShowLoading = new ObservableBoolean(false);
+public abstract class BaseViewModel extends ViewModel{
+    final ObservableBoolean mShowLoading = new ObservableBoolean(false);
     protected final CompositeDisposable compositeDisposable;
-    private N mNavigator;
-    public BaseViewModel(){
+    protected final EventBus eventBus;
+
+    public BaseViewModel(EventBus eventBus){
         compositeDisposable = new CompositeDisposable();
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -23,7 +29,7 @@ public class BaseViewModel<N> extends ViewModel{
         super.onCleared();
     }
 
-    public ObservableBoolean getmShowLoading() {
+    public ObservableBoolean getShowLoading() {
         return mShowLoading;
     }
 
@@ -31,11 +37,4 @@ public class BaseViewModel<N> extends ViewModel{
         this.mShowLoading.set(toggleLoading);
     }
 
-    public N getNavigator() {
-        return mNavigator;
-    }
-
-    public void setmNavigator(N mNavigator) {
-        this.mNavigator = mNavigator;
-    }
 }

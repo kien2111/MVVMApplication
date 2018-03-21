@@ -14,8 +14,13 @@ import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.Ungr
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.highrate.HighRateViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.notification.NotificationViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserViewModel;
@@ -100,6 +105,25 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AdminManageProfileViewModel.class)
     abstract ViewModel bindAdminManageProfileViewModel(AdminManageProfileViewModel allAdminManageProfileViewModel);
+
+    @ViewModelKey(CategoryViewModel.class)
+    abstract ViewModel bindCatogoryViewModel(CategoryViewModel categoryViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HighRateViewModel.class)
+    abstract ViewModel bindHighRateViewModel(HighRateViewModel categoryViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailCategoryViewModel.class)
+    abstract ViewModel bindDetailCategoryViewModel(DetailCategoryViewModel detailCategoryViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailProfileViewModel.class)
+    abstract ViewModel bindDetailProfileViewModel(DetailProfileViewModel detailProfileViewModel);
+
 
     @Binds
     @Singleton
