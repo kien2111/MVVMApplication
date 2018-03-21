@@ -3,7 +3,6 @@
     android:accountType="com.mvvm.finalcourse"
     android:icon="@drawable/ic_launcher_foreground"
     android:smallIcon="@drawable/ic_launcher_background"
-    android:label="@string/label"
-    android:accountPreferences="@xml/preference">
+    android:label="@string/label">
 
 </account-authenticator>

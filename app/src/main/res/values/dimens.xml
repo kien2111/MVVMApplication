@@ -17,4 +17,13 @@
     <dimen name="admin_textsize_10dp">10dp</dimen>
     <dimen name="admin_textsize_9dp">9dp</dimen>
 
+
+    <dimen name="feed_textsize_12sp">12sp</dimen>
+    <dimen name="cardview_category_corner_radius">4dp</dimen>
+    <dimen name="cardview_category_elevation">2dp</dimen>
+    <dimen name="default_margin">5dp</dimen>
+    <dimen name="textsize_categoryname">20sp</dimen>
+    <dimen name="divider">12dip</dimen>
+    <dimen name="login_or_padding">15dip</dimen>
+
 </resources>

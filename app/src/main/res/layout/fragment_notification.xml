@@ -3,12 +3,15 @@
     <data>
         <variable
             name="VMnotification"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel">
+            type="com.mvvm.kien2111.mvvmapplication.ui.universal.notification.NotificationViewModel">
         </variable>
     </data>
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="haha"/>
     </LinearLayout>
 </layout>

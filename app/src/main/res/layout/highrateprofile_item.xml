@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="profile" type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.HighRateProfileModel"/>
+    </data>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardCornerRadius="@dimen/cardview_category_corner_radius"
+        card_view:cardElevation="@dimen/cardview_category_elevation"
+        card_view:cardBackgroundColor="@color/cardview_category_item_background_color"
+        android:layout_width="match_parent"
+        android:background="@color/cardview_category_item_background_color"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageCategory"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:imageUrl="@{profile.avatar}"
+                app:defaultImg="@{@drawable/defaultimage}"
+                app:errorImg="@{@drawable/errorimg}"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginStart="10dp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/textsize_categoryname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{profile.name}"
+                />
+            <RatingBar
+                style= "@style/CustomRatingBar"
+                android:numStars="5"
+                android:rating="@{profile.rating}"
+                android:layout_marginStart="10dp"
+                android:stepSize="0.01"
+                android:isIndicator="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <Button
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:paddingStart="15dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/add_to_favourite"
+                    android:drawableStart="@drawable/ic_not_yet_favorite_border_24dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <Button
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:paddingStart="15dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/rating"
+                    android:drawableStart="@drawable/ic_rating_24dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <Button
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:paddingStart="15dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/detail"
+                    android:drawableStart="@drawable/ic_detail_24dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

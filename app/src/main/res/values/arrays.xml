@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="tab_color">
+        <item>@color/bottombar_icon</item>
+        <item>@color/bottombar_icon</item>
+        <item>@color/bottombar_icon</item>
+        <item>@color/bottombar_icon</item>
+        <item>@color/bottombar_icon</item>
+    </array>
+</resources>

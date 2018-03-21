@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="VMfeed"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel">
-        </variable>
+            name="vm"
+            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel"/>
     </data>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
-                    app:navigationIcon="@drawable/ic_menu_24dp"
+                    app:navigationIcon="@drawable/ic_arrow_back_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
@@ -40,7 +40,7 @@
                 style="@style/FeedTabLayout"
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="@color/bottombar_icon"
                 app:tabMode="scrollable"
                 app:tabTextColor="@android:color/white"/>

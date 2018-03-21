@@ -3,7 +3,7 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -19,5 +19,21 @@
 
 
     <string name="label_administrator">Admin</string>
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="notification">notification</string>
+    <string name="favourite">favourite</string>
+    <string name="setting">setting</string>
+
+    <string name="unknown_error">unexpected error</string>
+    <string name="action_login">Login</string>
+    <string name="action_login_social">Login Social</string>
+    <string name="or_text">OR</string>
+    <string name="facebook_login_text">Facebook</string>
+    <string name="google_login_text">Google</string>
+    <string name="add_to_favourite">Favourite</string>
+    <string name="rating">Rating</string>
+    <string name="detail">Detail</string>
+    <string name="dummy_text">dummy text</string>
 
 </resources>
