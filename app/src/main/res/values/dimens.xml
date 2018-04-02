@@ -6,6 +6,7 @@
     <dimen name="admim_textsize_screen_notibar">30dp</dimen>
 
 
+    <dimen name="admin_textsize_26dp">23dp</dimen>
     <dimen name="admin_textsize_20dp">20dp</dimen>
     <dimen name="admin_textsize_18dp">18dp</dimen>
     <dimen name="admin_textsize_16dp">16dp</dimen>
@@ -25,5 +26,17 @@
     <dimen name="textsize_categoryname">20sp</dimen>
     <dimen name="divider">12dip</dimen>
     <dimen name="login_or_padding">15dip</dimen>
+
+    <dimen name="user_textsize_26dp">23dp</dimen>
+    <dimen name="user_textsize_20dp">20dp</dimen>
+    <dimen name="user_textsize_18dp">18dp</dimen>
+    <dimen name="user_textsize_16dp">16dp</dimen>
+    <dimen name="user_textsize_15dp">15dp</dimen>
+    <dimen name="user_textsize_14dp">14dp</dimen>
+    <dimen name="user_textsize_13dp">13dp</dimen>
+    <dimen name="usern_textsize_12dp">12dp</dimen>
+    <dimen name="user_textsize_11dp">11dp</dimen>
+    <dimen name="user_textsize_10dp">10dp</dimen>
+    <dimen name="user_textsize_9dp">9dp</dimen>
 
 </resources>

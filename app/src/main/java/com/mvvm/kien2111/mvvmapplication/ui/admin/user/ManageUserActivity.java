@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.user;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +21,13 @@ import android.widget.Toast;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminManageUserBinding;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserFragment;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 
@@ -55,6 +61,11 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
         //mViewModel.setmNavigator(this);
         setupBottomnagivation();
         setupTabLayout();
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
 
     }
 
@@ -114,6 +125,8 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
         mActivityBinding.mtabLayout.setupWithViewPager(mActivityBinding.mpager);
         mActivityBinding.toolbar.setVisibility(View.GONE);
     }
+
+
     //Custom viewpager and tablayout
     static class SectionPagerAdapter extends FragmentPagerAdapter {
         public SectionPagerAdapter(FragmentManager fm) {
@@ -142,9 +155,11 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
                     return "All Account";
                 case 1:
                 default:
-                    return "Ungrade Account";
+                    return "New Account";
             }
         }
     }
+
+
 
 }

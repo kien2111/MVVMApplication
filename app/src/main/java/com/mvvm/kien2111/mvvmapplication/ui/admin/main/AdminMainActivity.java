@@ -29,32 +29,27 @@ import javax.inject.Inject;
  * Created by VAKHANHPR on 2/26/2018.
  */
 
-public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityAdminHomeBinding > implements IAdminMainNavigator {
+public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityAdminHomeBinding >  {
 
 
-    @Override
-    public void handleError(Throwable throwable) {
-
-    }
 
     //go to activity Manage Account
-    @Override
-    public void gotomanagerAccount() {
+    //@Override
+    public void gotomanagerAccount(View view) {
         Intent mItent= new Intent(this, ManageUserActivity.class);
         startActivity(mItent);
     }
 
     //Go to activity Satistical
-    @Override
-    public void gotoSatisticalActivity() {
+    public void gotoSatisticalActivity(View view) {
 
         Intent mItent= new Intent(this, AdminStatisticalActivity.class);
         startActivity(mItent);
     }
 
     //Go to activity edit myprofile
-    @Override
-    public void gotoManageMyProfile() {
+    //@Override
+    public void gotoManageMyProfile(View view) {
         Intent mItent= new Intent(this, AdminManageProfileActivity.class);
         startActivity(mItent);
     }
@@ -63,6 +58,8 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
     public void onEvent(BaseMessage message){
         if(message instanceof AdminMainViewModel.Message){
 
+        }else if(message instanceof AdminMainViewModel.DummyMessage){
+            //gotomanagerAccount();
         }
     }
 
@@ -89,18 +86,20 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //mViewModel.setmNavigator(this);
-        mViewModel.getResourceMutableLiveData().observe(this,listResource -> {
+       /* mViewModel.getResourceMutableLiveData().observe(this,listResource -> {
             switch (listResource.status){
                 case SUCCESS:
-                    listResource.getData();
+                    Log.d("adadadad",listResource.getData().get(0).getUsername());
                     break;
                 case LOADING:
+                    Log.d("adaad","ádfasdfsdf800800");
                     break;
                 case ERROR:
-                    handleError(listResource.message);
-                    break;
+                    Log.d("adaad","ádfasdfsdf");
+                handleError(listResource.message);
+                break;
             }
-        });
+        });*/
 
     }
 

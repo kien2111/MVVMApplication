@@ -44,9 +44,9 @@ public class AdminMainViewModel extends BaseViewModel {
         compositeDisposable.add(adminRepository
                 .getAllUser()
                 .subscribe(listResource -> {
-                    resourceMutableLiveData.postValue(listResource);
+                    resourceMutableLiveData.setValue(listResource);
                 },error->{
-                    resourceMutableLiveData.postValue(Resource.error(error.getMessage(),null));
+                    resourceMutableLiveData.setValue(Resource.error(error.getMessage(),null));
                 })
         );
     }
@@ -57,6 +57,7 @@ public class AdminMainViewModel extends BaseViewModel {
 
     public  void onclickManagerAccount()
     {
+        eventBus.post(new DummyMessage());
         //getNavigator().gotomanagerAccount();
     }
     public void onclicStatistical() {
@@ -68,6 +69,9 @@ public class AdminMainViewModel extends BaseViewModel {
         //getNavigator().gotoManageMyProfile();
     }
     static class Message extends BaseMessage{
+
+    }
+    static class DummyMessage extends BaseMessage{
 
     }
 }

@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.statistical;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,7 +17,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminStatisticalBinding;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +40,11 @@ public class AdminStatisticalActivity extends BaseActivity<AdminStatisticalViewM
     protected AdminStatisticalViewModel createViewModel() {
         return ViewModelProviders.of(this,viewModelFactory).get(AdminStatisticalViewModel.class);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
 
+
+    }
     @Override
     protected int getBindVariable() {
         return BR.vm;
@@ -120,5 +129,8 @@ public class AdminStatisticalActivity extends BaseActivity<AdminStatisticalViewM
     @Override
     public void finishActivity() {
         finish();
+    }
+    static class MessageShowStatistify extends  BaseMessage{
+
     }
 }

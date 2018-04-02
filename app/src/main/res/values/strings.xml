@@ -62,4 +62,16 @@
         <item>By year</item>
     </string-array>
 
+
+    text user
+    <string name="user_text_invite_friend_title">Mời bạn bè</string>
+    <string name="user_text_invite_friend_mesage">Message</string>
+    <string name="user_text_invite_friend_everyone">Everyone</string>
+    <string name="user_text_appointment_schedule_title">My Appointments</string>
+    <string name="user_text_appointment_schedule_title_second">Explore all your appointments heres</string>
+
+    rechange money
+    <string name="user_text_title_rechange">Deposit funds</string>
+    confirm appoinment
+    <string name="user_text_title_confirm_appointment">Appointment creating</string>
 </resources>

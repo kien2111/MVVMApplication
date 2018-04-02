@@ -9,7 +9,7 @@
     <color name="color_admin_text_title">#FFFFFF</color>
     <color name="color_admin_black">#000000</color>
 
-    <color name="admin_background_notibar">#39347f</color>
+    <color name="admin_background_notibar">#0c0c0d</color>
     <color name="admin_color_text_screen_notibar">#FFFFFF</color>
     <color name="admin_background_notibar_second">#342f71</color>
     <color name="admin_background_content">#f5f6fb</color>
@@ -18,4 +18,17 @@
 
     <color name="bottombar_icon">#342f71</color>
     <color name="cardview_category_item_background_color">#FFFFFF</color>
+
+     file of user list
+    <color name="admin_backround_first_file">#6BCBCA</color>
+    <color name="admin_backround_second_file">#EDEDE5</color>
+    <color name="admin_text_second_file">#B2AA97</color>
+    <color name="admin_text_black">#000000</color>
+
+    for user
+    <color name="user_background_title">#303F9F</color>
+    <color name="user_color_text_title">#FFFFFFFF</color>
+    <color name="user_color_text_invite_content_black">#000000</color>
+    <color name="user_color_text_invite_content_grown">#B2AA97</color>
+    <color name="user_color_text_black">#000000</color>
 </resources>
