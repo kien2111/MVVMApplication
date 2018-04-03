@@ -1,6 +1,12 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
@@ -8,32 +14,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
+import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
-import com.mvvm.kien2111.mvvmapplication.model.Gender;
+import com.mvvm.kien2111.mvvmapplication.retrofit.EnumTypeAdapterFactory;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
-import com.mvvm.kien2111.mvvmapplication.retrofit.serialize.EnumTypeDeserialize;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Logger;
-
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
+import javax.inject.Named;
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Authenticator;
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -68,24 +69,57 @@ public class NetModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(Gender.class,new EnumTypeDeserialize())
+                .registerTypeAdapterFactory(new EnumTypeAdapterFactory())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache, PreferenceHelper preferenceHelper) {
+    AccountManager provideAccountManager(MyApplication myApplication){
+        return AccountManager.get(myApplication);
+    }
+
+    @Provides
+    @Singleton
+    HttpLoggingInterceptor provideLoggingService(){
+        return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    }
+
+
+    @Provides
+    @Named("protected_OkHttp")
+    OkHttpClient provideProtectedOkHttpClient(Cache cache,
+                                              HttpLoggingInterceptor httpLoggingInterceptor,
+                                              AccountManager accountManager){
+        final String[] auth_token = new String[2];
+        accountManager.getAuthTokenByFeatures(AccountAuthenticator.ACCOUNT_TYPE,
+                AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER, null, null, null, null,future -> {
+                    try {
+                        auth_token[0] = future.getResult().getString(AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER);
+                        auth_token[1] = future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+                    } catch (OperationCanceledException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (AuthenticatorException e) {
+                        e.printStackTrace();
+                    }
+                },null);
         return new OkHttpClient.Builder()
-                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .connectTimeout(BuildConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+                .addNetworkInterceptor(httpLoggingInterceptor)
+                /*.connectTimeout(BuildConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
                 .readTimeout(BuildConfig.READ_TIMEOUT,TimeUnit.MILLISECONDS)
-                .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)
-                .authenticator(new Authenticator() {
-                    @Nullable
+                .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)*/
+                .addInterceptor(new Interceptor() {
                     @Override
-                    public Request authenticate(Route route, Response response) throws IOException {
-                        return null;
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        request = request.newBuilder()
+                                .addHeader("authorization",auth_token[0]+" "+auth_token[1])
+                                .build();
+                        Response response = chain.proceed(request);
+                        return response;
                     }
                 })
                 .cache(cache)
@@ -94,14 +128,28 @@ public class NetModule {
 
     @Provides
     @Singleton
-    UserService provideUserService(Retrofit retrofit){
+    @Named("no_protected_OkHttp")
+    OkHttpClient provideOkHttpClient(Cache cache,HttpLoggingInterceptor httpLoggingInterceptor) {
+        return new OkHttpClient.Builder()
+                .addNetworkInterceptor(httpLoggingInterceptor)
+                .connectTimeout(BuildConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+                .readTimeout(BuildConfig.READ_TIMEOUT,TimeUnit.MILLISECONDS)
+                .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)
+                .cache(cache)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    UserService provideUserService(@Named("non_protected_api")Retrofit retrofit){
         return retrofit.create(UserService.class);
     }
 
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    @Named("non_protected_api")
+    Retrofit provideRetrofit(Gson gson,@Named("no_protected_OkHttp")OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(new EnvelopeConverterFactory())
@@ -111,6 +159,20 @@ public class NetModule {
                 .build();
         return retrofit;
     }
+
+    @Provides
+    @Named("protected_api")
+    Retrofit provideProtectedRetrofit(Gson gson,@Named("protected_OkHttp") OkHttpClient okHttpClient) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(new EnvelopeConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(BuildConfig.API_URL)
+                .client(okHttpClient)
+                .build();
+        return retrofit;
+    }
+
 
     private final static int NUM_THREADS = 2;
 
@@ -125,12 +187,12 @@ public class NetModule {
     }
     @Provides
     @Singleton
-    AdminService provideAdminService(Retrofit retrofit){
+    AdminService provideAdminService(@Named("protected_api") Retrofit retrofit){
         return retrofit.create(AdminService.class);
     }
     @Provides
     @Singleton
-    ProfileService provideProfileService(Retrofit retrofit){
+    ProfileService provideProfileService(@Named("non_protected_api")Retrofit retrofit){
         return retrofit.create(ProfileService.class);
     }
 }

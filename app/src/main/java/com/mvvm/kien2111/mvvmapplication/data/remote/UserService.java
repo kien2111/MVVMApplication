@@ -20,7 +20,7 @@ import retrofit2.http.POST;
  */
 
 public interface UserService {
-    @POST("/Accounts/Login")
+    @POST("/Users/Login")
     Single<LoginResponse> loginExpress(@Body LoginRequest.ExpressLoginRequest expressLoginRequest);
 
     @POST("/google")
@@ -29,7 +29,7 @@ public interface UserService {
     @POST("/facebook")
     Single<LoginResponse> loginFacebook(@Body LoginRequest.FacebookLoginRequest facebookLoginRequest);
 
-    @POST("/Accounts/signupemployer")
+    @POST("/Users/signupemployer")
     Completable SignUpEmployer(@Body SignUpRequest mSignUpEmployer);
 
     @POST("/Accounts/signupemployee")

@@ -10,11 +10,12 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String","API_URL","\""+getApiUrl()+"\""
-        buildConfigField ("long","CONNECT_TIMEOUT",getConnectionTimeOut())
-        buildConfigField ("long","READ_TIMEOUT",getReadTimeOut())
-        buildConfigField ("long","WRITE_TIMEOUT",getWriteTimeOut())
-        buildConfigField "String","DATABASE_NAME","\""+getDatabaseName()+"\""
+        buildConfigField "String","API_URL","\""+getLocalConfigProperties("api")+"\""
+        buildConfigField ("long","CONNECT_TIMEOUT",getLocalConfigProperties("connect.timeout"))
+        buildConfigField ("long","READ_TIMEOUT",getLocalConfigProperties("read.timeout"))
+        buildConfigField ("long","WRITE_TIMEOUT",getLocalConfigProperties("write.timeout"))
+        buildConfigField "String","DATABASE_NAME","\""+getLocalConfigProperties("databasename")+"\""
+        buildConfigField "String","IMG_URL","\""+getLocalConfigProperties("img_url")+"\""
     }
     buildTypes {
         release {
@@ -31,30 +32,10 @@ android {
     }
 
 }
-def getApiUrl(){
+def getLocalConfigProperties(String query){
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("api")
-}
-def getReadTimeOut(){
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("read.timeout")
-}
-def getWriteTimeOut(){
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("write.timeout")
-}
-def getConnectionTimeOut(){
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("connect.timeout")
-}
-def getDatabaseName(){
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("roomdb")
+    return properties.getProperty(query)
 }
 ext{
     supportLibraryVersion = '27.0.2'

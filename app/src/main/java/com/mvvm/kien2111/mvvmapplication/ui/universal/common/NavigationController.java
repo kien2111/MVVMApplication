@@ -78,7 +78,7 @@ public class NavigationController {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         DetailCategoryFragment detailCategoryFragment = (DetailCategoryFragment)fragmentManager.findFragmentByTag(category.getNamecategory());
         if(detailCategoryFragment==null){
-            detailCategoryFragment = new DetailCategoryFragment();
+            detailCategoryFragment = DetailCategoryFragment.newInstance(category);
         }
         transaction.replace(containerId,detailCategoryFragment).addToBackStack(null);
         transaction.commitAllowingStateLoss();

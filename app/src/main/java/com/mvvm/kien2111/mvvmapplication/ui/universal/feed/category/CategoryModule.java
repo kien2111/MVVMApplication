@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category;
 
 import android.databinding.DataBindingComponent;
+import android.support.v7.widget.GridLayoutManager;
 
 import com.mvvm.kien2111.mvvmapplication.base.BaseAdapter;
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
@@ -23,4 +24,9 @@ public class CategoryModule {
     FragmentBindingComponent provideFragmentBindingComponent(CategoryFragment categoryFragment){
         return new FragmentBindingComponent(categoryFragment);
     }
+    @Provides
+    GridLayoutManager provideGridlayoutManager(CategoryFragment categoryFragment){
+        return new GridLayoutManager(categoryFragment.getContext(),NUM_COLUMN_GRIDLAYOUTMANAGER);
+    }
+    private static int NUM_COLUMN_GRIDLAYOUTMANAGER = 2;
 }

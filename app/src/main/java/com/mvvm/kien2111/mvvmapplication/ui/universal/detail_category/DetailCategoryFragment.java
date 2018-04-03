@@ -18,6 +18,7 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentDetailcategoryBinding;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.highrate.HighRateFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.skilledfreelancer.SkilledFreelancerFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.ViewPagerAdapter;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryFragment;
 
@@ -43,7 +44,7 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
 
     @Override
     protected DetailCategoryViewModel createViewModel() {
-        return ViewModelProviders.of(this).get(DetailCategoryViewModel.class);
+        return ViewModelProviders.of(this,viewModelFactory).get(DetailCategoryViewModel.class);
     }
 
     @Inject
@@ -59,12 +60,18 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater,container,savedInstanceState);
         setUpToolBar(getArguments().getParcelable(KEY_PICK_CATEGORY));
         setUpTabLayout(getArguments().getParcelable(KEY_PICK_CATEGORY));
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     @Inject
@@ -77,6 +84,7 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     }
     private void setUpTabLayout(Category category){
         adapter.addFragment(HighRateFragment.newInstance(category),"High Rate");
+        adapter.addFragment(SkilledFreelancerFragment.newInstance(category),"Skilled Freelancer");
         mFragmentBinding.viewPager.setAdapter(adapter);
         mFragmentBinding.tabLayout.setupWithViewPager(mFragmentBinding.viewPager);
     }

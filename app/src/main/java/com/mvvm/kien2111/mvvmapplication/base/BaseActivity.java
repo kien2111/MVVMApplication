@@ -1,7 +1,9 @@
 package com.mvvm.kien2111.mvvmapplication.base;
 
+import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
@@ -12,7 +14,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.gson.Gson;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
+import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.util.NetworkUtil;
 
@@ -34,6 +41,10 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
     private Bundle mResultBundle = null;
 
+
+    @Inject
+    protected Gson gson;
+
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
 
@@ -54,7 +65,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAccountManager = AccountManager.get(this);
+        mAccountManager = AccountManager.get(mApplication);
         bind();
         if(this instanceof LoginActivity){
             mAccountAuthenticatorResponse =
@@ -136,4 +147,14 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
         return viewModelFactory;
     }
 
+    public void showErrorDialog(String title,String message){
+        if(message==null)throw new IllegalArgumentException("Not supply message");
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Dismiss",((dialog, which) -> {
+            dialog.dismiss();
+        })).create();
+        alertDialog.show();
+    }
 }

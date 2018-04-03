@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="profileitem"
+            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.ProfileItem"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:weightSum="4"
+        android:layout_height="80dp">
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:imageUrl="@{profileitem.profile_avatar}"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:background="@android:color/darker_gray"
+            android:scaleType="fitCenter"
+            android:layout_height="match_parent"
+            />
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/name_profile"
+                android:text="@{profileitem.profile_name,default=profilename}"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

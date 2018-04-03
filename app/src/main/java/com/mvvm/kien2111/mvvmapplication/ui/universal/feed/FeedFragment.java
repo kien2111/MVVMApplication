@@ -71,8 +71,19 @@ public class FeedFragment extends BaseFragment<FeedViewModel,FragmentFeedBinding
 
     }
 
-    private void setUpTabLayout(){
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         adapter.addFragment(new CategoryFragment(),"Categories");
+    }
+
+    private void setUpTabLayout(){
+
         mFragmentBinding.viewPager.setAdapter(adapter);
         mFragmentBinding.tabLayout.setupWithViewPager(mFragmentBinding.viewPager);
     }

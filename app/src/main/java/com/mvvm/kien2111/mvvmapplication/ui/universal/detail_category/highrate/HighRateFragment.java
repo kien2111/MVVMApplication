@@ -2,17 +2,25 @@ package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.highrate;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.HighRateProfileModel;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentHighrateBinding;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Collections;
 
@@ -34,7 +42,7 @@ public class HighRateFragment extends BaseFragment<HighRateViewModel,FragmentHig
 
     @Override
     protected HighRateViewModel createViewModel() {
-        return ViewModelProviders.of(this).get(HighRateViewModel.class);
+        return ViewModelProviders.of(this,viewModelFactory).get(HighRateViewModel.class);
     }
 
     @Override
@@ -60,12 +68,25 @@ public class HighRateFragment extends BaseFragment<HighRateViewModel,FragmentHig
         super.onCreate(savedInstanceState);
         if(getArguments()!=null ){
             if(getArguments().getParcelable(KEY_PICK_CATEGORY)!=null){
-                setUpProfileAdapter();
-                mViewModel.setIdCategory(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory());
+
             }
         }else{
             navigationController.navigateToFeed();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        setUpProfileAdapter();
+        mViewModel.setIdCategory(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory());
+        return view;
     }
 
     private void setUpProfileAdapter() {

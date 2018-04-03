@@ -10,7 +10,7 @@ import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
-import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
 
 import java.util.List;
@@ -55,6 +55,9 @@ public class UserRepository {
     }
     public void updateAccessTokenOnly(String accessTokenType,String accessToken,Priority priority,List<Role> roleList){
 
+    }
+    public LoginResponse getUserData(){
+        return preferenceHelper.getUserData();
     }
 
 }

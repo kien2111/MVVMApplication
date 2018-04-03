@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
@@ -30,11 +31,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AuthenticatorImpl extends AbstractAccountAuthenticator {
     Context mContext;
-    @Inject
     UserRepository userRepository;
-    public AuthenticatorImpl(Context context) {
+    public AuthenticatorImpl(Context context,UserRepository repository) {
         super(context);
         mContext = context;
+        this.userRepository = repository;
     }
 
     @Override
@@ -44,11 +45,12 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, AdminMainActivity.class);
+        final Intent intent = new Intent(mContext, LoginActivity.class);
         intent.putExtra(LoginActivity.ARG_ACCOUNT_TYPE, accountType);
         intent.putExtra(LoginActivity.ARG_AUTH_TYPE, authTokenType);
         intent.putExtra(LoginActivity.ARG_IS_ADDING_NEW_ACCOUNT, true);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT,intent);
         return bundle;
@@ -96,6 +98,7 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
             bundle.putString(AccountManager.KEY_ACCOUNT_NAME,account.name);
             bundle.putString(AccountManager.KEY_ACCOUNT_TYPE,account.type);
             bundle.putString(AccountManager.KEY_AUTHTOKEN,loginResponse.getAccessToken());
+            bundle.putParcelable(AccountAuthenticator.KEY_USER_DATA,loginResponse);
             return bundle;
         }
 

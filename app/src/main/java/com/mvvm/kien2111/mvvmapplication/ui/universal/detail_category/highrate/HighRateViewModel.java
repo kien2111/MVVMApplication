@@ -90,7 +90,7 @@ public class HighRateViewModel extends BaseViewModel {
                 return;
             unregister();
             this.query = query;
-            nextPageLiveData = repository.fetchNextPageHighRateProfile(query);
+            nextPageLiveData = LiveDataReactiveStreams.fromPublisher(repository.fetchNextPageHighRateProfile(query));
             loadMoreStateMutableLiveData.setValue(new LoadMoreState(true,null));
             nextPageLiveData.observeForever(this);
         }

@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
@@ -57,6 +59,11 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewDataBindi
         mFragmentBinding = DataBindingUtil.inflate(inflater,getLayoutId(),container,false,fragmentBindingComponent);
         rootView = mFragmentBinding.getRoot();
         return rootView;
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
 
     }
 

@@ -40,10 +40,10 @@ public class CategoryViewModel extends BaseViewModel {
         compositeDisposable.add(categoryRepository.getListCategory()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(categoryList -> {
-                    resourceLiveData.postValue(Resource.success(categoryList));
+                .subscribe(listResource -> {
+                    resourceLiveData.setValue(listResource);
                 },throwable -> {
-                    resourceLiveData.postValue(Resource.error(throwable.getMessage(),null));
+                    resourceLiveData.setValue(Resource.error(throwable.getMessage(),null));
                 })
         );
     }

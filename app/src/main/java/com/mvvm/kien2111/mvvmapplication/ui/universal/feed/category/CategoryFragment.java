@@ -6,6 +6,7 @@ import android.databinding.DataBindingComponent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
+import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
@@ -57,10 +59,14 @@ public class CategoryFragment extends BaseFragment<CategoryViewModel,FragmentCat
         setupCategoryAdapter();
     }
 
+
     @Inject
     CategoryAdapter categoryAdapter;
+    @Inject
+    GridLayoutManager gridLayoutManager;
     private void setupCategoryAdapter() {
         mFragmentBinding.recycleViewCategories.setAdapter(categoryAdapter);
+        mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager);
         mViewModel.getResourceCategoriesLiveData().observe(this,listResource -> {
             switch (listResource.status){
                 case SUCCESS:
@@ -83,6 +89,7 @@ public class CategoryFragment extends BaseFragment<CategoryViewModel,FragmentCat
 
     private void handleError(String message) {
         //show error
+        ((BaseActivity)getActivity()).showErrorDialog("Error",message);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

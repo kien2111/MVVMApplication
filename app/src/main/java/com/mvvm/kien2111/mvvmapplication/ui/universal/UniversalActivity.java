@@ -57,8 +57,7 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         if(savedInstanceState==null){
             navigationController.navigateToFeed();
         }
-        getTokenForAccountCreateIfNeeded(AccountAuthenticator.ACCOUNT_TYPE,
-                AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER);
+
         setupNavigationBottomBar();
     }
 
@@ -79,32 +78,6 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
     }
 
 
-    private void getExistingAccountAuthToken(Account account, String authTokenType) {
-        final AccountManagerFuture<Bundle> future = mAccountManager.getAuthToken(account, authTokenType, null, this, null, null);
-        new Thread(()-> {
-            Bundle bnd = null;
-            try {
-                bnd = future.getResult();
-                final String authtoken = bnd.getString(AccountManager.KEY_AUTHTOKEN);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }).start();
-    }
-    private void getTokenForAccountCreateIfNeeded(String accountType, String authTokenType) {
-        final AccountManagerFuture<Bundle> future =mAccountManager.getAuthTokenByFeatures(accountType, authTokenType, null, this, null, null,
-                new AccountManagerCallback<Bundle>() {
-                    @Override
-                    public void run(AccountManagerFuture<Bundle> future) {
-                        try {
-                            final String authtoken = future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-                            mViewModel.updateAccessToken(authTokenType,authtoken, Priority.BASIC,new ArrayList<>());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                , null);
-    }
+
 
 }

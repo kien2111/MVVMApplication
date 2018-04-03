@@ -55,6 +55,21 @@
     <string name="admin_password_update_user">Password</string>
     <string name="admin_show">Show</string>
     <string name="admin_button_update_acount">Update Account</string>
+    <string name="title_search_view">search</string>
+    <string name="description_settingimg">more detail</string>
+    <string name="account_setting">Thiết lập tài khoản</string>
+    <string name="view_profile">Hồ sơ cá nhân</string>
+    <string name="edit_profile_to_provide_more_contact_info">Cung cấp thông tin để được hỗ trợ tốt nhất</string>
+    <string name="topup_money">Nạp tiền</string>
+    <string name="payment_system_title">Nạp tiền vào tài khoản để hưởng tối đa tiện ích</string>
+    <string name="others">Khác</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="app_guide">Hướng dẫn sử dụng</string>
+    <string name="app_guide_subtittle">Cách sử dụng app Fast Job</string>
+    <string name="invite_friend">Mời bạn bè cùng tham gia</string>
+    <string name="invite_friend_subtittle">Nhận ưu đãi khi mời bạn bè cùng sử dụng app</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="feedback_subtitle">Gửi phản hồi để cải thiện phần mềm tốt hơn</string>
 
     <string-array name="arr_admin_shortby">
         <item>By day</item>

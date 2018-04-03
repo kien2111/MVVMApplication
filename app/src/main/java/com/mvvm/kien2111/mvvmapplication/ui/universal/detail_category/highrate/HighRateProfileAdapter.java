@@ -34,7 +34,7 @@ public class HighRateProfileAdapter extends BaseAdapter<HighRateProfileModel,Hig
     @Override
     protected HighrateprofileItemBinding createBinding(ViewGroup parent) {
         HighrateprofileItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.category_item,parent,false,dataBindingComponent);
+                R.layout.highrateprofile_item,parent,false,dataBindingComponent);
         binding.getRoot().setOnClickListener(view->{
             if(callback!=null && binding.getProfile()!=null){
                 callback.onClick(binding.getProfile());
@@ -55,7 +55,7 @@ public class HighRateProfileAdapter extends BaseAdapter<HighRateProfileModel,Hig
 
     @Override
     protected boolean areItemsTheSame(HighRateProfileModel olditem, HighRateProfileModel newitem) {
-        return olditem.getName().equals(newitem.getName()) && olditem.getAvatar().equals(newitem.getAvatar())
+        return olditem.getName()!=null && newitem.getName()!=null && olditem.getName().equals(newitem.getName()) && olditem.getAvatar().equals(newitem.getAvatar())
                 && olditem.getRating()==newitem.getRating();
     }
 }

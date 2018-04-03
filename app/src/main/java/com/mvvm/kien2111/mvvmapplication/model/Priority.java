@@ -7,12 +7,10 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum Priority {
-    @SerializedName("0")
-    BASIC(0),
-    @SerializedName("1")
-    MEDIUM(1),
-    @SerializedName("2")
-    PREMIUM(2);
+    FREE(0),
+    BASIC(1),
+    MEDIUM(2),
+    PREMIUM(3);
 
     private final int type;
     Priority(int value){
@@ -21,5 +19,14 @@ public enum Priority {
 
     public int getType() {
         return type;
+    }
+
+    public static Priority mapPriority(int type){
+        for(Priority priority : values()){
+            if(type == priority.getType()){
+                return priority;
+            }
+        }
+        return FREE;
     }
 }

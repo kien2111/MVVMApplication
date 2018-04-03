@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -45,7 +46,7 @@ public class LoginViewModel extends BaseViewModel {
                 .doOnSuccess(response->{
                     userRepository.updateInfo(response
                             ,LoggedInMode.LOGGED_IN_MODE_EXPRESS);
-                })
+                }).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response->{
                     setShowLoading(false);

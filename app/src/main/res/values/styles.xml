@@ -30,4 +30,19 @@
         <item name="android:minHeight">9dp</item>
         <item name="android:maxHeight">30dp</item>
     </style>
+    <style name="RattingBarSetting" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:isIndicator">false</item>
+        <item name="android:minHeight">9dp</item>
+        <item name="android:maxHeight">50dp</item>
+    </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/ic_search_white_24dp</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <item name="queryBackground">@android:color/white</item>
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+        <!-- The hint text that appears when the user has not typed anything -->
+        <item name="android:queryHint">@string/title_search_view</item>
+    </style>
 </resources>

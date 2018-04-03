@@ -18,10 +18,13 @@ import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
@@ -46,20 +49,20 @@ public class CategoryRepository {
         this.categoryDao=categoryDao;
         this.appExecutors = appExecutors;
     }
-    public Single<List<Category>> getListCategory(){
-        if(limitFetch.shouldFetch("KEY_CATEGORIES")){
-            return userService.getListCategory()
-                    .flatMap(new Function<List<Category>, SingleSource<List<Category>>>() {
-                        @Override
-                        public SingleSource<List<Category>> apply(List<Category> categoryList) throws Exception {
-                            return categoryDao.getLocalCategories();
-                        }
-                    })
-                    .doOnSuccess(categoryList -> appExecutors.getDiskIO().execute(()->categoryDao.insert(categoryList)));
-        }else{
-            return categoryDao.getLocalCategories();
-        }
-
+    public Single<Resource<List<Category>>> getListCategory(){
+        return userService.getListCategory()
+                .flatMap(new Function<List<Category>, SingleSource<Resource<List<Category>>>>() {
+                    @Override
+                    public SingleSource<Resource<List<Category>>> apply(List<Category> categoryList) throws Exception {
+                        return Single.fromCallable(new Callable<Resource<List<Category>>>() {
+                            @Override
+                            public Resource<List<Category>> call() throws Exception {
+                                categoryDao.insert(categoryList);
+                                return Resource.success(categoryDao.getLocalCategories());
+                            }
+                        });
+                    }
+                });
     }
 
 }

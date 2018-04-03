@@ -15,7 +15,7 @@ public class DetailProfileFragment extends BaseFragment<DetailProfileViewModel,F
 
     @Override
     protected DetailProfileViewModel createViewModel() {
-        return ViewModelProviders.of(this).get(DetailProfileViewModel.class);
+        return ViewModelProviders.of(this,viewModelFactory).get(DetailProfileViewModel.class);
     }
 
     @Override

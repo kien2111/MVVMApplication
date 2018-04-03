@@ -3,13 +3,8 @@ package com.mvvm.kien2111.mvvmapplication.data.local.pref;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
-import com.mvvm.kien2111.mvvmapplication.model.Priority;
-import com.mvvm.kien2111.mvvmapplication.model.Role;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,6 +15,7 @@ import javax.inject.Inject;
 public final class PreferenceHelper {
     private static final String KEY_USER_LOGGED_IN_MODE = "KEY_USER_LOGGED_IN_MODE";
     private static final String KEY_USER_DATA = "KEY_USER_DATA";
+    private static final String KEY_ACCOUNT_NAME = "KEY_ACCOUNT_NAME";
 
 
     private final Gson gson;
@@ -37,12 +33,22 @@ public final class PreferenceHelper {
     public void setCurrentLoggedInMode(LoggedInMode loggedInMode){
         mSharedPreferences.edit().putInt(KEY_USER_LOGGED_IN_MODE,loggedInMode.getType()).apply();
     }
-    public String getUserData(){
-        return this.mSharedPreferences.getString(KEY_USER_DATA,"");
+    public LoginResponse getUserData(){
+        return gson.fromJson(this.mSharedPreferences.getString(KEY_USER_DATA,""),LoginResponse.class);
     }
 
     public void setUserData(LoginResponse loginResponse){
         mSharedPreferences.edit().putString(KEY_USER_DATA,gson.toJson(loginResponse)).apply();
     }
 
+    public String getAccountName() {
+        return mSharedPreferences.getString(KEY_ACCOUNT_NAME,"");
+    }
+
+    public void setKeyAccountName(String accountName) {
+        mSharedPreferences.edit().putString(KEY_ACCOUNT_NAME,accountName).apply();
+    }
+    public void clearPreference(){
+        mSharedPreferences.edit().clear().apply();
+    }
 }

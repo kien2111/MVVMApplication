@@ -1,11 +1,10 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal;
 
-import android.arch.lifecycle.ViewModel;
-
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 

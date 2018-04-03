@@ -7,7 +7,6 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
-        card_view:cardCornerRadius="@dimen/cardview_category_corner_radius"
         card_view:cardElevation="@dimen/cardview_category_elevation"
         card_view:cardBackgroundColor="@color/cardview_category_item_background_color"
         android:layout_width="match_parent"
@@ -26,8 +25,9 @@
                 app:defaultImg="@{@drawable/defaultimage}"
                 app:errorImg="@{@drawable/errorimg}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="150dp" />
             <TextView
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:textSize="@dimen/textsize_categoryname"
                 android:layout_width="wrap_content"
@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:textSize="@dimen/textsize_numberprofileincategories"
                     android:text="1200 profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

@@ -3,27 +3,17 @@ package com.mvvm.kien2111.mvvmapplication.data.remote.model;
 /**
  * Created by WhoAmI on 24/02/2018.
  */
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mvvm.kien2111.mvvmapplication.model.Employee;
-import com.mvvm.kien2111.mvvmapplication.model.Employer;
-import com.mvvm.kien2111.mvvmapplication.model.Role;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 
-import java.util.List;
+public class LoginResponse implements Parcelable {
 
-public class LoginResponse {
-
-    @Expose
-    @SerializedName("employee")
-    private Employee employee;
-
-    @Expose
-    @SerializedName("employer")
-    private Employer employer;
-
-    @Expose
-    @SerializedName("access_token")
-    private String accessToken;
+    private String access_token;
+    private User user;
 
     @Expose
     @SerializedName("fb_profile_pic_url")
@@ -33,49 +23,43 @@ public class LoginResponse {
     @SerializedName("google_profile_pic_url")
     private String googleProfilePicUrl;
 
-    @Expose
-    @SerializedName("message")
-    private String message;
+    private String auth_token_type;
 
-    @Expose
-    @SerializedName("avatar")
-    private String serverProfilePicUrl;
+    public LoginResponse(){
 
-    public Employee getEmployee() {
-        return employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    protected LoginResponse(Parcel in) {
+        access_token = in.readString();
+        fbProfilePicUrl = in.readString();
+        googleProfilePicUrl = in.readString();
+        auth_token_type = in.readString();
     }
 
-    public Employer getEmployer() {
-        return employer;
+    public static final Creator<LoginResponse> CREATOR = new Creator<LoginResponse>() {
+        @Override
+        public LoginResponse createFromParcel(Parcel in) {
+            return new LoginResponse(in);
+        }
+
+        @Override
+        public LoginResponse[] newArray(int size) {
+            return new LoginResponse[size];
+        }
+    };
+
+    public User getUser() {
+        return user;
     }
 
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Expose
-    @SerializedName("email")
-    private String userEmail;
 
-    @Expose
-    @SerializedName("user_id")
-    private int userId;
-
-    public List<Role> getRoleList() {
-        return roleList;
+    public String getServerPicUrl(){
+        return user.getAvatar();
     }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
-    @Expose
-    @SerializedName("role_list")
-    private List<Role> roleList;
 
     public void setFbProfilePicUrl(String fbProfilePicUrl) {
         this.fbProfilePicUrl = fbProfilePicUrl;
@@ -85,36 +69,8 @@ public class LoginResponse {
         this.googleProfilePicUrl = googleProfilePicUrl;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setServerProfilePicUrl(String serverProfilePicUrl) {
-        this.serverProfilePicUrl = serverProfilePicUrl;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Expose
-    @SerializedName("auth_token_type")
-    private String auth_token_type;
-
-    @Expose
-    @SerializedName("username")
-    private String userName;
-
     public String getAccessToken() {
-        return accessToken;
+        return access_token;
     }
 
     public String getFbProfilePicUrl() {
@@ -125,25 +81,6 @@ public class LoginResponse {
         return googleProfilePicUrl;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getServerProfilePicUrl() {
-        return serverProfilePicUrl;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
     public String getAuth_token_type() {
         return auth_token_type;
     }
@@ -152,7 +89,21 @@ public class LoginResponse {
         this.auth_token_type = auth_token_type;
     }
     public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+        this.access_token = accessToken;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(auth_token_type);
+        dest.writeString(access_token);
+        dest.writeString(fbProfilePicUrl);
+        dest.writeString(googleProfilePicUrl);
     }
 
 

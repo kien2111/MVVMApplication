@@ -4,6 +4,8 @@ import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.ActivityBuilder;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.AppModule;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.NetModule;
+import com.mvvm.kien2111.mvvmapplication.dagger.module.ServiceBuilder;
+
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
@@ -18,6 +20,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {AndroidSupportInjectionModule.class,
         ActivityBuilder.class,
         AppModule.class,
+        ServiceBuilder.class,
         NetModule.class})
 public interface AppComponent {
     @Component.Builder
