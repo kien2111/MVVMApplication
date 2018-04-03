@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.dagger.module.FragmentManageUserBuilder_BinAllUserFragment;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentAdminManageuserUngradeuserBinding;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AdapterListAllUser;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -29,7 +33,10 @@ public class UngradeUserFragment extends BaseFragment<UngradeUserViewModel,Fragm
     protected UngradeUserViewModel createViewModel() {
         return ViewModelProviders.of(this,viewModelFactory).get(UngradeUserViewModel.class);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseMessage message){
 
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_admin_manageuser_ungradeuser;
@@ -45,7 +52,7 @@ public class UngradeUserFragment extends BaseFragment<UngradeUserViewModel,Fragm
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        ArrayList<String> listUser = new ArrayList<>();
+       /* ArrayList<String> listUser = new ArrayList<>();
         listUser.add("Khanh");
         listUser.add("Ninh");
         listUser.add("Khai");
@@ -56,7 +63,7 @@ public class UngradeUserFragment extends BaseFragment<UngradeUserViewModel,Fragm
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mFragmentBinding.rcUngradeUsermanage.setLayoutManager(mLayoutManager);
         mFragmentBinding.rcUngradeUsermanage.setItemAnimator(new DefaultItemAnimator());
-        mFragmentBinding.rcUngradeUsermanage.setAdapter(adapterListAllUser);
+        mFragmentBinding.rcUngradeUsermanage.setAdapter(adapterListAllUser);*/
         return  view;
     }
 }
