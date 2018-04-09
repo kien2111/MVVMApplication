@@ -7,6 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="RattingBarSetting" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:isIndicator">false</item>
+        <item name="android:minHeight">9dp</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:maxHeight">50dp</item>
+    </style>
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!-- Gets rid of the search icon -->
         <item name="searchIcon">@drawable/ic_search_white_24dp</item>

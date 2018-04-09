@@ -13,12 +13,9 @@ import static org.junit.Assert.*;
  */
 public class SplashActivityUnitTest {
     @Test
-    public void testObservable(){
-        Observable.empty()
-                .delay(15000, TimeUnit.MILLISECONDS)
-                .test()
-                .awaitDone(15000, TimeUnit.MILLISECONDS)
-                .assertComplete();
+    public void testString(){
+        String test = " test";
+        assertEquals(0,test.indexOf(" "));
     }
 
 }

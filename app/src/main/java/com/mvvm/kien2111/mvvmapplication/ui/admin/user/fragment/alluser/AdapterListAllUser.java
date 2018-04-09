@@ -64,8 +64,8 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
         {
         }
         else if(holder instanceof ViewHolder){
-            ((ViewHolder) holder).tv_personname.setText(""+listUser.get(position-1).getUsername().toString());
-            ((ViewHolder) holder).tv_email.setText(""+listUser.get(position-1).getId());
+            ((ViewHolder) holder).tv_personname.setText(""+listUser.get(position-1).getUserName().toString());
+            ((ViewHolder) holder).tv_email.setText(""+listUser.get(position-1).getUserId());
         }
     }
 
@@ -83,7 +83,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return String.valueOf(listUser.get(id).getId());
+        return String.valueOf(listUser.get(id).getUserId());
     }
 
     // allows clicks events to be caught

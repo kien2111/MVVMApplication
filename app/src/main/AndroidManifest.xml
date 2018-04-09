@@ -43,7 +43,7 @@
         <activity android:name=".ui.admin.user.ManageUserActivity"/>
         <activity android:name=".ui.admin.statistical.AdminStatisticalActivity"/>
         <activity android:name=".ui.admin.profile.AdminManageProfileActivity"/>
-
+        <activity android:name=".ui.listappointment.ListAppointmentActivity"/>
     </application>
 
 </manifest>

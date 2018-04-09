@@ -11,17 +11,19 @@ import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalVi
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.historyappointment.HistoryAppointmentViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointment.OnProgressAppointmentViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate.ListRateViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.highrate.HighRateViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.notification.NotificationViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserViewModel;
 
@@ -63,18 +65,8 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(NotificationViewModel.class)
-    abstract ViewModel bindNotificationViewModel(NotificationViewModel notificationViewModel);
-
-    @Binds
-    @IntoMap
     @ViewModelKey(SearchViewModel.class)
     abstract ViewModel bindSearchViewModel(SearchViewModel searchViewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(FavouriteProfileViewModel.class)
-    abstract ViewModel bindFavouriteProfileViewModel(FavouriteProfileViewModel favouriteProfileViewModel);
 
     @Binds
     @IntoMap
@@ -111,10 +103,6 @@ public abstract class ViewModelModule {
     @ViewModelKey(CategoryViewModel.class)
     abstract ViewModel bindCatogoryViewModel(CategoryViewModel categoryViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(HighRateViewModel.class)
-    abstract ViewModel bindHighRateViewModel(HighRateViewModel categoryViewModel);
 
     @Binds
     @IntoMap
@@ -126,6 +114,30 @@ public abstract class ViewModelModule {
     @ViewModelKey(DetailProfileViewModel.class)
     abstract ViewModel bindDetailProfileViewModel(DetailProfileViewModel detailProfileViewModel);
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(ListRateViewModel.class)
+    abstract ViewModel bindListRateViewModel(ListRateViewModel listRateViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AboutViewModel.class)
+    abstract ViewModel bindAboutViewModel(AboutViewModel aboutViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ListAppointmentViewModel.class)
+    abstract ViewModel bindListAppointmentViewModel(ListAppointmentViewModel listAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OnProgressAppointmentViewModel.class)
+    abstract ViewModel bindOnProgressAppointmentViewModel(OnProgressAppointmentViewModel onProgressAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HistoryAppointmentViewModel.class)
+    abstract ViewModel bindHistoryAppointmentViewModel(HistoryAppointmentViewModel historyAppointmentViewModel);
 
     @Binds
     @Singleton

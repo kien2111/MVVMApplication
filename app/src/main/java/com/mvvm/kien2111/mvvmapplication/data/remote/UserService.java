@@ -38,4 +38,7 @@ public interface UserService {
     @GET("/Categories/GetAllCategories")
     Single<List<Category>> getListCategory();
 
+    @GET("/Users/Test")
+    Single<Category> getTest();
+
 }

@@ -5,8 +5,18 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
@@ -14,8 +24,9 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityUniversalBinding;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
-
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -31,6 +42,7 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
     @Inject
     NavigationController navigationController;
 
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected int getLayoutRes() {
@@ -57,27 +69,87 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         if(savedInstanceState==null){
             navigationController.navigateToFeed();
         }
-
+        setupToolbar();
         setupNavigationBottomBar();
+        //setupTest();
+    }
+
+    public void onClickViewAppointment(View v){
+        Intent intent = new Intent(this, ListAppointmentActivity.class);
+        startActivity(intent);
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(mActivityBinding.toolbar);
+        drawerToggle = new ActionBarDrawerToggle(this,mActivityBinding.drawerlayout,mActivityBinding.toolbar,R.string.drawer_open,R.string.drawer_close);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerToggle.syncState();
+        drawerToggle.setToolbarNavigationClickListener(v -> {
+            onBackPressed();
+        });
+        /*mActivityBinding.toolbar.setNavigationOnClickListener(v -> {
+            if(getSupportFragmentManager().getBackStackEntryCount()>1){
+                onBackPressed();
+            }else{
+                drawerToggle.syncState();
+                mActivityBinding.drawerlayout.addDrawerListener(drawerToggle);
+            }
+        });*/
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    private void setupTest() {
+        mViewModel.getResourceLiveData().observe(this,categoryResource -> {
+            switch (categoryResource.status){
+                case ERROR:showErrorDialog("Error",categoryResource.getMessage());
+            }
+        });
+        mViewModel.getMutableLiveData().setValue(null);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(drawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        //Toast.makeText(this,"shit",Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
+
+    public ActionBarDrawerToggle getDrawerToggle() {
+        return drawerToggle;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
     }
 
     private void setupNavigationBottomBar() {
-        mActivityBinding.bnve.enableAnimation(false);
-        mActivityBinding.bnve.enableItemShiftingMode(false);
-        mActivityBinding.bnve.enableShiftingMode(false);
         mActivityBinding.bnve.setOnNavigationItemSelectedListener(menuItem->{
             switch (menuItem.getItemId()){
-                case R.id.action_home:navigationController.navigateToFeed();return true;
-                case R.id.action_favourite:navigationController.navigateToFavouriteProfile();return true;
-                case R.id.action_notification:navigationController.navigateToNotification();return true;
+                case R.id.action_home:navigationController.navigateToFeed(); return true;
                 case R.id.action_search:navigationController.navigateToSearch();return true;
                 case R.id.action_setting:navigationController.navigateToUser();return true;
             }
             return false;
         });
     }
-
-
-
 
 }

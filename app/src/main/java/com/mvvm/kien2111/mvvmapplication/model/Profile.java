@@ -1,5 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -10,7 +12,7 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
  * Created by WhoAmI on 17/03/2018.
  */
 
-public class Profile {
+public class Profile implements Parcelable{
     @NonNull
     @Expose
     @SerializedName("idprofile")
@@ -49,6 +51,29 @@ public class Profile {
     @Expose
     @SerializedName("summary")
     private String summary;
+
+    protected Profile(Parcel in) {
+        idprofile = in.readString();
+        career_objective = in.readString();
+        salary_expected_to = in.readDouble();
+        salary_expected_from = in.readDouble();
+        experienced_description = in.readString();
+        attachment_resume_url = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        summary = in.readString();
+    }
+    public Profile(){}
+    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
+        @Override
+        public Profile createFromParcel(Parcel in) {
+            return new Profile(in);
+        }
+
+        @Override
+        public Profile[] newArray(int size) {
+            return new Profile[size];
+        }
+    };
 
     @NonNull
     public String getIdprofile() {
@@ -129,5 +154,22 @@ public class Profile {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(idprofile);
+        dest.writeString(career_objective);
+        dest.writeDouble(salary_expected_to);
+        dest.writeDouble(salary_expected_from);
+        dest.writeString(experienced_description);
+        dest.writeString(attachment_resume_url);
+        dest.writeParcelable(category, flags);
+        dest.writeString(summary);
     }
 }

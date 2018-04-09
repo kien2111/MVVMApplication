@@ -8,13 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="FeedAppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorPrimary">@color/bottombar_icon</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
     <style name="FeedTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/TabLayoutTitleFeedFragment</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
         <item name="tabIndicatorColor">@android:color/white</item>
+    </style>
+    <style name="DetailProfileTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabLayoutTitleDetailProfileFragment</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+    </style>
+    <style name="TabLayoutTitleDetailProfileFragment" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/detail_profile_tablayout_title_12sp</item>
     </style>
     <style name="TabLayoutTitleFeedFragment" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
@@ -33,6 +42,7 @@
     <style name="RattingBarSetting" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:isIndicator">false</item>
         <item name="android:minHeight">9dp</item>
+
         <item name="android:maxHeight">50dp</item>
     </style>
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
@@ -44,5 +54,22 @@
         <item name="searchHintIcon">@null</item>
         <!-- The hint text that appears when the user has not typed anything -->
         <item name="android:queryHint">@string/title_search_view</item>
+    </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#00bcd4</item>
+        <item name="colorControlActivated">#4caf50</item>
+    </style>
+    <style name="RaisedButtonColorPrimary" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimaryBlueGrey</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+    <style name="Widget.MyApp.Toolbar.Solid" parent="Widget.AppCompat.ActionBar">
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+        <item name="android:colorControlNormal" tools:ignore="NewApi">@android:color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 </resources>

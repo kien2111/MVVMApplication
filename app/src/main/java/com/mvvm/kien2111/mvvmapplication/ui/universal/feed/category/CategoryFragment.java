@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Collections;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 /**
  * Created by WhoAmI on 05/03/2018.
@@ -53,20 +54,22 @@ public class CategoryFragment extends BaseFragment<CategoryViewModel,FragmentCat
         return BR.vm;
     }
 
+    @Nullable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         setupCategoryAdapter();
+        return view;
     }
-
 
     @Inject
     CategoryAdapter categoryAdapter;
     @Inject
-    GridLayoutManager gridLayoutManager;
+    Provider<GridLayoutManager> gridLayoutManager;
     private void setupCategoryAdapter() {
         mFragmentBinding.recycleViewCategories.setAdapter(categoryAdapter);
-        mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager);
+        //if(mFragmentBinding.recycleViewCategories.getLayoutManager()==null)
+            mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager.get());
         mViewModel.getResourceCategoriesLiveData().observe(this,listResource -> {
             switch (listResource.status){
                 case SUCCESS:

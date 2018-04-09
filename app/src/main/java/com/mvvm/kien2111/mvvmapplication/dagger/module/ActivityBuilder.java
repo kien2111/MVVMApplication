@@ -10,6 +10,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalAc
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserModule;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentModule;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginModule;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpActivity;
@@ -58,6 +60,10 @@ public abstract class ActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector
     abstract SplashActivity bindSplashActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = {ListAppointmentModule.class,ChildListAppointmentBuilder.class})
+    abstract ListAppointmentActivity bindListAppointmentActivity();
 
 
 }

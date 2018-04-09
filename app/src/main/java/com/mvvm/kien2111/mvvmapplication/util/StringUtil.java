@@ -1,6 +1,8 @@
 package com.mvvm.kien2111.mvvmapplication.util;
 
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
@@ -67,4 +69,5 @@ public class StringUtil {
     public static String joinStringoString(List<String> stringlist) {
         return StringUtils.join(stringlist.toArray(),",");
     }
+
 }

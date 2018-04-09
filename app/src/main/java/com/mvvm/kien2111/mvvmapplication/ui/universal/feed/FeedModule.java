@@ -1,5 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.feed;
 
+import com.mvvm.kien2111.mvvmapplication.ui.universal.common.ViewPagerAdapter;
+
 import dagger.Module;
 import dagger.Provides;
 

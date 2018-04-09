@@ -2,13 +2,17 @@ package com.mvvm.kien2111.mvvmapplication.data;
 
 
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
+import com.mvvm.kien2111.mvvmapplication.exception.ApiException;
+import com.mvvm.kien2111.mvvmapplication.model.ErrorResponse;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
@@ -19,6 +23,10 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -58,6 +66,18 @@ public class UserRepository {
     }
     public LoginResponse getUserData(){
         return preferenceHelper.getUserData();
+    }
+
+    public Single<Resource<Category>> getCategory(){
+        return userService.getTest()
+                .map(new Function<Category, Resource<Category>>() {
+                    @Override
+                    public Resource<Category> apply(Category category) throws Exception {
+                        return Resource.success(category);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

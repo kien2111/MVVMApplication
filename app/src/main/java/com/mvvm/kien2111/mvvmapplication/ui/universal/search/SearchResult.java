@@ -27,10 +27,19 @@ public class SearchResult {
 
     public List<ExpandableChildItem> mergeList(){
         List<ExpandableChildItem> mergelist = new ArrayList<>();
-        mergelist.add(new HeaderItem("Categories"));
-        mergelist.addAll(categoryItemList);
-        mergelist.add(new HeaderItem("Profiles"));
-        mergelist.addAll(profileItemList);
+        if(categoryItemList.size()==0 && profileItemList.size()==0){
+
+        }else{
+            if(categoryItemList.size()!=0){
+                mergelist.add(new HeaderItem("Categories"));
+                mergelist.addAll(categoryItemList);
+            }
+            if(profileItemList.size()!=0){
+                mergelist.add(new HeaderItem("Profiles"));
+                mergelist.addAll(profileItemList);
+            }
+        }
+
         return mergelist;
     }
 }

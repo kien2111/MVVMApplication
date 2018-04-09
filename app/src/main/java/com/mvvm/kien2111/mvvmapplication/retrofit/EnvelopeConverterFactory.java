@@ -35,7 +35,11 @@ public class EnvelopeConverterFactory extends Converter.Factory{
         public T convert(ResponseBody value) throws IOException {
             Envelope<T> envelope = delegate.convert(value);
             if(envelope.getData()==null){
-                throw new ApiException(envelope.getErrorMessage());
+                if(envelope.getErrorMessage()==null){
+                    throw new IllegalArgumentException("Don't know what happened");
+                }else{
+                    throw ApiException.httpError(null,null,null);
+                }
             }
             return envelope.getData();
         }

@@ -11,6 +11,7 @@ import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentModel;
 
 import java.io.IOException;
 
@@ -35,6 +36,9 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory {
         }
         if(Approve_Publish.class == rawtype){
             return (TypeAdapter<T>)new Approve_PublishTypeAdapter();
+        }
+        if(AppointmentModel.StatusAppointment.class == rawtype){
+            return (TypeAdapter<T>)new StatusAppointmentAdapter();
         }
         return null;
     }
@@ -78,6 +82,18 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory {
         @Override
         public Priority read(JsonReader in) throws IOException {
             return Priority.mapPriority(in.nextInt());
+        }
+    }
+    static class StatusAppointmentAdapter extends TypeAdapter<AppointmentModel.StatusAppointment>{
+
+        @Override
+        public void write(JsonWriter out, AppointmentModel.StatusAppointment value) throws IOException {
+            out.value(value.getType());
+        }
+
+        @Override
+        public AppointmentModel.StatusAppointment read(JsonReader in) throws IOException {
+            return AppointmentModel.StatusAppointment.mapType(in.nextInt());
         }
     }
 }

@@ -5,12 +5,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCate
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileModule;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileFragment;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedModule;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.notification.NotificationFragment;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.notification.NotificationModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserFragment;
@@ -34,22 +30,16 @@ public abstract class FragmentBuilder {
     abstract SearchFragment bindSearchFragment();
 
     @PerFragment
-    @ContributesAndroidInjector(modules = {FavouriteProfileModule.class})
-    abstract FavouriteProfileFragment bindFavouriteProfileFragment();
-
-    @PerFragment
-    @ContributesAndroidInjector(modules = {NotificationModule.class})
-    abstract NotificationFragment bindNotificationFragment();
-
-    @PerFragment
     @ContributesAndroidInjector(modules = {FeedModule.class,ChildFeedFragmentBuilder.class})
     abstract FeedFragment bindFeedFragment();
 
     @PerFragment
-    @ContributesAndroidInjector(modules = {DetailCategoryModule.class,ChildDetailProfileCategoryBuilder.class})
+    @ContributesAndroidInjector(modules = {DetailCategoryModule.class})
     abstract DetailCategoryFragment bindDetailCategoryFragment();
 
     @PerFragment
-    @ContributesAndroidInjector(modules = {DetailProfileModule.class})
+    @ContributesAndroidInjector(modules = {DetailProfileModule.class,ChildDetailProfileBuilder.class})
     abstract DetailProfileFragment bindDetailProfileFragment();
+
+
 }

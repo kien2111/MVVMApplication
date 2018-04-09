@@ -16,7 +16,8 @@
     <string name="label">MVVMApplication</string>
     <string name="prompt_username">Username</string>
 
-
+    <string name="default_point">1.0</string>
+    <string name="default_name">Default Name</string>
 
     <string name="admin_add_newuser">Add new Account</string>
     <string name="label_administrator">Admin</string>
@@ -77,6 +78,8 @@
         <item>By year</item>
     </string-array>
 
+    <string name="default_email">email@gmail.com</string>
+    <string name="default_phonenumber">088960938</string>
 
     text user
     <string name="user_text_invite_friend_title">Mời bạn bè</string>
@@ -88,5 +91,44 @@
     rechange money
     <string name="user_text_title_rechange">Deposit funds</string>
     confirm appoinment
-    <string name="user_text_title_confirm_appointment">Appointment creating</string>
+    <string name="appointment_booking">Đặt lịch hẹn</string>
+    <string name="title_no_data_found">Không tìm thấy thông tin yêu cầu</string>
+    <string name="rate_now">Đánh giá</string>
+    <string name="book_appointment">Đặt lịch hẹn</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</string>
+    <string name="summary">Giới thiệu</string>
+    <string name="experienced_description">Kinh nghiệm</string>
+    <string name="salary_expected">Mức lương mong muốn</string>
+    <string name="read_more">xem thêm</string>
+    <string name="read_less">thu gọn</string>
+    <string name="hint_name_appointment">Tên cuộc hẹn</string>
+    <string name="decline">Hủy</string>
+    <string name="accept">Đồng ý</string>
+    <string name="appointment_duration">Thời lượng cuộc hẹn</string>
+    <string name="note">Ghi chú</string>
+    <string name="example_date">26/8/2018</string>
+    <string name="example_time">12:00 PM</string>
+    <string name="tittle_deposit_money_appointment">Số tiền đặt cọc cho cuộc hẹn</string>
+    <string name="dummy_money">200.000 đ</string>
+    <string name="employer">Doanh nghiệp</string>
+    <string name="freelancer">Người làm việc tự do</string>
+    <string name="onprogressappointment">Đang chờ xử lý</string>
+    <string name="historyappointment">Lịch sử cuộc hẹn</string>
+    <string name="Time">Time :</string>
+    <string name="Date">Ngày :</string>
+    <string name="fail">Thất bại</string>
+    <string name="status">Trạng thái</string>
+    <string name="time">Thời gian</string>
+    <string name="deposit_money">Tiền đặt cọc</string>
+    <string name="contact_info">Thông tin liên lạc</string>
+    <string name="make_a_call">Gọi điện</string>
+    <string name="view_detail_profile">Thông tin tài khoản</string>
+    <string name="deposit_fund">Nạp tiền</string>
+    <string name="deposit_fund_subtitle">Nạp tiền vào ví tài khoản cá nhân</string>
+    <string name="view_appointment">Cuộc hẹn của tôi</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Open</string>
+    <string name="back">go back</string>
+    <string name="share_image_profile">Share image profile</string>
 </resources>

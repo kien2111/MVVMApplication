@@ -1,6 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 
-import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.ViewPagerAdapter;
+import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,8 +11,12 @@ import dagger.Provides;
 @Module
 public class DetailCategoryModule {
     @Provides
-    ViewPagerAdapter provideViewPagerAdapter(DetailCategoryFragment detailCategoryFragment){
-        return new ViewPagerAdapter(detailCategoryFragment.getChildFragmentManager());
+    FragmentBindingComponent provideFragmentComponent(DetailCategoryFragment detailCategoryFragment){
+        return new FragmentBindingComponent(detailCategoryFragment);
     }
 
+    @Provides
+    ProfileAdapter provideProfileAdapter(FragmentBindingComponent fragmentBindingComponent, DetailCategoryFragment detailCategoryFragment){
+        return new ProfileAdapter(fragmentBindingComponent,detailCategoryFragment);
+    }
 }

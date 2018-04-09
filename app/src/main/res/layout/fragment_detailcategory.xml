@@ -4,46 +4,27 @@
     <data>
         <import type="android.view.View"/>
         <variable
+            name="LoadingMoreState"
+            type="Boolean"/>
+        <variable
             name="vm"
             type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel"/>
     </data>
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar_layout"
+       <!-- <ProgressBar
+            android:visibility="@{vm.showProgressBar?View.VISIBLE:View.GONE}"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/profile_adapter_recycleview"
+            app:layoutManager="LinearLayoutManager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/FeedAppBarTheme">
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    app:navigationIcon="@drawable/ic_arrow_back_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_height="wrap_content">
 
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <android.support.design.widget.TabLayout
-                style="@style/FeedTabLayout"
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bottombar_icon"
-                app:tabMode="scrollable"
-                app:tabTextColor="@android:color/white"/>
-        </android.support.v4.view.ViewPager>
-    </android.support.design.widget.CoordinatorLayout>
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </layout>

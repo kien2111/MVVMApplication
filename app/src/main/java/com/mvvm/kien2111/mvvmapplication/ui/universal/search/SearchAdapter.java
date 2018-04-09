@@ -13,6 +13,7 @@ import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseAdapter;
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 import com.mvvm.kien2111.mvvmapplication.databinding.ChildCategoryItemExpandableBinding;
+import com.mvvm.kien2111.mvvmapplication.databinding.ChildNodataItemExpandableBinding;
 import com.mvvm.kien2111.mvvmapplication.databinding.ChildProfileItemExpandableBinding;
 import com.mvvm.kien2111.mvvmapplication.databinding.HeaderItemExpandableBinding;
 
@@ -29,16 +30,15 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final static int CATEGORY_VIEWTYPE = 1;
+    private final static int CATEGORY_VIEWTYPE = 3;
     private final static int PROFILE_VIEWTYPE = 2;
-    private final static int HEADER_VIEWTYPE = 0;
+    private final static int HEADER_VIEWTYPE = 1;
+    private final static int NODATA_VIEWTYPE = 0;
     private final DataBindingComponent dataBindingComponent;
     private List<ExpandableChildItem> arrayListItem;
     private int dataVersion = 0;
     public SearchAdapter(FragmentBindingComponent fragmentBindingComponent){
         arrayListItem = new ArrayList<>();
-        arrayListItem.add(new HeaderItem("Categories"));
-        arrayListItem.add(new HeaderItem("Profiles"));
         this.dataBindingComponent = fragmentBindingComponent;
     }
     @Override
@@ -47,8 +47,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return HEADER_VIEWTYPE;
         }else if(arrayListItem.get(position) instanceof CategoryItem){
             return CATEGORY_VIEWTYPE;
-        }else{
+        }else if(arrayListItem.get(position) instanceof ProfileItem){
             return PROFILE_VIEWTYPE;
+        }else{
+            return NODATA_VIEWTYPE;
         }
 
     }
@@ -59,8 +61,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case HEADER_VIEWTYPE:return new HeaderViewHolder(createHeaderBinding(parent));
             case CATEGORY_VIEWTYPE:return new CategoryItemViewHolder(createCategoryBinding(parent));
             case PROFILE_VIEWTYPE:return new ProfileItemViewHolder(createProfileBinding(parent));
+            default:return new NoDataItemViewHolder(createNoDataBinding(parent));
         }
-        return null;
+    }
+
+    private ChildNodataItemExpandableBinding createNoDataBinding(ViewGroup parent) {
+        ChildNodataItemExpandableBinding binding =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_nodata_item_expandable,parent,false,dataBindingComponent);
+        return binding;
     }
 
     private ChildProfileItemExpandableBinding createProfileBinding(ViewGroup parent) {
@@ -90,9 +98,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }else if(this.arrayListItem.get(position) instanceof CategoryItem){
             ((CategoryItemViewHolder)holder).binding.setCategoryitem(((CategoryItem)arrayListItem.get(position)));
             ((CategoryItemViewHolder) holder).binding.executePendingBindings();
-        }else{
+        }else if(this.arrayListItem.get(position) instanceof ProfileItem){
             ((ProfileItemViewHolder)holder).binding.setProfileitem(((ProfileItem)arrayListItem.get(position)));
             ((ProfileItemViewHolder) holder).binding.executePendingBindings();
+        }else{
+            ((NoDataItemViewHolder)holder).binding.executePendingBindings();
         }
 
     }
@@ -172,23 +182,28 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder{
         private HeaderItemExpandableBinding binding;
-        public HeaderViewHolder(HeaderItemExpandableBinding binding) {
+        HeaderViewHolder(HeaderItemExpandableBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
     public static class CategoryItemViewHolder extends RecyclerView.ViewHolder{
         private ChildCategoryItemExpandableBinding binding;
-
-        public CategoryItemViewHolder(ChildCategoryItemExpandableBinding binding) {
+        CategoryItemViewHolder(ChildCategoryItemExpandableBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
     }
     public static class ProfileItemViewHolder extends RecyclerView.ViewHolder{
         private ChildProfileItemExpandableBinding binding;
-
-        public ProfileItemViewHolder(ChildProfileItemExpandableBinding binding) {
+        ProfileItemViewHolder(ChildProfileItemExpandableBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+    public static class NoDataItemViewHolder extends RecyclerView.ViewHolder{
+        private ChildNodataItemExpandableBinding binding;
+        NoDataItemViewHolder(ChildNodataItemExpandableBinding binding){
             super(binding.getRoot());
             this.binding = binding;
         }

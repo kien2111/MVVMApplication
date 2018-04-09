@@ -61,7 +61,7 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
             }
             lstData = updatelist;
             notifyDataSetChanged();
-        }else if(updatelist==null){
+        }else if(updatelist==null || updatelist.size()==0){
             int oldsize = lstData.size();
             lstData = null;
             notifyItemRangeRemoved(0,oldsize);

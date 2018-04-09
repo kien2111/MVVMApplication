@@ -18,9 +18,7 @@ import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentAdminManageuserAlluserBinding;
-import com.mvvm.kien2111.mvvmapplication.databinding.FragmentFavouriteprofileBinding;
 import com.mvvm.kien2111.mvvmapplication.model.User;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.favouriteprofile.FavouriteProfileViewModel;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -60,7 +58,7 @@ public class AllUserFragment extends BaseFragment<AllUserViewModel,FragmentAdmin
         mViewModel.getResourceMutableLiveData().observe(this,listResource -> {
             switch (listResource.status){
                 case SUCCESS:
-                    Log.d("adadadad",listResource.getData().get(0).getUsername());
+                    Log.d("adadadad",listResource.getData().get(0).getUserName());
 
                     AdapterListAllUser adapterListAllUser = new AdapterListAllUser(getContext(),listResource.getData());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

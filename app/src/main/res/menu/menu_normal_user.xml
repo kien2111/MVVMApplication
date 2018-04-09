@@ -14,18 +14,6 @@
         android:title="@string/search"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_notification"
-        android:enabled="true"
-        android:icon="@drawable/ic_notifications_24dp"
-        android:title="@string/notification"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_favourite"
-        android:enabled="true"
-        android:icon="@drawable/ic_favorite_24dp"
-        android:title="@string/favourite"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_setting"
         android:enabled="true"
         android:icon="@drawable/ic_settings_24dp"

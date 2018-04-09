@@ -13,8 +13,25 @@ public class Resource<T> {
     @NonNull
     public final Status status;
 
+    @NonNull
+    public Status getStatus() {
+        return status;
+    }
+
+    @Nullable
+    public String getMessage() {
+        return message;
+    }
+
+    @Nullable
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
     @Nullable
     public final String message;
+    @Nullable
+    public Throwable throwable;
 
     @Nullable
     public T getData() {
@@ -30,7 +47,11 @@ public class Resource<T> {
         this.message = message;
     }
     public Resource(@NonNull Status status,String message,int responseCode){this.status = status;this.message = message;}
-
+    public Resource(@NonNull Status status,String message,@Nullable Throwable throwable){
+        this.status = status;
+        this.throwable = throwable;
+        this.message = message;
+    }
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(SUCCESS, data, null);
     }
@@ -41,7 +62,9 @@ public class Resource<T> {
     public static <T> Resource<T> error(String msg,@Nullable T data) {
         return new Resource<>(ERROR,data,null);
     }
-
+    public static <T> Resource<T> error(String msg,Throwable cause){
+        return new Resource<>(ERROR,msg,cause);
+    }
     public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(LOADING, data, null);
     }

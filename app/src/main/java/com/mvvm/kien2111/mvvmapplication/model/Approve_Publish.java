@@ -5,7 +5,7 @@ package com.mvvm.kien2111.mvvmapplication.model;
  */
 
 public enum  Approve_Publish {
-    ON_PROGRESS(0),DECLINE(1),ACCEPT(2),CONFLICT(3);
+    ON_PROGRESS(0),DECLINE(4),ACCEPT(1),CONFLICT(5),ADMIN_BLOCKED(2);
     final int type;
     Approve_Publish(int type){
         this.type = type;

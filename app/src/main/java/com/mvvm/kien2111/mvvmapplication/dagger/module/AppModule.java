@@ -7,6 +7,7 @@ import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.CategoryDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.ProfileDao;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.RateDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 
 import javax.inject.Singleton;
@@ -41,4 +42,8 @@ public class AppModule {
     @Provides
     @Singleton
     ProfileDao provideProfileDao(RoomDb roomDb){return roomDb.profileDao();}
+
+    @Provides
+    @Singleton
+    RateDao provideRateDao(RoomDb roomDb){return roomDb.rateDao();}
 }

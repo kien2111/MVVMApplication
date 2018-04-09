@@ -8,6 +8,7 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.model.Approve_Publish;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
 
 import java.util.Collections;
@@ -28,8 +29,19 @@ public class AppConverter {
         return StringUtil.splitToStringList(data);
     }
     @TypeConverter
-    public static String StringListToString(List<String> ints) {
-        return StringUtil.joinStringoString(ints);
+    public static List<Integer> integerToList(String data){
+        if(data==null){
+            return Collections.emptyList();
+        }
+        return StringUtil.splitToIntList(data);
+    }
+    @TypeConverter
+    public static String IntListToString(List<Integer> ints){
+        return StringUtil.joinIntoString(ints);
+    }
+    @TypeConverter
+    public static String StringListToString(List<String> strings) {
+        return StringUtil.joinStringoString(strings);
     }
     @TypeConverter
     public static Gender intToGender(int data){
@@ -79,5 +91,13 @@ public class AppConverter {
     @TypeConverter
     public static Category StringToCategory(String json){
         return new Gson().fromJson(json,Category.class);
+    }
+    @TypeConverter
+    public static User stringToUser(String json){
+        return new Gson().fromJson(json,User.class);
+    }
+    @TypeConverter
+    public static String userToString(User user){
+        return new Gson().toJson(user);
     }
 }

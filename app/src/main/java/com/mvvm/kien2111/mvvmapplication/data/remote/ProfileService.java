@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.data.remote;
 
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.highrate.HighRateProfileWrapper;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.ProfileWrapper;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.ProfileWrapper;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchResult;
 
 import io.reactivex.Flowable;
@@ -14,11 +15,11 @@ import retrofit2.http.Query;
  */
 
 public interface ProfileService {
-    @GET("/Profiles/gethighrateprofile")
-    Call<HighRateProfileWrapper> getNextPageHighRateProfiles(@Query("idcategory") String id
+    @GET("/Profiles/getprofile")
+    Flowable<ProfileWrapper> getNextPageProfiles(@Query("idcategory") String id
             , @Query("page") int page);
-    @GET("/Profiles/gethighrateprofile")
-    Single<HighRateProfileWrapper> getHighRateProfiles(@Query("idcategory") String id);
+    @GET("/Profiles/getprofile")
+    Single<ProfileWrapper> getProfiles(@Query("idcategory") String id);
 
     @GET("/Profiles/search")
     Flowable<SearchResult> getSearchResult(@Query("query") String query);

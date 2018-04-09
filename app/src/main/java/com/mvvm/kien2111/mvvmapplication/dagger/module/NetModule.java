@@ -18,6 +18,7 @@ import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.RateService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnumTypeAdapterFactory;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
@@ -194,5 +195,10 @@ public class NetModule {
     @Singleton
     ProfileService provideProfileService(@Named("non_protected_api")Retrofit retrofit){
         return retrofit.create(ProfileService.class);
+    }
+    @Provides
+    @Singleton
+    RateService provideRateService(@Named("protected_api")Retrofit retrofit){
+        return retrofit.create(RateService.class);
     }
 }

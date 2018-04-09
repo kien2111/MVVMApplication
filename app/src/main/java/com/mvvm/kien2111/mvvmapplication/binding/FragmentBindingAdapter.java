@@ -7,19 +7,30 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.util.ScreenUtil;
 
 import java.security.MessageDigest;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Created by WhoAmI on 11/02/2018.
@@ -36,9 +47,17 @@ public class FragmentBindingAdapter {
         Glide.with(fragment)
                 .load(BuildConfig.IMG_URL+url)
                 .apply(new RequestOptions()
-                       .fitCenter()
                 .error(error).placeholder(defaultImg).dontAnimate())
                 .into(imageView);
+    }
+    @BindingAdapter(value={"imageCircleUrl","defaultImg","errorImg"},requireAll = false)
+    public void setCircleImageUrl(ImageView circleImage,String url,Drawable defaultImg,Drawable error){
+        Glide.with(fragment)
+                .load(BuildConfig.IMG_URL+url)
+                .apply(new RequestOptions()
+                        .fitCenter()
+                        .error(error).placeholder(defaultImg).dontAnimate())
+                .into(circleImage);
     }
     private static class MyBitmapTransformation extends BitmapTransformation{
 

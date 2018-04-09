@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="vm"
+            type="com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointment.OnProgressAppointmentViewModel"/>
+    </data>
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/employer"
+                android:textColor="@android:color/black"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:background="#AFAFAF"/>
+            <ExpandableListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ExpandableListView>
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/freelancer"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:background="#AFAFAF"/>
+            <ExpandableListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ExpandableListView>
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="nodata"
+            type="Object">
+        </variable>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="#26aaaaaa"
+        android:layout_height="match_parent">
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/nodataavailable"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+        <TextView
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:singleLine="false"
+            android:textColor="#af000000"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="@string/title_no_data_found"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

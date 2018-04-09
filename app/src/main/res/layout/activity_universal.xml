@@ -9,21 +9,223 @@
         </variable>
     </data>
     <RelativeLayout
+        android:background="@color/colorPrimaryBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <FrameLayout
-            android:layout_above="@+id/bnve"
-            android:id="@+id/container"
+        <android.support.v7.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-            android:id="@+id/bnve"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.MyApp.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            style="@style/Widget.MyApp.Toolbar.Solid" />
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawerlayout"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/white"
-            app:itemIconTint="@color/selector_bottombar_color"
-            app:itemTextColor="@color/selector_bottombar_color"
-            app:menu="@menu/menu_normal_user" />
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:layout_above="@+id/bnve"
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <android.support.design.widget.BottomNavigationView
+                    android:id="@+id/bnve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/white"
+                    app:menu="@menu/menu_normal_user" />
+            </RelativeLayout>
+            <android.support.design.widget.NavigationView
+                android:layout_width="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <!--Header-->
+                    <LinearLayout
+                        android:gravity="bottom"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:background="@color/navigationbackground"
+                        android:orientation="vertical"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_header_height">
+                        <ImageView
+                            android:id="@+id/imgavatar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/activity_vertical_margin"
+                            app:srcCompat="@mipmap/ic_launcher_round" />
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/activity_vertical_margin"
+                            android:text="Who Am I"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"
+                            android:id="@+id/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="yellowcode.books@gmail.com" />
+
+                    </LinearLayout>
+
+                    <!-- Item detail profile -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_item_height"
+                        android:layout_marginTop="3dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_account_circle_24dp" />
+                        <TextView
+                            android:textSize="14sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@string/view_detail_profile" />
+                    </LinearLayout>
+
+                    <!-- Item deposit -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_item_height"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+                        <ImageView
+                            android:contentDescription=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_credit_card_24dp" />
+
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@string/deposit_fund" />
+
+
+                    </LinearLayout>
+
+                    <!-- View appointment -->
+
+                    <LinearLayout
+                        android:onClick="onClickViewAppointment"
+                        android:id="@+id/view_appointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_item_height"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+                        <ImageView
+                            android:contentDescription=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_event_navigationdrawer_24dp" />
+
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@string/view_appointment" />
+
+
+                    </LinearLayout>
+
+                    <!-- Change password -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_item_height"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+                        <ImageView
+                            android:contentDescription=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_lock_24dp" />
+
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@string/change_password" />
+
+                    </LinearLayout>
+
+                    <!-- Log out -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/navigation_item_height"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
+                        <ImageView
+                            android:contentDescription=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_log_out_24dp" />
+
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@string/logout" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.design.widget.NavigationView>
+
+
+        </android.support.v4.widget.DrawerLayout>
+
     </RelativeLayout>
+
 </layout>

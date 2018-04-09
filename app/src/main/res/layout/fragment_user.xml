@@ -147,8 +147,7 @@
                     android:src="@drawable/ic_chevron_right_gray_24dp"
                     android:contentDescription="@string/description_settingimg"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"

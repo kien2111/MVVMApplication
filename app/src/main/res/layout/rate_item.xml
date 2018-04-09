@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="rateitem"
+            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:contentDescription="@{rateitem.user.userName}"
+                android:padding="10dp"
+                android:layout_weight="3"
+                app:defaultImg="@{@drawable/defaultimage}"
+                app:errorImg="@{@drawable/errorimg}"
+                app:imageUrl="@{rateitem.user.avatar}"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <LinearLayout
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="@{rateitem.user.realname}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RatingBar
+                    android:theme="@style/RatingBar"
+                    android:stepSize="0.01"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    style="?attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.mvvm.kien2111.mvvmapplication.ui.universal.common.ExpandTextView
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"
+                    android:text="@{rateitem.note,default=@string/lorem_ipsum}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <ImageView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_chevron_right_gray_24dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -26,6 +26,7 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.dagger.Injectable;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentSearchBinding;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.common.DividerItemDecoration;
 import com.mvvm.kien2111.mvvmapplication.util.RxBindingSearchView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +51,8 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
 
     @Inject
     SearchAdapter expandableListAdapter;
+    @Inject
+    DividerItemDecoration dividerItemDecoration;
 
     @Override
     protected SearchViewModel createViewModel() {
@@ -66,13 +69,14 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
-        setUpToolBar();
+        //setUpToolBar();
         setUpExpandableAdapter();
         return view;
     }
 
     private void setUpExpandableAdapter() {
         mFragmentBinding.expandableListview.setAdapter(expandableListAdapter);
+        mFragmentBinding.expandableListview.addItemDecoration(dividerItemDecoration);
         //expandableListAdapter.expandAll(mFragmentBinding.expandableListview);//expand all group
         mViewModel.getResourceSearchResultLiveData().observe(this,searchResultResource -> {
             if(searchResultResource==null){
@@ -89,9 +93,10 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
 
 
 
+
     private void setUpToolBar(){
-        AppCompatActivity activity = (BaseActivity)getActivity();
-        activity.setSupportActionBar(mFragmentBinding.toolbar);
+        //AppCompatActivity activity = (BaseActivity)getActivity();
+        //activity.setSupportActionBar(mFragmentBinding.toolbar);
         //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
@@ -105,8 +110,17 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
+    public void onResume() {
+        super.onResume();
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_search,menu);
+        menu.findItem(R.id.menu_toolbarsearch).setVisible(true);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         MenuItem mSearchmenuItem = menu.findItem(R.id.menu_toolbarsearch);
         SearchView searchView = (SearchView) mSearchmenuItem.getActionView();
@@ -118,18 +132,18 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
         searchView.setQueryHint("Search");
 
         disposable = RxBindingSearchView.fromSearchView(searchView)
-                            .debounce(1000, TimeUnit.MILLISECONDS)
-                            .distinctUntilChanged()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<String>() {
-                                @Override
-                                public void accept(String query) throws Exception {
-                                    mViewModel.setNewQuery(query);
-                                }
-                            });
-        super.onCreateOptionsMenu(menu,inflater);
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String query) throws Exception {
+                        mViewModel.setNewQuery(query);
+                    }
+                });
     }
+
     Disposable disposable;
 
     @Override

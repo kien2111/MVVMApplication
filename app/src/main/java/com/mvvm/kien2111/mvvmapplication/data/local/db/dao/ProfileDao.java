@@ -4,9 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.util.SparseIntArray;
-
-import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.HighRateProfileModel;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileNextPageResult;
 
 import java.util.Collections;
@@ -24,10 +22,10 @@ public abstract class ProfileDao {
     public abstract ProfileNextPageResult findProfileNextPageResult(String query);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(HighRateProfileModel... highRateProfileModels);
+    public abstract void insert(ProfileModel... profileModels);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(List<HighRateProfileModel> highRateProfileModelList);
+    public abstract void insert(List<ProfileModel> profileModelList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(ProfileNextPageResult result);
@@ -35,17 +33,17 @@ public abstract class ProfileDao {
     @Query("SELECT * FROM ProfileNextPageResult WHERE `query` = :query")
     public abstract Flowable<ProfileNextPageResult> findNextPageResultFlowable(String query);
 
-    public Flowable<List<HighRateProfileModel>> loadOrdered(List<String> idProfilelist){
-        return loadById(idProfilelist).map(new Function<List<HighRateProfileModel>, List<HighRateProfileModel>>() {
+    public Flowable<List<ProfileModel>> loadOrdered(List<String> idProfilelist){
+        return loadById(idProfilelist).map(new Function<List<ProfileModel>, List<ProfileModel>>() {
             @Override
-            public List<HighRateProfileModel> apply(List<HighRateProfileModel> highRateProfileModelList) throws Exception {
-                Collections.sort(highRateProfileModelList,(o1, o2) -> {
+            public List<ProfileModel> apply(List<ProfileModel> profileModelList) throws Exception {
+                Collections.sort(profileModelList,(o1, o2) -> {
                     return o1.getPriority().compareTo(o2.getPriority());
                 });
-                return highRateProfileModelList;
+                return profileModelList;
             }
         });
     }
-    @Query("SELECT * FROM HighRateProfileModel WHERE idprofile in (:idprofiles)")
-    protected abstract Flowable<List<HighRateProfileModel>> loadById(List<String> idprofiles);
+    @Query("SELECT * FROM ProfileModel WHERE idprofile in (:idprofiles)")
+    protected abstract Flowable<List<ProfileModel>> loadById(List<String> idprofiles);
 }

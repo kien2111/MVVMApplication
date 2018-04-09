@@ -13,7 +13,6 @@ import dagger.android.ContributesAndroidInjector;
 @PerChildFeedFragment
 @Module
 public abstract class ChildFeedFragmentBuilder {
-    @PerChildFeedFragment
     @ContributesAndroidInjector(modules = {CategoryModule.class})
     abstract CategoryFragment bindCategoryFragment();
 }
