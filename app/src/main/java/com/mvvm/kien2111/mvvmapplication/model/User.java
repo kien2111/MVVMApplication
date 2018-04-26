@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 public class User extends BaseObservable implements Parcelable {
-    public User(){}
 
     @Bindable
     public String getRealname() {
