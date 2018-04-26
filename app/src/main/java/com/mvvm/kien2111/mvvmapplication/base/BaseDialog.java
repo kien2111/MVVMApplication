@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+
+import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
 /**
  * Created by WhoAmI on 07/02/2018.
@@ -20,7 +23,7 @@ public abstract class
 BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
     protected BaseActivity mActivity;
     protected VB mDialogBinding;
-
+    protected View rootView;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -29,6 +32,7 @@ BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
             this.mActivity = baseActivity;
         }
     }
+    protected android.databinding.DataBindingComponent fragmentBindingComponent = new FragmentBindingComponent(this);
 
     @Override
     public void onDetach() {
@@ -37,13 +41,19 @@ BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
         super.onDetach();
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),getLayoutRes(),container,false,fragmentBindingComponent);
+        rootView = mDialogBinding.getRoot();
+        return rootView;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),getLayoutRes(),null,false);
-        dialog.setContentView(mDialogBinding.getRoot());
         return dialog;
     }
 

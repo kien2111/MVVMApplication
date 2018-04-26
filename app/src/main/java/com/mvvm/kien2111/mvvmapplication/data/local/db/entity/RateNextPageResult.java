@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by WhoAmI on 06/04/2018.
  */
-@Entity(primaryKeys = {"query"})
+@Entity(primaryKeys = {"query"},tableName = "ratenextpageresult")
 @TypeConverters(AppConverter.class)
 public class RateNextPageResult {
     @NonNull

@@ -11,6 +11,7 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.ProfileRepository;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.util.AbsentLiveData;
+import com.mvvm.kien2111.mvvmapplication.util.MyLiveDataReactiveStream;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,7 +33,7 @@ public class SearchViewModel extends BaseViewModel {
            if("".equals(input) || input==null){
                return AbsentLiveData.create();
            }else{
-               return LiveDataReactiveStreams.fromPublisher(profileRepository.getSearchResult(input));
+               return MyLiveDataReactiveStream.fromPublisher(profileRepository.getSearchResult(input));
            }
         });
     }

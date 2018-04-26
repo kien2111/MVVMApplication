@@ -14,17 +14,6 @@ public abstract class BaseWrapper {
     @SerializedName("nextpage")
     @Expose
     private Integer nextpage;
-    @SerializedName("query")
-    @Expose
-    private String query;
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
-    }
 
     public Integer getNextpage() {
         return nextpage;

@@ -30,8 +30,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:outlineProvider="bounds"
                         android:contentDescription=""
-                        android:transitionName="@{profile.avatar+System.currentTimeMillis()}"
                         android:id="@+id/imageprofile"
                         app:imageUrl="@{profile.avatar}"
                         app:defaultImg="@{@drawable/defaultimage}"
@@ -73,11 +73,9 @@
                                 android:layout_height="wrap_content" />
                         </FrameLayout>
                     </LinearLayout>
-                    <com.mvvm.kien2111.mvvmapplication.ui.universal.common.ExpandTextView
+                    <TextView
                         android:id="@+id/txt_summary"
                         android:paddingEnd="8dp"
-                        custom:trimLine="3"
-                        custom:trimMode="trimModeLine"
                         android:paddingStart="0dp"
                         android:textSize="12sp"
                         android:textColor="@android:color/black"

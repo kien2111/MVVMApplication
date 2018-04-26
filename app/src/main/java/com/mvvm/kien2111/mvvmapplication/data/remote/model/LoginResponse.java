@@ -22,7 +22,8 @@ public class LoginResponse implements Parcelable {
     @Expose
     @SerializedName("google_profile_pic_url")
     private String googleProfilePicUrl;
-
+    @Expose
+    @SerializedName("auth_token_type")
     private String auth_token_type;
 
     public LoginResponse(){

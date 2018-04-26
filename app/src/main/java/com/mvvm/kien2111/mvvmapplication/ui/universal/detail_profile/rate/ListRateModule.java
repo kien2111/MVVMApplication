@@ -1,5 +1,8 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate;
 
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
 import dagger.Module;
@@ -17,5 +20,9 @@ public class ListRateModule {
     @Provides
     RateAdapter provideRateAdapter(ListRateFragment listRateFragment,FragmentBindingComponent fragmentBindingComponent){
         return new RateAdapter(fragmentBindingComponent,listRateFragment);
+    }
+    @Provides
+    DividerItemDecoration provideDecoration(ListRateFragment listRateFragment){
+        return new DividerItemDecoration(listRateFragment.getContext(), LinearLayoutManager.VERTICAL);
     }
 }

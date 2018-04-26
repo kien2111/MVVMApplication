@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.ui.login;
 
 
+import android.accounts.Account;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
 
@@ -43,7 +44,9 @@ public class LoginViewModel extends BaseViewModel {
                 userRepository.loginServer(new LoginRequest.ExpressLoginRequest(username,password))
                 .doOnSuccess(response->{
                     userRepository.updateInfo(response
-                            ,LoggedInMode.LOGGED_IN_MODE_EXPRESS);
+                            ,LoggedInMode.LOGGED_IN_MODE_EXPRESS,
+                            new Account(response.getUser().getUserName()
+                                    ,"com.mvvm.finalcourse"));
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response->{

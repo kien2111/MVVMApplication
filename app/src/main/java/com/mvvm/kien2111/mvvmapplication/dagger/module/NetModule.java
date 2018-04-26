@@ -17,11 +17,15 @@ import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.AppointmentService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.RateService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.UserLoggedInService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnumTypeAdapterFactory;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
+import com.mvvm.kien2111.mvvmapplication.retrofit.RxErrorHandlingCallAdapterFactory;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Logger;
 import java.io.IOException;
@@ -152,7 +156,8 @@ public class NetModule {
     @Named("non_protected_api")
     Retrofit provideRetrofit(Gson gson,@Named("no_protected_OkHttp")OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addConverterFactory(new EnvelopeConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BuildConfig.API_URL)
@@ -165,7 +170,8 @@ public class NetModule {
     @Named("protected_api")
     Retrofit provideProtectedRetrofit(Gson gson,@Named("protected_OkHttp") OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addConverterFactory(new EnvelopeConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BuildConfig.API_URL)
@@ -200,5 +206,15 @@ public class NetModule {
     @Singleton
     RateService provideRateService(@Named("protected_api")Retrofit retrofit){
         return retrofit.create(RateService.class);
+    }
+    @Provides
+    @Singleton
+    AppointmentService provideAppointmentService(@Named("protected_api")Retrofit retrofit){
+        return retrofit.create(AppointmentService.class);
+    }
+    @Provides
+    @Singleton
+    UserLoggedInService provideUserLoggedInService(@Named("protected_api")Retrofit retrofit){
+        return retrofit.create(UserLoggedInService.class);
     }
 }

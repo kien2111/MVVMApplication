@@ -13,7 +13,7 @@ import com.mvvm.kien2111.mvvmapplication.model.Profile;
 /**
  * Created by WhoAmI on 17/03/2018.
  */
-@Entity(primaryKeys = {"idprofile"})
+@Entity(primaryKeys = {"idprofile"},tableName = "profiles")
 @TypeConverters(AppConverter.class)
 public class ProfileModel extends Profile implements Parcelable {
     @Expose

@@ -11,6 +11,8 @@ import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.databinding.CategoryItemBinding;
 
+import java.util.UUID;
+
 /**
  * Created by WhoAmI on 07/03/2018.
  */
@@ -22,6 +24,12 @@ public class CategoryAdapter extends BaseAdapter<Category,CategoryItemBinding> {
     public CategoryAdapter(FragmentBindingComponent dataBindingComponent, CategoryClickCallBack callback){
         this.dataBindingComponent = dataBindingComponent;
         this.callBack = callback;
+        this.setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return getLstData().get(position).hashCode();
     }
 
     @Override

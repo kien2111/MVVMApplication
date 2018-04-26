@@ -8,19 +8,15 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ErrorResponse {
-    @Expose
     @SerializedName("code")
-    private int code;
-    @Expose
+    private int statusCode;
+
     @SerializedName("message")
     private String message;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
+    public ErrorResponse(String message,int code){
+        this.message = message;
+        this.statusCode = code;
     }
 
     public String getMessage() {
@@ -30,7 +26,11 @@ public class ErrorResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+    public int getStatusCode() {
+        return statusCode;
+    }
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
 
-
-
+    }
 }

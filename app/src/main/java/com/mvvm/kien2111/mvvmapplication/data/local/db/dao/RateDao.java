@@ -19,7 +19,7 @@ import io.reactivex.functions.Function;
  */
 @Dao
 public abstract class RateDao {
-    @Query("SELECT * FROM RateNextPageResult WHERE `query` = :query")
+    @Query("SELECT * FROM ratenextpageresult WHERE `query` = :query")
     public abstract RateNextPageResult findRateNextPageResult(String query);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,7 +31,7 @@ public abstract class RateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(RateNextPageResult result);
 
-    @Query("SELECT * FROM RateNextPageResult WHERE `query` = :query")
+    @Query("SELECT * FROM ratenextpageresult WHERE `query` = :query")
     public abstract Flowable<RateNextPageResult> findNextPageResultFlowable(String query);
 
     public Flowable<List<RateModel>> loadOrdered(List<Integer> idRatelist){
@@ -45,6 +45,6 @@ public abstract class RateDao {
             }
         });
     }
-    @Query("SELECT * FROM RateModel WHERE idrate in (:idrates)")
+    @Query("SELECT * FROM rates WHERE idrate in (:idrates)")
     protected abstract Flowable<List<RateModel>> loadById(List<Integer> idrates);
 }

@@ -81,7 +81,8 @@ public class AuthenticatorImpl extends AbstractAccountAuthenticator {
                             loginResponse.setAccessToken(resp.getAccessToken());
                             loginResponse.setAuth_token_type(resp.getAuth_token_type());
                             userRepository.updateInfo(resp
-                                    ,LoggedInMode.LOGGED_IN_MODE_EXPRESS);}
+                                    ,LoggedInMode.LOGGED_IN_MODE_EXPRESS,
+                                            account);}
                         ).dispose();
             }
         }

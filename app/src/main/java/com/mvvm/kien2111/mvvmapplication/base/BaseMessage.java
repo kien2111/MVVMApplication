@@ -14,6 +14,17 @@ public class BaseMessage {
     }
     public BaseMessage(){}
 
+    public BaseMessage(Throwable throwable){this.throwable=throwable;}
+
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
+    public void setThrowable(Throwable throwable) {
+        this.throwable = throwable;
+    }
+
+    private Throwable throwable;
     private String errorMessage;
 
     public Throwable getCause() {

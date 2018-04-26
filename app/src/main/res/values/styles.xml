@@ -6,28 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
     <style name="FeedAppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
-    <style name="FeedTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabTextAppearance">@style/TabLayoutTitleFeedFragment</item>
-        <item name="tabSelectedTextColor">@android:color/white</item>
-        <item name="tabIndicatorColor">@android:color/white</item>
+    <style name="MyTabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyTabLayoutTitle</item>
+        <item name="tabSelectedTextColor">@color/lime</item>
+        <item name="tabIndicatorColor">@color/lime</item>
     </style>
-    <style name="DetailProfileTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabTextAppearance">@style/TabLayoutTitleDetailProfileFragment</item>
-        <item name="tabSelectedTextColor">@android:color/white</item>
-        <item name="tabIndicatorColor">@android:color/white</item>
-    </style>
-    <style name="TabLayoutTitleDetailProfileFragment" parent="TextAppearance.AppCompat.Button">
+    <style name="MyTabLayoutTitle" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/detail_profile_tablayout_title_12sp</item>
-    </style>
-    <style name="TabLayoutTitleFeedFragment" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/feed_textsize_12sp</item>
+        <item name="android:textSize">@dimen/user_profile_textsize_12sp</item>
     </style>
     <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar</item>
@@ -67,9 +59,44 @@
         <item name="android:elevation" tools:ignore="NewApi">4dp</item>
         <item name="android:colorControlNormal" tools:ignore="NewApi">@android:color/white</item>
     </style>
-
+    <style name="RaisedButtonBottomSheetDialog" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="colorButtonNormal">@color/lime</item>
+    </style>
     <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
         <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="colorPrimaryRaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimaryBlueGrey</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
+    <style name="colorPrimaryBlueGreyRadioBtn" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryBlueGrey</item>
+    </style>
+
+    <style name="MyEdittextStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_lighter_gray</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/lime</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/colorPrimaryBlueGrey</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/colorPrimaryBlueGrey</item>
     </style>
 </resources>

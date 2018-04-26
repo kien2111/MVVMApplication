@@ -19,11 +19,15 @@ import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
+import com.mvvm.kien2111.mvvmapplication.exception.ApiException;
+import com.mvvm.kien2111.mvvmapplication.model.ErrorResponse;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.util.NetworkUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -37,7 +41,10 @@ import dagger.android.support.DaggerAppCompatActivity;
  */
 
 public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBinding> extends DaggerAppCompatActivity{
-    protected AccountManager mAccountManager;
+
+    @Inject
+    public AccountManager mAccountManager;
+
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
     private Bundle mResultBundle = null;
 
@@ -65,7 +72,6 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAccountManager = AccountManager.get(mApplication);
         bind();
         if(this instanceof LoginActivity){
             mAccountAuthenticatorResponse =
@@ -153,6 +159,31 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("Dismiss",((dialog, which) -> {
+            dialog.dismiss();
+        })).create();
+        alertDialog.show();
+    }
+
+    public void showSuccessDialog(String title,String message){
+        if(message==null)throw new IllegalArgumentException("Not supply message");
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Dismiss",((dialog, which) -> {
+                    dialog.dismiss();
+                })).create();
+        alertDialog.show();
+    }
+
+    public void showServerErrorDialog(ApiException apiException) throws IOException {
+        if(apiException==null)throw new IllegalArgumentException("no throwable supply");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Lỗi từ server");
+        ErrorResponse errorResponse = gson.fromJson(apiException.getMessage(),ErrorResponse.class);
+        switch (apiException.getErrorType()){
+            case BlockedAccount:builder.setMessage(errorResponse.getMessage());
+        }
+        AlertDialog alertDialog = builder.setPositiveButton("Dismiss",((dialog, which) -> {
             dialog.dismiss();
         })).create();
         alertDialog.show();

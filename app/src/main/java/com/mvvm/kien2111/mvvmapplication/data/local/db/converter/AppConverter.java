@@ -6,15 +6,19 @@ import android.arch.persistence.room.TypeConverter;
 import com.google.gson.Gson;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.model.Approve_Publish;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.City;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.District;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentModel;
 import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
 
+import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by WhoAmI on 20/03/2018.
@@ -47,7 +51,7 @@ public class AppConverter {
     public static Gender intToGender(int data){
         switch (data){
             case 0:return Gender.MALE;
-            case 1:return Gender.FEMAIL;
+            case 1:return Gender.FEMALE;
             case 2:return Gender.UNKNOWN;
             default:return Gender.MALE;
         }
@@ -99,5 +103,81 @@ public class AppConverter {
     @TypeConverter
     public static String userToString(User user){
         return new Gson().toJson(user);
+    }
+
+    @TypeConverter
+    public static ListAppointmentViewModel.PickOption.Option optionToInt(int type){
+        return ListAppointmentViewModel.PickOption.Option.mapOption(type);
+    }
+
+    @TypeConverter
+    public static int IntToPickOption(ListAppointmentViewModel.PickOption.Option option){
+        return option.getType();
+    }
+
+    @TypeConverter
+    public static ListAppointmentViewModel.PickOption pickOptionToString(String json){
+        return new Gson().fromJson(json, ListAppointmentViewModel.PickOption.class);
+    }
+    @TypeConverter
+    public static String stringTopickoption(ListAppointmentViewModel.PickOption pickOption){
+        return new Gson().toJson(pickOption);
+    }
+
+    @TypeConverter
+    public static City stringToCity(String json){
+        return new Gson().fromJson(json,City.class);
+    }
+
+    @TypeConverter
+    public static String cityToString(City city){
+        return new Gson().toJson(city);
+    }
+
+    @TypeConverter
+    public static District stringToDistrict(String json){
+        return new Gson().fromJson(json,District.class);
+    }
+
+    @TypeConverter
+    public static String districtToString(District district){
+        return new Gson().toJson(district);
+    }
+
+    @TypeConverter
+    public static Date fromTimestamp(Long value){
+        return value == null ? null : new Date(value);
+    }
+    @TypeConverter
+    public Long dateToTimestamp(Date date) {
+        if (date == null) {
+            return null;
+        } else {
+            return date.getTime();
+        }
+    }
+    @TypeConverter
+    public static AppointmentModel.StatusAppointment intToStatusAppointment(int type){
+        return AppointmentModel.StatusAppointment.mapType(type);
+    }
+    @TypeConverter
+    public static int StatusAppointmentToInt(AppointmentModel.StatusAppointment statusAppointment){
+        return statusAppointment.getType();
+    }
+    @TypeConverter
+    public static Timestamp longToTimeStamp(Long time){
+        if(time==null){
+            return null;
+        }else{
+            return new Timestamp(time);
+        }
+    }
+    @TypeConverter
+    public static Long TimeStampToLong(Timestamp timestamp){
+        if(timestamp==null){
+            return null;
+        }else{
+            return timestamp.getTime();
+        }
     }
 }

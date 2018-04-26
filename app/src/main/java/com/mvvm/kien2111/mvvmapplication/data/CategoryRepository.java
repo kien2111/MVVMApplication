@@ -50,19 +50,11 @@ public class CategoryRepository {
         this.appExecutors = appExecutors;
     }
     public Single<Resource<List<Category>>> getListCategory(){
-        return userService.getListCategory()
-                .flatMap(new Function<List<Category>, SingleSource<Resource<List<Category>>>>() {
-                    @Override
-                    public SingleSource<Resource<List<Category>>> apply(List<Category> categoryList) throws Exception {
-                        return Single.fromCallable(new Callable<Resource<List<Category>>>() {
-                            @Override
-                            public Resource<List<Category>> call() throws Exception {
-                                categoryDao.insert(categoryList);
-                                return Resource.success(categoryDao.getLocalCategories());
-                            }
-                        });
-                    }
-                });
+        return userService
+                .getListCategory()
+                .map(Resource::success)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
     }
 
 }

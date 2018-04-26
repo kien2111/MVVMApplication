@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.data.local.pref;
 
+import android.accounts.Account;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ public final class PreferenceHelper {
     private static final String KEY_USER_LOGGED_IN_MODE = "KEY_USER_LOGGED_IN_MODE";
     private static final String KEY_USER_DATA = "KEY_USER_DATA";
     private static final String KEY_ACCOUNT_NAME = "KEY_ACCOUNT_NAME";
+    private static final String KEY_CURRENT_ACCOUNT = "KEY_CURRENT_ACCOUNT";
 
 
     private final Gson gson;
@@ -50,5 +52,11 @@ public final class PreferenceHelper {
     }
     public void clearPreference(){
         mSharedPreferences.edit().clear().apply();
+    }
+    public void saveCurrentAccount(Account account){
+        mSharedPreferences.edit().putString(KEY_CURRENT_ACCOUNT,gson.toJson(account)).apply();
+    }
+    public Account getCurrentAccount(){
+        return gson.fromJson(mSharedPreferences.getString(KEY_CURRENT_ACCOUNT,null),Account.class);
     }
 }

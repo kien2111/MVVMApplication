@@ -19,4 +19,8 @@ public class DetailCategoryModule {
     ProfileAdapter provideProfileAdapter(FragmentBindingComponent fragmentBindingComponent, DetailCategoryFragment detailCategoryFragment){
         return new ProfileAdapter(fragmentBindingComponent,detailCategoryFragment);
     }
+    @Provides
+    BottomSheetDialogFilter provideBottomSheetDialogFilter(DetailCategoryFragment detailCategoryFragment){
+        return new BottomSheetDialogFilter();
+    }
 }

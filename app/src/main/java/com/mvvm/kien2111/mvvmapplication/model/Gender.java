@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public enum  Gender {
     MALE(0),
-    FEMAIL(1),
+    FEMALE(1),
     UNKNOWN(2);
     private final int type;
     Gender(int type){

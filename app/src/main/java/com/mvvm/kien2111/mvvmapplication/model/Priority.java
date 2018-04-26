@@ -7,14 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum Priority {
-    FREE(0),
-    BASIC(1),
-    MEDIUM(2),
-    PREMIUM(3);
+    FREE(0,"Free Profile"),
+    BASIC(1,"Basic Profile"),
+    MEDIUM(2,"Medium Profile"),
+    PREMIUM(3,"Premium Profile");
 
     private final int type;
-    Priority(int value){
+    private final String name;
+    Priority(int value,String name){
         this.type = value;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getType() {

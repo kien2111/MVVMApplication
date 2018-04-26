@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.data.remote;
 
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.RateRequest;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.ProfileWrapper;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate.RateWrapper;
 
@@ -16,8 +17,6 @@ import retrofit2.http.Query;
  */
 
 public interface RateService {
-    @POST
-    Completable rateUser();
 
     @GET("/Rates/getlistrate")
     Flowable<RateWrapper> getNextPageRate(@Query("iduser") String iduser
@@ -26,5 +25,6 @@ public interface RateService {
     @GET("/Rates/getlistrate")
     Single<RateWrapper> getRateList(@Query("iduser")String iduser);
 
-
+    @POST("/Rates/dorate")
+    Completable doRate(@Body RateRequest rateRequest);
 }

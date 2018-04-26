@@ -13,7 +13,17 @@ import java.util.List;
  */
 
 public class ProfileWrapper extends BaseWrapper{
+    @SerializedName("query")
+    @Expose
+    private String query;
 
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
     @SerializedName("profiles")
     @Expose
     private List<ProfileModel> listprofile;

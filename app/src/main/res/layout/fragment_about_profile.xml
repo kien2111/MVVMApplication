@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+        <import type="android.view.View"/>
+        <variable
+            name="profile"
+            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel"/>
         <variable
             name="vm"
             type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel"/>
@@ -9,88 +13,107 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
-        android:layout_height="match_parent">
-        <TextView
-            android:textSize="25sp"
-            android:textColor="@color/colorPrimaryBlueGrey"
-            android:text="@string/summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/txt_summary"
-            android:textSize="15sp"
-            android:textColor="@android:color/black"
-            android:text="@string/lorem_ipsum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textSize="25sp"
-            android:textColor="@color/colorPrimaryBlueGrey"
-            android:text="@string/experienced_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/txt_experienced_description"
-            android:textSize="15sp"
-            android:textColor="@android:color/black"
-            android:text="@string/lorem_ipsum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textSize="25sp"
-            android:textColor="@color/colorPrimaryBlueGrey"
-            android:text="@string/salary_expected"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:weightSum="7"
-            android:orientation="horizontal"
+            android:visibility="@{profile.summary==null?View.GONE:View.VISIBLE}"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_weight="3"
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-               <TextView
-                   android:textSize="18sp"
-                   android:id="@+id/txt_salary_from"
-                   android:textColor="@android:color/black"
-                   android:text="8.000.000 VND"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content" />
-                <View
-                    android:background="@android:color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-            </LinearLayout>
+            android:layout_height="wrap_content">
             <TextView
-                android:layout_gravity="bottom"
-                android:textSize="14sp"
-                android:gravity="center"
+                android:textSize="25sp"
+                android:textColor="@color/colorPrimaryBlueGrey"
+                android:text="@string/summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/txt_summary"
+                android:textSize="15sp"
                 android:textColor="@android:color/black"
-                android:text="To"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
+                android:text="@{profile.summary,default=@string/lorem_ipsum}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="@{profile.experienced_description==null?View.GONE:View.VISIBLE}"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="25sp"
+                android:textColor="@color/colorPrimaryBlueGrey"
+                android:text="@string/experienced_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/txt_experienced_description"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                android:text="@{profile.experienced_description,default=@string/lorem_ipsum}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="@{(profile.salary_expected_from == 0.0 || profile.salary_expected_to == 0.0)?View.GONE:View.VISIBLE}"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="25sp"
+                android:textColor="@color/colorPrimaryBlueGrey"
+                android:text="@string/salary_expected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_weight="3"
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:weightSum="7"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="18sp"
+                        android:id="@+id/txt_salary_from"
+                        android:textColor="@android:color/black"
+                        android:text="@{String.valueOf(profile.salary_expected_from),default=VND}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:background="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                </LinearLayout>
                 <TextView
-                    android:textSize="18sp"
-                    android:id="@+id/txt_salary_to"
+                    android:layout_gravity="bottom"
+                    android:textSize="14sp"
+                    android:gravity="center"
                     android:textColor="@android:color/black"
-                    android:text="8.000.000 VND"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:background="@android:color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:text="To"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="18sp"
+                        android:id="@+id/txt_salary_to"
+                        android:textColor="@android:color/black"
+                        android:text="@{String.valueOf(profile.salary_expected_to),default=VND}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:background="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface ProfileService {
     @GET("/Profiles/getprofile")
     Flowable<ProfileWrapper> getNextPageProfiles(@Query("idcategory") String id
-            , @Query("page") int page);
+            , @Query("page") int page,@Query("filter")String filter);
     @GET("/Profiles/getprofile")
-    Single<ProfileWrapper> getProfiles(@Query("idcategory") String id);
+    Single<ProfileWrapper> getProfiles(@Query("idcategory") String id,@Query("filter") String filter);
 
     @GET("/Profiles/search")
     Flowable<SearchResult> getSearchResult(@Query("query") String query);
