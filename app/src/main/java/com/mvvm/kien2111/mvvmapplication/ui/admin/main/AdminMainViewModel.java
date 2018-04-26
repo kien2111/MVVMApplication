@@ -36,7 +36,7 @@ public class AdminMainViewModel extends BaseViewModel {
     public AdminMainViewModel(EventBus eventBus,AdminRepository adminRepository) {
         super(eventBus);
         this.adminRepository = adminRepository;
-        getData();
+//        getData();
     }
 
     private void getData() {

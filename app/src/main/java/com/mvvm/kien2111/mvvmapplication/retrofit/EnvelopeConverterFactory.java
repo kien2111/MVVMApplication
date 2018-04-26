@@ -22,8 +22,12 @@ public class EnvelopeConverterFactory extends Converter.Factory{
     @Nullable
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        Type envelopeType = TypeUtils.parameterize(Envelope.class,type);
-        return new EnvelopeConverter<>(retrofit.nextResponseBodyConverter(this,envelopeType,annotations));
+        try {
+            Type envelopeType = TypeUtils.parameterize(Envelope.class,type);
+            return new EnvelopeConverter<>(retrofit.nextResponseBodyConverter(this,envelopeType,annotations));
+        }finally {
+
+        }
     }
     static class EnvelopeConverter<T> implements Converter<ResponseBody,T>{
         private final Converter<ResponseBody,Envelope<T>> delegate;
