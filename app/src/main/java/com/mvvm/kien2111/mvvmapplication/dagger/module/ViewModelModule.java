@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.mvvm.kien2111.mvvmapplication.AppViewModelFactory;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
@@ -17,7 +16,7 @@ import com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointmen
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.BottomSheetDialogFilterViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel;
@@ -26,6 +25,9 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.userprofile.bussiness.BussinessProfileViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.IndividualProfileViewModel;
 
 import javax.inject.Singleton;
 
@@ -138,6 +140,27 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HistoryAppointmentViewModel.class)
     abstract ViewModel bindHistoryAppointmentViewModel(HistoryAppointmentViewModel historyAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserProfileViewModel.class)
+    abstract ViewModel bindUserProfileViewModel(UserProfileViewModel userProfileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(IndividualProfileViewModel.class)
+    abstract ViewModel bindIndividualProfileViewModel(IndividualProfileViewModel individualProfileViewModel);
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BottomSheetDialogFilterViewModel.class)
+    abstract ViewModel bindBottomSheetDialogFilterViewModel(BottomSheetDialogFilterViewModel bottomSheetDialogFilterViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BussinessProfileViewModel.class)
+    abstract ViewModel bindBussinessProfileViewModel(BussinessProfileViewModel bussinessProfileViewModel);
 
     @Binds
     @Singleton

@@ -54,6 +54,7 @@ ext{
     databindingCompilerVersion = '3.0.1'
     multidexVersion = '1.0.1'
     chartVersion = 'v2.2.4'
+    assetRoomDbVersion = '1.0.3'
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -68,6 +69,8 @@ dependencies {
         annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
         */
+    implementation "com.github.humazed:RoomAsset:$assetRoomDbVersion"
+
     implementation "io.reactivex.rxjava2:rxjava:$rxJava2LibraryVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2LibraryVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2LibraryVersion"

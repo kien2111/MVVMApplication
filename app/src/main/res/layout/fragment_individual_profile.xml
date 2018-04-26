@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.mvvm.kien2111.mvvmapplication.model.Gender"/>
+        <variable
+            name="user"
+            type="com.mvvm.kien2111.mvvmapplication.model.User"/>
+        <variable
+            name="vm"
+            type="com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.IndividualProfileViewModel"/>
+    </data>
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="20dp"
+                android:text="Thông tin hồ sơ"/>
+            <EditText
+                android:id="@+id/edt_realname"
+                android:paddingBottom="10dp"
+                android:paddingStart="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name_hint"
+                android:text="@{user.realname}"
+                android:theme="@style/MyEdittextStyle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:textColor="@color/user_color_text_black"/>
+                <RadioGroup
+                    android:id="@+id/radioGender"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:id="@+id/radioButtonMale"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/Male"
+                        android:checked="@{user.gender==Gender.MALE?true:false}"
+                        android:theme="@style/colorPrimaryBlueGreyRadioBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/radioButtonFemale"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/female"
+                        android:checked="@{user.gender==Gender.FEMALE?true:false}"
+                        android:theme="@style/colorPrimaryBlueGreyRadioBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:id="@+id/radioButtonUnknown"
+                        android:text="@string/unknown"
+                        android:checked="@{user.gender==Gender.UNKNOWN?true:false}"
+                        android:theme="@style/colorPrimaryBlueGreyRadioBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+            </LinearLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/birthdaybutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp">
+                <EditText
+                    android:focusable="false"
+                    android:cursorVisible="true"
+                    android:textColorHint="@color/darker_gray"
+                    android:id="@+id/tv_datetime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:paddingEnd="24dp"
+                    android:paddingStart="5dp"
+                    android:paddingBottom="10dp"
+                    android:hint="@string/birthday"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:theme="@style/MyEdittextStyle" />
+                <ImageView
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription=""
+                    android:id="@+id/imv_settime"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_event_color_primary_blue_grey_24dp" />
+
+
+            </FrameLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:paddingTop="3dp"
+                android:weightSum="15">
+
+                <TextView
+                    android:id="@+id/categoryProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="14"
+                    android:gravity="center_vertical"
+                    android:text="@{user.profile.category.namecategory,default=@string/choose_category}" />
+
+                <ImageView
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/admin_background_notibar_second"
+                    android:contentDescription=""
+                    android:scaleType="center"
+                    android:src="@drawable/ic_chevron_right_gray_24dp"
+                    tools:targetApi="lollipop" />
+
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/edt_phonenumber"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="24dp"
+                    android:paddingStart="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/MyEdittextStyle"
+                    android:gravity="start"
+                    android:hint="@string/phonenumber"
+                    android:inputType="phone"
+                    android:textColorHint="@color/darker_gray"
+                    android:text="@{user.phone_individual}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="end"
+                    android:contentDescription=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_phone_color_primary_grey_24dp"
+                    android:id="@+id/imageView2" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/edt_summary"
+                android:theme="@style/MyEdittextStyle"
+                android:text="@{user.profile.summary}"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#E2E2E2"
+                android:fadeScrollbars="true"
+                android:gravity="top"
+                android:hint="@string/let_employer_know_something_about_you"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:textColor="@android:color/black" />
+            <Button
+                android:id="@+id/publish_btn"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:paddingEnd="100dp"
+                android:paddingStart="100dp"
+                android:textColor="@color/lime"
+                android:text="@string/publish_profile"
+                android:theme="@style/colorPrimaryRaisedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
