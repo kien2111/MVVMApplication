@@ -16,7 +16,7 @@ import io.reactivex.Single;
  */
 @Dao
 public interface CategoryDao {
-    @Query("SELECT * FROM category")
+    @Query("SELECT * FROM categories")
     List<Category> getLocalCategories();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

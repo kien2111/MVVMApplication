@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="object"
+            type="Object"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:padding="15dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryBlueGrey"
+                    android:text="@string/city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Switch
+                    android:id="@+id/switchToggleFilterDistricts"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:theme="@style/MySwitch"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                app:cardElevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <Spinner
+                    android:id="@+id/cityspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </Spinner>
+            </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/districtspinnercontainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryBlueGrey"
+                    android:text="@string/district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.CardView
+                    app:cardElevation="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+                    <Spinner
+                        android:id="@+id/districtspinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </Spinner>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/filterButton"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/filter"
+            android:textColor="@android:color/black"
+            android:theme="@style/RaisedButtonBottomSheetDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</layout>

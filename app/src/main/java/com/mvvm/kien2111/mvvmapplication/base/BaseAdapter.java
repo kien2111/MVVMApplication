@@ -22,6 +22,10 @@ import java.util.List;
     VB databindingType
 * */
 public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends RecyclerView.Adapter<BaseViewHolder<VB>>{
+    public List<T> getLstData() {
+        return lstData;
+    }
+
     private List<T> lstData = Collections.emptyList();
 
     public void setLstData(List<T> lstData) {
@@ -111,4 +115,6 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
     protected abstract boolean areContentsTheSame(T olditem, T newitem);
 
     protected abstract boolean areItemsTheSame(T olditem, T newitem);
+
+
 }

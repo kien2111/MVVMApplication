@@ -131,4 +131,25 @@
     <string name="drawer_open">Open</string>
     <string name="back">go back</string>
     <string name="share_image_profile">Share image profile</string>
+    <string name="choose_category">Chọn nhóm ngành</string>
+    <string name="upgrade_profile">Nâng cấp hồ sơ</string>
+    <string name="Male">nam</string>
+    <string name="female">nữ</string>
+    <string name="unknown">không xác định</string>
+    <string name="gender">Giới tính :</string>
+    <string name="birthday">ngày sinh nhật</string>
+    <string name="phonenumber">số điện thoại</string>
+    <string name="let_employer_know_something_about_you">Hãy giới thiệu bản thân của bạn</string>
+    <string name="publish_profile">Công khai hồ sơ</string>
+    <string name="filter">LỌC</string>
+    <string name="city">Lọc theo thành phố</string>
+    <string name="district">Lọc theo quận huyện</string>
+    <string name="name_hint">display name</string>
+    <string name="save_change">Lưu thay đổi</string>
+    <string name="sync_profile">Đồng bộ dữ liệu</string>
+    <string name="pick_category">Chọn ngành hồ sơ</string>
+    <string name="cancle">Hủy</string>
+    <string name="company_title">Thông tin doanh nghiệp</string>
+    <string name="brand_name">Tên công ty</string>
+    <string name="logo_title">Logo công ty</string>
 </resources>

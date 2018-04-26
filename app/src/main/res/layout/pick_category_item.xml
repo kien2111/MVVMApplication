@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="category"
+            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            app:defaultImg="@{@drawable/defaultimage}"
+            app:errorImg="@{@drawable/errorimg}"
+            app:imageUrl="@{category.image_path}"
+            android:contentDescription="@{category.namecategory}"
+            android:scaleType="fitCenter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:text="@{category.namecategory}"
+            android:paddingEnd="3dp"
+            android:paddingStart="5dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

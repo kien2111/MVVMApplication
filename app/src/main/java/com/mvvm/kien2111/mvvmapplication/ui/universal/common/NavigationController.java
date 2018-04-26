@@ -24,6 +24,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserFragment;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Created by WhoAmI on 07/02/2018.
  */
@@ -58,6 +60,10 @@ public class NavigationController {
         transaction.commitAllowingStateLoss();
     }
     public void navigateToFeed(){
+        if(fragmentManager.getPrimaryNavigationFragment() instanceof DetailCategoryFragment || fragmentManager.getPrimaryNavigationFragment() instanceof DetailProfileFragment){
+            //do nothing
+            return;
+        }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment feedFragment = fragmentManager.findFragmentByTag("feed");
         if(!(feedFragment != null && feedFragment instanceof FeedFragment)){
@@ -83,12 +89,29 @@ public class NavigationController {
         }else{
             DetailProfileFragment detailProfileFragment = DetailProfileFragment.newInstance(profileModel);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.addSharedElement(imageView, ViewCompat.getTransitionName(imageView));
-            transaction.replace(containerId,detailProfileFragment,"detailprofile "+profileModel.getName())
-                    .addToBackStack("detailprofile "+profileModel.getName()+" "+System.currentTimeMillis());
 
+            transaction.replace(containerId,detailProfileFragment,"detailprofile_"+profileModel.getIdprofile())
+                    .addToBackStack("detailprofile_"+profileModel.getIdprofile());
+            transaction.addSharedElement(imageView, ViewCompat.getTransitionName(imageView));
             transaction.setPrimaryNavigationFragment(detailProfileFragment);
-            transaction.commitAllowingStateLoss();
+            transaction.commit();
+        }
+    }
+
+    public void refreshDetailProfile(ProfileModel profileModel){
+        try {
+            DetailProfileFragment detailProfileFragment =
+                    (DetailProfileFragment) fragmentManager.findFragmentByTag("detailprofile_"+profileModel.getIdprofile());
+            if(detailProfileFragment!=null){
+                final FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.detach(detailProfileFragment);
+                transaction.attach(detailProfileFragment);
+                transaction.commit();
+            }
+        }catch (ClassCastException ex){
+            Timber.d(ex);
+        }finally {
+            //do nothing
         }
     }
 
@@ -99,7 +122,7 @@ public class NavigationController {
         if(detailCategoryFragment==null){
             detailCategoryFragment = DetailCategoryFragment.newInstance(category);
         }
-        transaction.replace(containerId,detailCategoryFragment).addToBackStack(null);
+        transaction.replace(containerId,detailCategoryFragment).addToBackStack(category.getNamecategory());
         transaction.setPrimaryNavigationFragment(detailCategoryFragment);
         transaction.commitAllowingStateLoss();
     }

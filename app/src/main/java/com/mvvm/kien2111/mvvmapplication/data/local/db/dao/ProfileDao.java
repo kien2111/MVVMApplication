@@ -18,7 +18,7 @@ import io.reactivex.functions.Function;
  */
 @Dao
 public abstract class ProfileDao {
-    @Query("SELECT * FROM ProfileNextPageResult WHERE `query` = :query")
+    @Query("SELECT * FROM profilenextpageresult WHERE `query` = :query")
     public abstract ProfileNextPageResult findProfileNextPageResult(String query);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -30,7 +30,7 @@ public abstract class ProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(ProfileNextPageResult result);
 
-    @Query("SELECT * FROM ProfileNextPageResult WHERE `query` = :query")
+    @Query("SELECT * FROM profilenextpageresult WHERE `query` = :query")
     public abstract Flowable<ProfileNextPageResult> findNextPageResultFlowable(String query);
 
     public Flowable<List<ProfileModel>> loadOrdered(List<String> idProfilelist){
@@ -44,6 +44,6 @@ public abstract class ProfileDao {
             }
         });
     }
-    @Query("SELECT * FROM ProfileModel WHERE idprofile in (:idprofiles)")
+    @Query("SELECT * FROM profiles WHERE idprofile in (:idprofiles)")
     protected abstract Flowable<List<ProfileModel>> loadById(List<String> idprofiles);
 }

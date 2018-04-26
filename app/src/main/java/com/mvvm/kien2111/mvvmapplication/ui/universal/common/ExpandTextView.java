@@ -107,8 +107,10 @@ public class ExpandTextView extends android.support.v7.widget.AppCompatTextView 
         if (trimMode == TRIM_MODE_LINES) {
             if (text != null && lineEndIndex > 0) {
                 if (readMore) {
-                    if (getLayout().getLineCount() > trimLines) {
-                        return updateCollapsedText();
+                    if(getLayout()!=null){
+                        if (getLayout().getLineCount() > trimLines) {
+                            return updateCollapsedText();
+                        }
                     }
                 } else {
                     return updateExpandedText();

@@ -1,19 +1,20 @@
 package com.mvvm.kien2111.mvvmapplication.data.remote;
 
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.SignUpRequest;
-import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileWithPoint;
 
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by WhoAmI on 23/01/2018.
@@ -40,5 +41,10 @@ public interface UserService {
 
     @GET("/Users/Test")
     Single<Category> getTest();
+
+    @GET("/Users/getdetailprofile")
+    Single<DetailProfileWithPoint> getDetailProfile(@Query("iduser") String iduser);
+
+
 
 }

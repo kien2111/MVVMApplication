@@ -1,7 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
@@ -9,11 +8,12 @@ import android.support.annotation.Nullable;
 
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.RateRepository;
-import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel;
+import com.mvvm.kien2111.mvvmapplication.model.BaseNextPageHandler;
+import com.mvvm.kien2111.mvvmapplication.model.LoadMoreState;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.util.AbsentLiveData;
+import com.mvvm.kien2111.mvvmapplication.util.MyLiveDataReactiveStream;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,17 +30,24 @@ public class ListRateViewModel extends BaseViewModel {
     private final RateRepository rateRepository;
     private final LiveData<Resource<List<RateModel>>> resourceLiveData;
     private final MutableLiveData<String> mutableStringIdUserLiveData = new MutableLiveData<>();
-    private final NextPageHandler nextPageHandler;
+    //private final NextPageHandler nextPageHandler;
+    private final BaseNextPageHandler nextPageHandler;
     @Inject
     public ListRateViewModel(EventBus eventBus, RateRepository rateRepository) {
         super(eventBus);
         this.rateRepository = rateRepository;
-        nextPageHandler = new NextPageHandler(rateRepository);
+        this.nextPageHandler = new BaseNextPageHandler(){
+            @Override
+            public LiveData<Resource<Boolean>> bindNextPageCall(Object... param) {
+                return MyLiveDataReactiveStream.fromPublisher(rateRepository.fetchNextPageRate(String.valueOf(param[0])));
+            }
+        };
+        //nextPageHandler = new NextPageHandler(rateRepository);
         resourceLiveData = Transformations.switchMap(mutableStringIdUserLiveData,input -> {
             if(input==null || input.length()==0){
                 return AbsentLiveData.create();
             }else{
-                return LiveDataReactiveStreams.fromPublisher(rateRepository.fetchPageRate(input));
+                return MyLiveDataReactiveStream.fromPublisher(rateRepository.fetchPageRate(input));
             }
         });
     }
@@ -63,15 +70,8 @@ public class ListRateViewModel extends BaseViewModel {
         nextPageHandler.reload();
         mutableStringIdUserLiveData.setValue(iduser);
     }
-    public static class LoadMoreState{
-        public final Boolean isRunning;
-        public final String errorMessage;
-        public LoadMoreState(Boolean isRunning,String errorMessage){
-            this.isRunning = isRunning;
-            this.errorMessage = errorMessage;
-        }
-    }
-    static class NextPageHandler implements Observer<Resource<Boolean>>{
+
+    /*static class NextPageHandler implements Observer<Resource<Boolean>>{
         MutableLiveData<LoadMoreState> loadMoreStateMutableLiveData = new MutableLiveData<>();
         LiveData<Resource<Boolean>> nextPageLiveData;
         private final RateRepository repository;
@@ -91,7 +91,7 @@ public class ListRateViewModel extends BaseViewModel {
                 return;
             unregister();
             this.query = query;
-            nextPageLiveData = LiveDataReactiveStreams.fromPublisher(repository.fetchNextPageRate(query));
+            nextPageLiveData = MyLiveDataReactiveStream.fromPublisher(repository.fetchNextPageRate(query));
             loadMoreStateMutableLiveData.setValue(new LoadMoreState(true,null));
             nextPageLiveData.observeForever(this);
         }
@@ -130,6 +130,6 @@ public class ListRateViewModel extends BaseViewModel {
             }
         }
 
-    }
+    }*/
 
 }

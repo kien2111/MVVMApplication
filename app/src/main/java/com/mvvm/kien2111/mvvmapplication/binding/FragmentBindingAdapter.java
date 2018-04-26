@@ -27,6 +27,7 @@ import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.util.ScreenUtil;
 
 import java.security.MessageDigest;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -46,7 +47,7 @@ public class FragmentBindingAdapter {
     public void setImageUrl(ImageView imageView, String url, Drawable defaultImg,Drawable error){
         Glide.with(fragment)
                 .load(BuildConfig.IMG_URL+url)
-                .apply(new RequestOptions()
+                .apply(new RequestOptions().fitCenter()
                 .error(error).placeholder(defaultImg).dontAnimate())
                 .into(imageView);
     }
@@ -55,10 +56,11 @@ public class FragmentBindingAdapter {
         Glide.with(fragment)
                 .load(BuildConfig.IMG_URL+url)
                 .apply(new RequestOptions()
-                        .fitCenter()
+                        .centerCrop()
                         .error(error).placeholder(defaultImg).dontAnimate())
                 .into(circleImage);
     }
+
     private static class MyBitmapTransformation extends BitmapTransformation{
 
         @Override

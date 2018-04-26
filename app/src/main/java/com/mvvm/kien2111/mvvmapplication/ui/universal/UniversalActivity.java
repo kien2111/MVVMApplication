@@ -23,6 +23,8 @@ import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityUniversalBinding;
+import com.mvvm.kien2111.mvvmapplication.exception.ApiException;
+import com.mvvm.kien2111.mvvmapplication.model.ErrorResponse;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
@@ -30,6 +32,7 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCate
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
@@ -71,7 +74,6 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         }
         setupToolbar();
         setupNavigationBottomBar();
-        //setupTest();
     }
 
     public void onClickViewAppointment(View v){
@@ -82,21 +84,13 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
     private void setupToolbar() {
         setSupportActionBar(mActivityBinding.toolbar);
         drawerToggle = new ActionBarDrawerToggle(this,mActivityBinding.drawerlayout,mActivityBinding.toolbar,R.string.drawer_open,R.string.drawer_close);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         drawerToggle.syncState();
         drawerToggle.setToolbarNavigationClickListener(v -> {
             onBackPressed();
         });
-        /*mActivityBinding.toolbar.setNavigationOnClickListener(v -> {
-            if(getSupportFragmentManager().getBackStackEntryCount()>1){
-                onBackPressed();
-            }else{
-                drawerToggle.syncState();
-                mActivityBinding.drawerlayout.addDrawerListener(drawerToggle);
-            }
-        });*/
+        mActivityBinding.drawerlayout.addDrawerListener(drawerToggle);
     }
 
     @Override
@@ -105,14 +99,6 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         drawerToggle.syncState();
     }
 
-    private void setupTest() {
-        mViewModel.getResourceLiveData().observe(this,categoryResource -> {
-            switch (categoryResource.status){
-                case ERROR:showErrorDialog("Error",categoryResource.getMessage());
-            }
-        });
-        mViewModel.getMutableLiveData().setValue(null);
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

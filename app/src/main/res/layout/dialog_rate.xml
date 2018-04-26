@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="profilemodel"
+            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:gravity="center"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:contentDescription="@{profilemodel.name}"
+            android:scaleType="fitCenter"
+            app:defaultImg="@{@drawable/defaultimage}"
+            app:imageUrl="@{profilemodel.avatar}"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="@{profilemodel.name,default=@string/default_name}"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RatingBar
+            android:isIndicator="false"
+            android:id="@+id/ratting"
+            android:layout_marginTop="5dp"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:stepSize="0.01"
+            android:rating="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/dismissBtn"
+                android:layout_weight="1"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/acceptBtn"
+                android:textAllCaps="false"
+                android:background="?attr/selectableItemBackground"
+                android:text="Accept"
+                android:textColor="@color/green_accept_color"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

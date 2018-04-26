@@ -51,7 +51,7 @@ public class AboutFragment extends BaseFragment<AboutViewModel,FragmentAboutProf
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
+        mFragmentBinding.setProfile(getArguments().getParcelable(KEY_PROFILE_MODEL));
         return view;
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

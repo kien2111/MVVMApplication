@@ -1,21 +1,17 @@
 package com.mvvm.kien2111.mvvmapplication.data;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileNextPageResult;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
-import com.mvvm.kien2111.mvvmapplication.exception.ApiException;
-import com.mvvm.kien2111.mvvmapplication.model.Resource;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.City;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.District;
+import com.mvvm.kien2111.mvvmapplication.model.Profile;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.ProfileRequest;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.ProfileWrapper;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchResult;
 
-import org.reactivestreams.Publisher;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,16 +23,13 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 /**
  * Created by WhoAmI on 18/03/2018.
  */
 
-public class ProfileRepository {
+public class ProfileRepository{
     private final AppExecutors appExecutors;
     private final ProfileService service;
     private final HashMap<String,ProfileWrapper> cached = new HashMap<>();
@@ -48,21 +41,36 @@ public class ProfileRepository {
         this.roomDb = roomDb;
     }
 
-    public Flowable<Resource<SearchResult>> getSearchResult(String query){
+    public Flowable<List<City>> getAllCity(){
+        return roomDb.cityDao()
+                .getAllCity()
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Flowable<List<District>> getAllDistrict(City city){
+        return roomDb.districtDao()
+                .getAllDistrict(city.getCityid())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Flowable<SearchResult> getSearchResult(String query){
         return service.getSearchResult(query)
-                .map(Resource::success)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Flowable<Resource<List<ProfileModel>>> getProfile(String idcategory){
-        return service.getProfiles(idcategory)
+    public Flowable<List<ProfileModel>> getProfile(ProfileRequest request){
+        return service.getProfiles(request.query,request.filter)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(profileWrapper -> {
                     appExecutors.getDiskIO().execute(()->{
                         List<String> profilesid = profileWrapper.getProfilesId();
                         ProfileNextPageResult profileNextPageResult = new ProfileNextPageResult(profileWrapper.getQuery(),
+                                request.filter,
                                 profilesid,
                                 profileWrapper.getTotalcount(),
                                 profileWrapper.getNextpage());
@@ -80,11 +88,8 @@ public class ProfileRepository {
                 .toFlowable()
                 .flatMap(profileWrapper -> {
                     return roomDb.profileDao()
-                            .findNextPageResultFlowable(idcategory)
+                            .findNextPageResultFlowable(request.query)
                             .switchMap(result -> {return roomDb.profileDao().loadOrdered(result.idprofiles);});
-                })
-                .map(ProfileModelList -> {
-                    return Resource.success(ProfileModelList);
                 });
     }
     /*public LiveData<Resource<Boolean>> fetchNextPageHighRateProfile(String idcategory){
@@ -97,10 +102,10 @@ public class ProfileRepository {
         //appExecutors.getNetworkIO().execute(fetchNextPageTask);
         return fetchNextPageTask.getResourceMutableLiveData();
     }*/
-    public Flowable<Resource<Boolean>> fetchNextPageProfile(String idcategory){
+    public Flowable<Boolean> fetchNextPageProfile(ProfileRequest request){
         return Flowable.create(emitter -> {
             FetchNextPageTask fetchNextPageTask =
-                    new FetchNextPageTask(service,idcategory,roomDb,emitter);
+                    new FetchNextPageTask(service,request.query,request.filter,roomDb,emitter);
             Completable.fromRunnable(fetchNextPageTask)
                     .subscribeOn(Schedulers.io())
                     .subscribe();
@@ -112,10 +117,12 @@ public class ProfileRepository {
         private final ProfileService profileService;
         private final String query;
         private final RoomDb roomDb;
+        private final String filter;
         private final FlowableEmitter emitter;
-        public FetchNextPageTask(ProfileService profileService,String query,RoomDb roomDb,FlowableEmitter emitter){
+        public FetchNextPageTask(ProfileService profileService,String query,String filter,RoomDb roomDb,FlowableEmitter emitter){
             this.profileService = profileService;
             this.query = query;
+            this.filter = filter;
             this.roomDb = roomDb;
             this.emitter = emitter;
         }
@@ -123,44 +130,81 @@ public class ProfileRepository {
         @Override
         public void run() {
             ProfileNextPageResult current = roomDb.profileDao().findProfileNextPageResult(query);
-            if(current==null){
-                emitter.onNext(null);
-                return;
-            }
-            final Integer nextPage = current.next;
-            if(nextPage ==null || nextPage<0){
-                emitter.onNext(Resource.success(true));
-                return;
-            }
-            try{
-                ProfileWrapper response = profileService
-                        .getNextPageProfiles(query,nextPage).blockingSingle();
-                if(response != null){
-                    List<String> ids = new ArrayList<>();
-                    ids.addAll(current.idprofiles);
-                    ids.addAll(response.getProfilesId());
-                    ProfileNextPageResult merged = new ProfileNextPageResult(query,
-                            ids,
-                            response.getTotalcount(),
-                            response.getNextpage());
-                    try {
-                        roomDb.beginTransaction();
-                        roomDb.profileDao().insert(merged);
-                        roomDb.profileDao().insert(response.getListprofile());
-                        roomDb.setTransactionSuccessful();
-                    }finally {
-                        roomDb.endTransaction();
+            if(current.filter!=null&&!current.filter.equals(this.filter)){
+                //change filter reset all
+                try{
+                    ProfileWrapper response = profileService
+                            .getNextPageProfiles(query,0,filter).blockingSingle();
+                    if(response != null){
+                        List<String> ids = new ArrayList<>();
+                        ids.addAll(response.getProfilesId());
+                        ProfileNextPageResult merged = new ProfileNextPageResult(query,
+                                filter,
+                                ids,
+                                response.getTotalcount(),
+                                response.getNextpage());
+                        try {
+                            roomDb.beginTransaction();
+                            roomDb.profileDao().insert(merged);
+                            roomDb.profileDao().insert(response.getListprofile());
+                            roomDb.setTransactionSuccessful();
+                        }finally {
+                            roomDb.endTransaction();
+                        }
+                        emitter.onNext(response.getNextpage()!=null);
+                    }else{
+                        emitter.onNext(true);
                     }
-                    emitter.onNext(Resource.success(response.getNextpage()!=null));
-                }else{
-                    emitter.onNext(Resource.error("Can't load more profile",true));
+                }
+                catch (Exception e){
+                    emitter.onNext(true);
+                }finally {
+                    emitter.onComplete();
+                }
+
+            }else{
+                if(current==null){
+                    emitter.onNext(null);
+                    return;
+                }
+                final Integer nextPage = current.next;
+                if(nextPage ==null || nextPage<0){
+                    emitter.onNext(false);
+                    return;
+                }
+                try{
+                    //do normal
+                    ProfileWrapper response = profileService
+                            .getNextPageProfiles(query,nextPage,filter).blockingSingle();
+                    if(response != null){
+                        List<String> ids = new ArrayList<>();
+                        ids.addAll(current.idprofiles);
+                        ids.addAll(response.getProfilesId());
+                        ProfileNextPageResult merged = new ProfileNextPageResult(query,
+                                filter,
+                                ids,
+                                response.getTotalcount(),
+                                response.getNextpage());
+                        try {
+                            roomDb.beginTransaction();
+                            roomDb.profileDao().insert(merged);
+                            roomDb.profileDao().insert(response.getListprofile());
+                            roomDb.setTransactionSuccessful();
+                        }finally {
+                            roomDb.endTransaction();
+                        }
+                        emitter.onNext(response.getNextpage()!=null);
+                    }else{
+                        emitter.onNext(true);
+                    }
+                }
+                catch (Exception e){
+                    emitter.onNext(true);
+                }finally {
+                    emitter.onComplete();
                 }
             }
-            catch (Exception e){
-                emitter.onNext(Resource.error(e.getMessage(),true));
-            }finally {
-                emitter.onComplete();
-            }
+
             /*ProfileNextPageResult current = roomDb.profileDao().findProfileNextPageResult(query);
             if(current==null){
                 resourceMutableLiveData.postValue(null);

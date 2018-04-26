@@ -36,16 +36,9 @@ public class CategoryViewModel extends BaseViewModel {
     }
 
     private void setUpListCategory() {
-        resourceLiveData.setValue(Resource.loading(null));
-        compositeDisposable.add(categoryRepository.getListCategory()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listResource -> {
-                    resourceLiveData.setValue(listResource);
-                },throwable -> {
-                    resourceLiveData.setValue(Resource.error(throwable.getMessage(),null));
-                })
-        );
+        categoryRepository.getListCategory()
+                .subscribe(listResource -> resourceLiveData.postValue(listResource),
+                        throwable -> resourceLiveData.postValue(Resource.error(throwable.getMessage(),throwable)));
     }
 
     public LiveData<Resource<List<Category>>> getResourceCategoriesLiveData() {

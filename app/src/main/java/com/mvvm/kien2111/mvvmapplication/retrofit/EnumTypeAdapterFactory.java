@@ -10,7 +10,6 @@ import com.mvvm.kien2111.mvvmapplication.model.Approve_Publish;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
-import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentModel;
 
 import java.io.IOException;

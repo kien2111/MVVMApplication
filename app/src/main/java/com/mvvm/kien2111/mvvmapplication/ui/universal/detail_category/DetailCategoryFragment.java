@@ -2,14 +2,13 @@ package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,10 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentDetailcategoryBinding;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.City;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.District;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.common.ViewPagerAdapter;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileFragment;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -37,12 +35,14 @@ import java.util.Collections;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Created by WhoAmI on 17/03/2018.
  */
 
 public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel,FragmentDetailcategoryBinding> implements ProfileAdapter.ProfileClickCallback {
-
+    private static final String TAG = DetailCategoryFragment.class.getSimpleName();
     private static final String KEY_PICK_CATEGORY = "KEY_PICK_CATEGORY";
     public static DetailCategoryFragment newInstance(Category category){
         DetailCategoryFragment detailCategoryFragment = new DetailCategoryFragment();
@@ -51,6 +51,9 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
         detailCategoryFragment.setArguments(bundle);
         return detailCategoryFragment;
     }
+
+    @Inject
+    BottomSheetDialogFilter bottomSheetDialogFilter;
 
     public Category getCurrentCategory(){
         return getArguments().getParcelable(KEY_PICK_CATEGORY);
@@ -76,7 +79,21 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message){
+        if(message instanceof BottomSheetDialogFilter.FilterMessage){
+            if(((BottomSheetDialogFilter.FilterMessage) message).regionDivision instanceof City){
+                profileAdapter.getFilter().filter(((City) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamecity());
+                mViewModel.setProfileRequest(new ProfileRequest(
+                        ((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory(),
+                        ((City) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamecity()));
 
+            }else if(((BottomSheetDialogFilter.FilterMessage) message).regionDivision instanceof District){
+                profileAdapter.getFilter().filter(((District) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamedist());
+                mViewModel.setProfileRequest(new ProfileRequest(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory(),
+                        ((District) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamedist()));
+            }else{
+                Timber.d(TAG,"no filter select");
+            }
+        }
     }
 
     @Nullable
@@ -86,9 +103,11 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
         setHasOptionsMenu(true);
         setUpToolBar(getArguments().getParcelable(KEY_PICK_CATEGORY));
         setUpProfileAdapter();
-        mViewModel.setIdCategory(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory());
+        mViewModel.setProfileRequest(new ProfileRequest(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory(),null));
         return view;
     }
+
+
 
     @Inject
     ProfileAdapter profileAdapter;
@@ -105,9 +124,22 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_filter,menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
             Toast.makeText(DetailCategoryFragment.this.getActivity(),"back",Toast.LENGTH_LONG).show();
+            return true;
+        }else if(item.getItemId()==R.id.action_filter){
+            /*Rotate3dAnimation rotate3dAnimation = new Rotate3dAnimation(-90f,0f,0.5f,0f,0.0f,false);
+            rotate3dAnimation.setDuration(4000);
+            mFragmentBinding.filtercontainer.startAnimation(rotate3dAnimation);*/
+            bottomSheetDialogFilter.show(getActivity().getSupportFragmentManager(),null);
         }
 
         return super.onOptionsItemSelected(item);
@@ -160,4 +192,5 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     public void onClick(ProfileModel profileModel,ImageView sharedImageView) {
         navigationController.navigateToDetailProfile(profileModel,sharedImageView);
     }
+
 }

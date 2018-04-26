@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -14,7 +15,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by WhoAmI on 06/03/2018.
  */
 
-@Entity(tableName = "category")
+@Entity(tableName = "categories")
 public class Category implements Parcelable{
     @SerializedName("idcategory")
     @Expose
@@ -22,15 +23,30 @@ public class Category implements Parcelable{
     @PrimaryKey
     private String idcategory;
 
+    @NonNull
     @SerializedName("category_name")
     @Expose
-    @ColumnInfo(name = "nameofcategory")
+    @ColumnInfo(name = "category_name")
     private String namecategory;
 
+    @NonNull
     @SerializedName("image_path")
     @Expose
     @ColumnInfo(name = "image_path")
     private String image_path;
+
+    @SerializedName("num_profile")
+    @Expose
+    @NonNull
+    private int num_profile;
+
+    public int getNum_profile() {
+        return num_profile;
+    }
+
+    public void setNum_profile(int num_profile) {
+        this.num_profile = num_profile;
+    }
 
     protected Category(Parcel in) {
         idcategory = in.readString();
@@ -90,5 +106,14 @@ public class Category implements Parcelable{
         dest.writeString(idcategory);
         dest.writeString(namecategory);
         dest.writeString(image_path);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31* result + idcategory.hashCode();
+        result = 31* result + namecategory.hashCode();
+        result = 31* result + image_path.hashCode();
+        return result;
     }
 }

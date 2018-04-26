@@ -147,11 +147,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
             AlertDialog mRoleDialog = new AlertDialog.Builder(this).setTitle("Pick Role")
                     .setAdapter(new ArrayAdapter(getBaseContext(),android.R.layout.simple_list_item_1,
                                     user.getListRoleName())
-                    ,((dialog, which) -> {
-                        navigateToMainScreen(intent,user.getRole_list().get(which));
-                    })).create();
+                    ,((dialog, which) -> navigateToMainScreen(intent,user.getRole_list().get(which)))).create();
             mRoleDialog.show();
-        }else {
+        }else{
             navigateToMainScreen(intent,user.getRole_list().get(0));//get default user
         }
 

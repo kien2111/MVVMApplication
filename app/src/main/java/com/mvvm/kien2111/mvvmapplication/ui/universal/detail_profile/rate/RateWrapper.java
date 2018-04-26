@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.BaseWrapper;
@@ -12,6 +13,17 @@ import java.util.List;
  */
 
 public class RateWrapper extends BaseWrapper {
+    @SerializedName("query")
+    @Expose
+    private String query;
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
     public List<RateModel> getLst_rate() {
         return lst_rate;
     }

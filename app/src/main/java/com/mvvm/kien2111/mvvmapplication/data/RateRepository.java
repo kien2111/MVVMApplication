@@ -1,13 +1,11 @@
 package com.mvvm.kien2111.mvvmapplication.data;
 
-import android.arch.lifecycle.MutableLiveData;
-
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateNextPageResult;
 import com.mvvm.kien2111.mvvmapplication.data.remote.RateService;
-import com.mvvm.kien2111.mvvmapplication.model.Resource;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.RateRequest;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate.RateWrapper;
 
 import java.util.ArrayList;
@@ -37,7 +35,13 @@ public class RateRepository {
         this.roomDb = roomDb;
     }
 
-    public Flowable<Resource<List<RateModel>>> fetchPageRate(String iduser){
+    public Completable doRate(RateRequest rateRequest){
+        return rateService.doRate(rateRequest)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Flowable<List<RateModel>> fetchPageRate(String iduser){
         return rateService.getRateList(iduser)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -59,11 +63,10 @@ public class RateRepository {
                 .toFlowable()
                 .flatMap(profileWrapper -> roomDb.rateDao()
                         .findNextPageResultFlowable(iduser)
-                        .switchMap(result -> roomDb.rateDao().loadOrdered(result.idrates)))
-                .map(Resource::success);
+                        .switchMap(result -> roomDb.rateDao().loadOrdered(result.idrates)));
     }
 
-    public Flowable<Resource<Boolean>> fetchNextPageRate(String iduser){
+    public Flowable<Boolean> fetchNextPageRate(String iduser){
         return Flowable.create(emitter -> {
            FetchNextRatePageTask task = new FetchNextRatePageTask(emitter,rateService,roomDb,iduser);
             Completable.fromRunnable(task)
@@ -92,7 +95,7 @@ public class RateRepository {
             }
             final Integer next = current.next;
             if(next == null || next<0){
-                emitter.onNext(Resource.success(true));
+                emitter.onNext(true);
                 return;
             }
             try{
@@ -113,13 +116,13 @@ public class RateRepository {
                     }finally {
                         roomDb.endTransaction();
                     }
-                    emitter.onNext(Resource.success(response.getNextpage()!=null));
+                    emitter.onNext(response.getNextpage()!=null);
                 }else{
-                    emitter.onNext(Resource.error("Can't load more rate",true));
+                    emitter.onNext(true);
                 }
 
             }catch (Exception e){
-                emitter.onNext(Resource.error(e.getMessage(),true));
+                emitter.onNext(true);
             }finally {
                 emitter.onComplete();
             }

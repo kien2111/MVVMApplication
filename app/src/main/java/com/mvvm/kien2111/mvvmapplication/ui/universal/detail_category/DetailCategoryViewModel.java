@@ -1,23 +1,22 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
-import android.support.annotation.Nullable;
 
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.ProfileRepository;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
+import com.mvvm.kien2111.mvvmapplication.model.BaseNextPageHandler;
+import com.mvvm.kien2111.mvvmapplication.model.LoadMoreState;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.util.AbsentLiveData;
+import com.mvvm.kien2111.mvvmapplication.util.MyLiveDataReactiveStream;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -26,25 +25,36 @@ import javax.inject.Inject;
  */
 
 public class DetailCategoryViewModel extends BaseViewModel {
-    MutableLiveData<String> mutableCategoryIdLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ProfileRequest> mutableCategoryIdLiveData = new MutableLiveData<>();
+
     ObservableBoolean showRecycleview = new ObservableBoolean(false);
-    LiveData<Resource<List<ProfileModel>>> resourceListProfileMutableLiveData ;
-    private final NextPageHandler nextPageHandler;
+    private final LiveData<Resource<List<ProfileModel>>> resourceListProfileMutableLiveData ;
+    //private final NextPageHandler nextPageHandler;
+    private final BaseNextPageHandler nextPageHandler;
     private final ProfileRepository profileRepository;
     @Inject
     public DetailCategoryViewModel(EventBus eventBus,ProfileRepository repository){
         super(eventBus);
         this.profileRepository = repository;
-        nextPageHandler = new NextPageHandler(repository);
+        nextPageHandler = new BaseNextPageHandler() {
+            @Override
+            public LiveData<Resource<Boolean>> bindNextPageCall(Object... param) {
+                return MyLiveDataReactiveStream
+                        .fromPublisher(repository.fetchNextPageProfile(
+                                (ProfileRequest) param[0]));
+            }
+        };
         resourceListProfileMutableLiveData = Transformations.switchMap(mutableCategoryIdLiveData, input -> {
             if(input==null){
                 return AbsentLiveData.create();
             }else{
-                return LiveDataReactiveStreams.fromPublisher(profileRepository.getProfile(input));
+                return MyLiveDataReactiveStream.fromPublisher(profileRepository.getProfile(input));
             }
         });
 
     }
+
+
 
     public ObservableBoolean getShowRecycleview() {
         return showRecycleview;
@@ -62,26 +72,19 @@ public class DetailCategoryViewModel extends BaseViewModel {
     }
 
     public void loadNextPage() {
-        String query = mutableCategoryIdLiveData.getValue();
-        if(query == null ||query.trim().length()==0){
+        ProfileRequest profileRequest = mutableCategoryIdLiveData.getValue();
+        if(profileRequest == null ||
+                profileRequest.query.trim().length()==0){
             return;
         }
-        nextPageHandler.queryNextPage(query);
+        nextPageHandler.queryNextPage(profileRequest);
     }
-    public void setIdCategory(String idCategory){
+    public void setProfileRequest(ProfileRequest profileRequest){
         nextPageHandler.reload();
-        mutableCategoryIdLiveData.setValue(idCategory);
+        mutableCategoryIdLiveData.setValue(profileRequest);
     }
 
-    public static class LoadMoreState{
-        public final Boolean isRunning;
-        public final String errorMessage;
-        public LoadMoreState(Boolean isRunning,String errorMessage){
-            this.isRunning = isRunning;
-            this.errorMessage = errorMessage;
-        }
-    }
-    static class NextPageHandler implements Observer<Resource<Boolean>> {
+    /*static class NextPageHandler implements Observer<Resource<Boolean>> {
         MutableLiveData<LoadMoreState> loadMoreStateMutableLiveData = new MutableLiveData<>();
         LiveData<Resource<Boolean>> nextPageLiveData;
         private final ProfileRepository repository;
@@ -101,7 +104,7 @@ public class DetailCategoryViewModel extends BaseViewModel {
                 return;
             unregister();
             this.query = query;
-            nextPageLiveData = LiveDataReactiveStreams.fromPublisher(repository.fetchNextPageProfile(query));
+            nextPageLiveData = MyLiveDataReactiveStream.fromPublisher(repository.fetchNextPageProfile(query));
             loadMoreStateMutableLiveData.setValue(new LoadMoreState(true,null));
             nextPageLiveData.observeForever(this);
         }
@@ -140,6 +143,6 @@ public class DetailCategoryViewModel extends BaseViewModel {
             }
         }
 
-    }
+    }*/
 
 }

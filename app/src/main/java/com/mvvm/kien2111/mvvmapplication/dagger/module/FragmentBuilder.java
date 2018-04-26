@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
 import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.BottomSheetDialogFilter;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileFragment;
@@ -41,5 +42,8 @@ public abstract class FragmentBuilder {
     @ContributesAndroidInjector(modules = {DetailProfileModule.class,ChildDetailProfileBuilder.class})
     abstract DetailProfileFragment bindDetailProfileFragment();
 
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract BottomSheetDialogFilter bindBottomSheetDialogFilter();
 
 }

@@ -11,6 +11,8 @@ import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel;
 import com.mvvm.kien2111.mvvmapplication.databinding.RateItemBinding;
 
+import java.util.UUID;
+
 /**
  * Created by WhoAmI on 04/04/2018.
  */
@@ -21,6 +23,7 @@ public class RateAdapter extends BaseAdapter<RateModel,RateItemBinding> {
     public RateAdapter(FragmentBindingComponent fragmentBindingComponent,ClickRateCallBack callBack){
         this.dataBindingComponent = fragmentBindingComponent;
         this.clickRateCallBack = callBack;
+        this.setHasStableIds(true);
     }
     @Override
     protected BaseViewHolder<RateItemBinding> instantiateViewHolder(RateItemBinding mBinding) {
@@ -29,7 +32,8 @@ public class RateAdapter extends BaseAdapter<RateModel,RateItemBinding> {
 
     @Override
     protected RateItemBinding createBinding(ViewGroup parent) {
-        RateItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.rate_item,parent,false,dataBindingComponent);
+        RateItemBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()), R.layout.rate_item,parent,false,dataBindingComponent);
         return binding;
     }
 
@@ -55,5 +59,10 @@ public class RateAdapter extends BaseAdapter<RateModel,RateItemBinding> {
     @Override
     protected boolean areItemsTheSame(RateModel olditem, RateModel newitem) {
         return false;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return UUID.fromString(getLstData().get(position).getUser().getUserId()).getLeastSignificantBits();
     }
 }

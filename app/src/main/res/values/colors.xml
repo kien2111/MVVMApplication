@@ -10,7 +10,8 @@
     <color name="green_money_color">#73e24f</color>
     <color name="dark_blue_currency">#1237ef</color>
     <color name="time_unit_system">#fc7b02</color>
-    
+    <color name="lime">#eeff41</color>
+
     <color name="color_lighter_gray">#e9dddddd</color>
     <color name="darker_gray">#bbb</color>
     <color name="color_admin_background_title">#303F9F</color>
@@ -26,7 +27,7 @@
 
     <color name="bottombar_icon">#342f71</color>
     <color name="cardview_category_item_background_color">#FFFFFF</color>
-    <color name="my_dark_green">#1bda0e</color>
+    <color name="my_dark_green">#21b617</color>
     file of user list
     <color name="admin_backround_first_file">#6BCBCA</color>
     <color name="admin_backround_second_file">#EDEDE5</color>
@@ -41,4 +42,7 @@
     <color name="user_color_text_black">#000000</color>
 
     <color name="light_blue">#6C9AEB</color>
+    <color name="green_accept_color">#50AF00</color>
+
+    <color name="cyan_light">#18ffff</color>
 </resources>

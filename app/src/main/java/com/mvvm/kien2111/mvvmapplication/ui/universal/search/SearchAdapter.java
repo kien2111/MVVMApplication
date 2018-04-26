@@ -40,6 +40,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public SearchAdapter(FragmentBindingComponent fragmentBindingComponent){
         arrayListItem = new ArrayList<>();
         this.dataBindingComponent = fragmentBindingComponent;
+        this.setHasStableIds(true);
     }
     @Override
     public int getItemViewType(int position) {
@@ -53,6 +54,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return NODATA_VIEWTYPE;
         }
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
     @Override

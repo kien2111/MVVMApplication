@@ -1,30 +1,49 @@
 package com.mvvm.kien2111.mvvmapplication.ui.listappointment;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
+import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityListAppoitmentBinding;
+import com.mvvm.kien2111.mvvmapplication.model.Role;
+import com.mvvm.kien2111.mvvmapplication.ui.SplashActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.historyappointment.HistoryAppointmentFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointment.OnProgressAppointmentFragment;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.common.ViewPagerAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by WhoAmI on 07/04/2018.
  */
 
-public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewModel,ActivityListAppoitmentBinding>{
+public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewModel,ActivityListAppoitmentBinding> implements PopupMenu.OnMenuItemClickListener{
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_list_appoitment;
@@ -44,13 +63,67 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
 
     }
 
+    @Inject
+    ViewPagerAdapter viewPagerAdapter;
+
+
+    public void showPopupMenu(View v){
+        PopupMenu popupMenu = new PopupMenu(this,v);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        popupMenu.setOnMenuItemClickListener(this);
+        inflater.inflate(R.menu.appointment_menu,popupMenu.getMenu());
+        popupMenu.show();
+    }
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
         super.onCreate(savedInstanceState);
-        DefaultStateViewActivity();
+        defaultStateViewActivity();
+        setUpViewPagerData();
+        observePickMenuItem();
     }
-    public void DefaultStateViewActivity(){
+
+    private void setUpViewPagerData() {
+        viewPagerAdapter.addFragment(OnProgressAppointmentFragment.newInstance(),"On Progress Appointment");
+        viewPagerAdapter.addFragment(HistoryAppointmentFragment.newInstance(),"History Appointment");
+        mActivityBinding.viewPager.setAdapter(viewPagerAdapter);
+        mActivityBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    private void observePickMenuItem() {
+        mViewModel.getRoleOptionMutableLiveData().observe(this,pickOption -> {
+            if(pickOption==null)return;
+            eventBus.post(new PickOptionMessage(pickOption));
+        });
+    }
+
+    public static class PickOptionMessage extends BaseMessage{
+        public ListAppointmentViewModel.PickOption pickOption;
+        public PickOptionMessage(ListAppointmentViewModel.PickOption pickOption){
+            this.pickOption = pickOption;
+        }
+    }
+
+
+    public void defaultStateViewActivity(){
         List<ICommand> commands = new ArrayList<>();
         commands.add(new SwitchOnButton(mActivityBinding.onProgressButton));
         new ToggleButton(commands).toggle();
@@ -71,6 +144,25 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
         new ToggleButton(commands).toggle();
     }
 
+    @Inject
+    PreferenceHelper preferenceHelper;
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_freelancer:
+                mViewModel.pickOption(new ListAppointmentViewModel.PickOption(
+                        ListAppointmentViewModel.PickOption.Option.FREELANCER,
+                        preferenceHelper.getUserData().getUser().getUserId()));
+                return true;
+            case R.id.action_employer:
+                mViewModel.pickOption(new ListAppointmentViewModel.PickOption(
+                        ListAppointmentViewModel.PickOption.Option.EMPLOYER,
+                        preferenceHelper.getUserData().getUser().getUserId()));
+                return true;
+        }
+        return false;
+    }
 
 
     static class ToggleButton{

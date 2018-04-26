@@ -59,7 +59,6 @@ public class FeedFragment extends BaseFragment<FeedViewModel,FragmentFeedBinding
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setHasOptionsMenu(true);
         setUpTabLayout();
         setUpToolbar();
         return view;

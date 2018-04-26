@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.base;
 
+import android.accounts.AccountManager;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +36,13 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewDataBindi
     protected VB mFragmentBinding;
 
     @Inject
+    public Gson gson;
+
+    @Inject
     protected ViewModelProvider.Factory viewModelFactory;
+
+    @Inject
+    public AccountManager mAccountManager;
 
     @Inject
     protected EventBus eventBus;

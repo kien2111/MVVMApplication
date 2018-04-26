@@ -69,23 +69,9 @@ public class CategoryFragment extends BaseFragment<CategoryViewModel,FragmentCat
     private void setupCategoryAdapter() {
         mFragmentBinding.recycleViewCategories.setAdapter(categoryAdapter);
         //if(mFragmentBinding.recycleViewCategories.getLayoutManager()==null)
-            mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager.get());
+        mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager.get());
         mViewModel.getResourceCategoriesLiveData().observe(this,listResource -> {
-            switch (listResource.status){
-                case SUCCESS:
-                    if(listResource!=null && listResource.getData()!=null){
-                        categoryAdapter.changeDataSet(listResource.data);
-                    }else{
-                        categoryAdapter.changeDataSet(Collections.emptyList());
-                    }
-                    break;
-                case LOADING:
-                    Toast.makeText(CategoryFragment.this.getContext(),"Loading",Toast.LENGTH_LONG).show();
-                    break;
-                case ERROR:
-                    handleError(listResource.message);
-                    break;
-            }
+            categoryAdapter.changeDataSet(listResource.data==null?Collections.emptyList():listResource.data);
 
         });
     }

@@ -1,158 +1,178 @@
 package com.mvvm.kien2111.mvvmapplication.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mvvm.kien2111.mvvmapplication.BR;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by WhoAmI on 21/01/2018.
  */
 
-public class User implements Parcelable {
+public class User extends BaseObservable implements Parcelable {
+    public User(){}
 
+    @Bindable
     public String getRealname() {
         return realname;
     }
 
     public void setRealname(String realname) {
         this.realname = realname;
+        notifyPropertyChanged(BR.realname);
     }
-
+    @Bindable
     public Gender getGender() {
         return gender;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
+        notifyPropertyChanged(BR.gender);
     }
-
-    public Date getBirthday() {
+    @Bindable
+    public java.util.Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(java.util.Date birthday) {
         this.birthday = birthday;
+        notifyPropertyChanged(BR.birthday);
     }
-
+    @Bindable
     public String getPhone_individual() {
         return phone_individual;
     }
 
     public void setPhone_individual(String phone_individual) {
         this.phone_individual = phone_individual;
+        notifyPropertyChanged(BR.phone_individual);
     }
-
+    @Bindable
     public Profile getProfile() {
         return profile;
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+        notifyPropertyChanged(BR.profile);
     }
-
+    @Bindable
     public String getBrandname() {
         return brandname;
     }
 
     public void setBrandname(String brandname) {
         this.brandname = brandname;
+        notifyPropertyChanged(BR.brandname);
     }
-
+    @Bindable
     public double getBudget_from() {
         return budget_from;
     }
 
     public void setBudget_from(double budget_from) {
         this.budget_from = budget_from;
+        notifyPropertyChanged(BR.budget_from);
     }
-
+    @Bindable
     public double getBudget_to() {
         return budget_to;
     }
 
     public void setBudget_to(double budget_to) {
         this.budget_to = budget_to;
+        notifyPropertyChanged(BR.budget_to);
     }
-
+    @Bindable
     public String getPhone_company() {
         return phone_company;
     }
 
     public void setPhone_company(String phone_company) {
         this.phone_company = phone_company;
+        notifyPropertyChanged(BR.phone_company);
     }
-
+    @Bindable
     public String getLogo_company() {
         return logo_company;
     }
 
     public void setLogo_company(String logo_company) {
         this.logo_company = logo_company;
+        notifyPropertyChanged(BR.logo_company);
     }
 
+    @Bindable
     public String getAbout_company() {
         return about_company;
     }
 
     public void setAbout_company(String about_company) {
         this.about_company = about_company;
+        notifyPropertyChanged(BR.about_company);
     }
-
+    @Bindable
     public double getAccount_balance() {
         return account_balance;
     }
 
     public void setAccount_balance(double account_balance) {
         this.account_balance = account_balance;
+        notifyPropertyChanged(BR.account_balance);
     }
-
+    @Bindable
     public String getUserName() {
         return username;
     }
 
     public void setUserName(String username) {
         this.username = username;
+        notifyPropertyChanged(BR.userName);
     }
-
+    @Bindable
     public String getPassword() {
         return password;
+
     }
 
     public void setPassword(String password) {
         this.password = password;
+        notifyPropertyChanged(BR.password);
     }
-
+    @Bindable
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+        notifyPropertyChanged(BR.avatar);
     }
-
+    @Bindable
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+        notifyPropertyChanged(BR.email);
     }
-
+    @Bindable
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+        notifyPropertyChanged(BR.userId);
     }
 
     @Expose
@@ -165,7 +185,7 @@ public class User implements Parcelable {
 
     @Expose
     @SerializedName("birthday")
-    private java.sql.Date birthday;
+    private java.util.Date birthday;
 
     @Expose
     @SerializedName("phone_individual")
@@ -248,13 +268,14 @@ public class User implements Parcelable {
         email = in.readString();
         userId = in.readString();
     }
-
+    @Bindable
     public List<Role> getRole_list() {
         return role_list;
     }
 
     public void setRole_list(List<Role> role_list) {
         this.role_list = role_list;
+        notifyPropertyChanged(BR.role_list);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

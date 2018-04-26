@@ -18,6 +18,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalModule;
+import com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -65,5 +67,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {ListAppointmentModule.class,ChildListAppointmentBuilder.class})
     abstract ListAppointmentActivity bindListAppointmentActivity();
 
-
+    @PerActivity
+    @ContributesAndroidInjector(modules = {UserProfileModule.class,ChildUserProfileBuilder.class})
+    abstract UserProfileActivity bindUserProfileActivity();
 }

@@ -1,5 +1,11 @@
 package com.mvvm.kien2111.mvvmapplication.util;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -7,6 +13,7 @@ import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +23,7 @@ import java.util.StringTokenizer;
  * Created by WhoAmI on 21/03/2018.
  */
 
-public class StringUtil {
+public final class StringUtil {
     @Nullable
     public static List<Integer> splitToIntList(@Nullable String input) {
         if (input == null) {
@@ -70,4 +77,17 @@ public class StringUtil {
         return StringUtils.join(stringlist.toArray(),",");
     }
 
+    public static String getRealPathFromURI(Context context, Uri contentURI) {
+        String result;
+        Cursor cursor = context.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
 }

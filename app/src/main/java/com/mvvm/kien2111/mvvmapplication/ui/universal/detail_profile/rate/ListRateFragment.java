@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,16 +66,20 @@ public class ListRateFragment extends BaseFragment<ListRateViewModel,FragmentLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        //setUpListRateAdapter();
-        //mViewModel.setIdUser(((ProfileModel)getArguments().getParcelable(KEY_PROFILE_MODEL)).getIdprofile());
+        setUpListRateAdapter();
+        mViewModel.setIdUser(((ProfileModel)getArguments().getParcelable(KEY_PROFILE_MODEL)).getIdprofile());
         return view;
     }
 
     @Inject
     RateAdapter rateAdapter;
 
+    @Inject
+    DividerItemDecoration dividerItemDecoration;
+
     private void setUpListRateAdapter() {
         mFragmentBinding.recycleViewRate.setAdapter(rateAdapter);
+        mFragmentBinding.recycleViewRate.addItemDecoration(dividerItemDecoration);
         mFragmentBinding.recycleViewRate.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
