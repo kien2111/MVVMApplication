@@ -66,8 +66,9 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.6'
     /*implementation 'com.jakewharton:butterknife:8.8.1'
         annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
         */
+
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.12.0'
     implementation "io.reactivex.rxjava2:rxjava:$rxJava2LibraryVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2LibraryVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2LibraryVersion"

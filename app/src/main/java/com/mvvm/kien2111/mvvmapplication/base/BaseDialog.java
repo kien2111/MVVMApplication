@@ -16,7 +16,8 @@ import android.view.Window;
  * Created by WhoAmI on 07/02/2018.
  */
 
-public abstract class BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
+public abstract class
+BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
     protected BaseActivity mActivity;
     protected VB mDialogBinding;
 

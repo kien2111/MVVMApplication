@@ -6,11 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,6 +40,18 @@ public class User implements Parcelable {
         this.birthday = birthday;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPhone_individual() {
         return phone_individual;
     }
@@ -51,9 +60,6 @@ public class User implements Parcelable {
         this.phone_individual = phone_individual;
     }
 
-    public Profile getProfile() {
-        return profile;
-    }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
@@ -139,7 +145,8 @@ public class User implements Parcelable {
         this.avatar = avatar;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
@@ -165,7 +172,7 @@ public class User implements Parcelable {
 
     @Expose
     @SerializedName("birthday")
-    private java.sql.Date birthday;
+    private Date birthday;
 
     @Expose
     @SerializedName("phone_individual")
@@ -201,7 +208,6 @@ public class User implements Parcelable {
     private String about_company;
 
 
-
     @Expose
     @SerializedName("role_list")
     private List<Role> role_list;
@@ -231,6 +237,10 @@ public class User implements Parcelable {
     private String userId;
 
 
+    public User() {
+
+    }
+
     protected User(Parcel in) {
         realname = in.readString();
         phone_individual = in.readString();
@@ -240,7 +250,7 @@ public class User implements Parcelable {
         phone_company = in.readString();
         logo_company = in.readString();
         about_company = in.readString();
-
+        role_list = in.readArrayList(Role.class.getClassLoader());
         account_balance = in.readDouble();
         username = in.readString();
         password = in.readString();
@@ -270,10 +280,9 @@ public class User implements Parcelable {
     };
 
 
-
-    public List<String> getListRoleName(){
+    public List<String> getListRoleName() {
         List<String> lst_string = new ArrayList<>();
-        for(Role role : role_list){
+        for (Role role : role_list) {
             lst_string.add(role.getRolename());
         }
         return lst_string;
@@ -302,8 +311,6 @@ public class User implements Parcelable {
         dest.writeString(email);
         dest.writeString(userId);
     }
-
-
 
 
 }

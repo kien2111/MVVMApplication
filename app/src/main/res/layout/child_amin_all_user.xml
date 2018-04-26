@@ -6,56 +6,59 @@
     android:orientation="horizontal"
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
-        android:src="@drawable/icon_admin_avatar_user"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_personname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nguyen Van Khanh"
-            android:paddingTop="5dp"
-            android:textSize="@dimen/admin_textsize_16dp"
-            android:textColor="@color/admin_background_notibar"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="khanhnv@gmail.com"
-            android:paddingTop="5dp"
-            android:textSize="@dimen/admin_textsize_12dp"
-            android:textColor="@color/admin_background_notibar"
-            android:gravity="center"/>
-    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/admin_sharp_screen_home__layout"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cicle_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentLeft="true"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp">
-            <CheckBox
-                android:id="@+id/checkbox_user"
+            android:src="@drawable/icon_admin_avatar_user"/>
+        <LinearLayout
+            android:id="@+id/tab_edituser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/cicle_imv"
+            android:layout_toLeftOf="@+id/checkbox_user"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_personname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"/>
+                android:text="Nguyen Van Khanh"
+                android:paddingTop="5dp"
+                android:textSize="@dimen/admin_textsize_16dp"
+                android:textColor="@color/admin_background_notibar"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="khanhnv@gmail.com"
+                android:paddingTop="5dp"
+                android:textSize="@dimen/admin_textsize_12dp"
+                android:textColor="@color/admin_background_notibar"
+                android:gravity="center"/>
         </LinearLayout>
 
-
+        <CheckBox
+            android:id="@+id/checkbox_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"/>
     </RelativeLayout>
+
+
 
 </LinearLayout>

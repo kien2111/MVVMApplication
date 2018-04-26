@@ -4,9 +4,7 @@
     <item
         android:title="@string/title_search_view"
         android:id="@+id/menu_toolbarsearch"
-        
         android:icon="@drawable/ic_search_white_24dp"
-
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>

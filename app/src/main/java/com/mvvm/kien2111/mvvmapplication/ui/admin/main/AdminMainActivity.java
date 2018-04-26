@@ -1,64 +1,57 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.main;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminHomeBinding;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserActivity;
-import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import javax.inject.Inject;
 
 /**
  * Created by VAKHANHPR on 2/26/2018.
  */
 
-public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityAdminHomeBinding >  {
-
-
+public class AdminMainActivity extends BaseActivity<AdminMainViewModel, ActivityAdminHomeBinding> implements BasicDialogAdmin.BasicDialogAdminListener {
 
     //go to activity Manage Account
     //@Override
     public void gotomanagerAccount(View view) {
-        Intent mItent= new Intent(this, ManageUserActivity.class);
+        Intent mItent = new Intent(this, ManageUserActivity.class);
         startActivity(mItent);
     }
 
     //Go to activity Satistical
     public void gotoSatisticalActivity(View view) {
 
-        Intent mItent= new Intent(this, AdminStatisticalActivity.class);
+        Intent mItent = new Intent(this, AdminStatisticalActivity.class);
         startActivity(mItent);
     }
 
     //Go to activity edit myprofile
     //@Override
     public void gotoManageMyProfile(View view) {
-        Intent mItent= new Intent(this, AdminManageProfileActivity.class);
+        Intent mItent = new Intent(this, AdminManageProfileActivity.class);
         startActivity(mItent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseMessage message){
-        if(message instanceof AdminMainViewModel.Message){
+    public void onEvent(BaseMessage message) {
+        if (message instanceof AdminMainViewModel.Message) {
 
-        }else if(message instanceof AdminMainViewModel.DummyMessage){
+        } else if (message instanceof AdminMainViewModel.DummyMessage) {
             //gotomanagerAccount();
         }
     }
@@ -70,7 +63,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
 
     @Override
     protected AdminMainViewModel createViewModel() {
-        return ViewModelProviders.of(this,viewModelFactory).get(AdminMainViewModel.class);
+        return ViewModelProviders.of(this, viewModelFactory).get(AdminMainViewModel.class);
     }
 
     @Override
@@ -82,6 +75,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,9 +95,28 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel,ActivityA
             }
         });*/
 
+       //view dialog
+   /*     View a = LayoutInflater.from(this).inflate(R.layout.category_item, null, false);
+        BasicDialogAdmin basicDialogAdmin = new BasicDialogAdmin(this);
+        basicDialogAdmin
+                .setTitle("AAA")
+                .setTitleButton("SSS", "SSS")
+                .setmListener(this)
+                .setView(a)
+                .show();*/
     }
 
     private void handleError(String message) {
 
+    }
+
+    @Override
+    public void onClickOK() {
+        Log.d("dá", "OK");
+    }
+
+    @Override
+    public void onClickCancel() {
+        Log.d("dá", "Cancle");
     }
 }

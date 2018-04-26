@@ -5,11 +5,12 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.mvvm.kien2111.mvvmapplication.AppViewModelFactory;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.historyappointment.HistoryAppointmentViewModel;
@@ -17,7 +18,6 @@ import com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointmen
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel;
-import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category.DetailCategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel;
@@ -98,6 +98,12 @@ public abstract class ViewModelModule {
     @ViewModelKey(AdminManageProfileViewModel.class)
     abstract ViewModel bindAdminManageProfileViewModel(AdminManageProfileViewModel allAdminManageProfileViewModel);
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddUserViewModel.class)
+    abstract ViewModel bindAddUserViewModle(AddUserViewModel allAddUserViewModel);
+
     @Binds
     @IntoMap
     @ViewModelKey(CategoryViewModel.class)
@@ -138,6 +144,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HistoryAppointmentViewModel.class)
     abstract ViewModel bindHistoryAppointmentViewModel(HistoryAppointmentViewModel historyAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserEditProfileViewModel.class)
+    abstract ViewModel bindUserEditProfileViewModel(UserEditProfileViewModel userEditProfileViewModel);
 
     @Binds
     @Singleton
