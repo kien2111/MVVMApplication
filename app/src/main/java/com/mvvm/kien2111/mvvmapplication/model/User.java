@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mvvm.kien2111.mvvmapplication.BR;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 public class User extends BaseObservable implements Parcelable {
-    public User(){}
 
     @Bindable
     public String getRealname() {
@@ -324,7 +323,9 @@ public class User extends BaseObservable implements Parcelable {
         dest.writeString(userId);
     }
 
+    public User(){
 
+    }
 
 
 }

@@ -2,7 +2,6 @@ package com.mvvm.kien2111.mvvmapplication.data.remote.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mvvm.kien2111.mvvmapplication.model.Gender;
 
 /**
  * Created by WhoAmI on 26/02/2018.
@@ -34,5 +33,20 @@ public class SignUpRequest {
     private SignUpRequest(Builder builder){
         this.username = builder.username;
         this.password = builder.password;
+    }
+
+    public  static  class AdminInsertUser
+    {
+        private  String username,email,password,age,photo;
+        private  int role;
+
+        public AdminInsertUser (String username, String email, String password, String age, String photo, int role) {
+            this.username = username;
+            this.email = email;
+            this.password = password;
+            this.age = age;
+            this.photo = photo;
+            this.role = role;
+        }
     }
 }

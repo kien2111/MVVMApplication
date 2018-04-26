@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
  * Created by WhoAmI on 30/03/2018.
  */
@@ -17,11 +15,32 @@ public class Role implements Parcelable {
     @Expose
     private int idrole;
 
-    protected Role(Parcel in) {
+    public Role(int idrole, String rolename, RoleStatus status) {
+        this.idrole = idrole;
+        this.rolename = rolename;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s",this.getRolename());
+    }
+
+    @SerializedName("rolename")
+    @Expose
+    private String rolename;
+
+    @SerializedName("status")
+    @Expose
+    private RoleStatus status;
+
+    public Role(Parcel in) {
         idrole = in.readInt();
         rolename = in.readString();
         status = RoleStatus.mapRole(in.readInt());
     }
+
+
 
     public static final Creator<Role> CREATOR = new Creator<Role>() {
         @Override
@@ -59,13 +78,7 @@ public class Role implements Parcelable {
         this.status = status;
     }
 
-    @SerializedName("rolename")
-    @Expose
-    private String rolename;
 
-    @SerializedName("status")
-    @Expose
-    private RoleStatus status;
 
     @Override
     public int describeContents() {
@@ -79,15 +92,28 @@ public class Role implements Parcelable {
         dest.writeInt(status.getType());
     }
 
-    public enum RoleName{
-        ADMIN("admin"),USER("user");
+    public enum RoleMap {
+        ADMIN("admin",0),USER("user",1);
         private final String rolename;
-        RoleName(String rolename){
-            this.rolename = rolename;
+        private final int type;
+        RoleMap(String rolename, int type){
+            this.rolename = rolename;this.type=type;
         }
 
-        public static RoleName mapRoleName(String name){
-            for(RoleName roleName : values()){
+        public int getType() {
+            return type;
+        }
+
+        public static RoleMap mapRoleType(int type){
+            for(RoleMap roleName : values()){
+                if(type==roleName.getType()){
+                    return roleName;
+                }
+            }
+            return USER;
+        }
+        public static RoleMap mapRoleName(String name){
+            for(RoleMap roleName : values()){
                 if(name.equals(roleName.getRolename())){
                     return roleName;
                 }

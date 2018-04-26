@@ -1,28 +1,25 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.user;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminManageUserBinding;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserFragment;
 
@@ -35,7 +32,11 @@ import java.lang.reflect.Field;
  * Created by donki on 3/6/2018.
  */
 
-public class ManageUserActivity extends BaseActivity<ManageUserViewModel,ActivityAdminManageUserBinding> implements IManageUserNagivator {
+public class ManageUserActivity extends BaseActivity<ManageUserViewModel, ActivityAdminManageUserBinding> implements IManageUserNagivator, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+
+    public static AllUserFragment allUserFragment = new AllUserFragment();
+    public static UngradeUserFragment ungradeUserFragment = new UngradeUserFragment();
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_admin_manage_user;
@@ -43,7 +44,7 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
 
     @Override
     protected ManageUserViewModel createViewModel() {
-        return ViewModelProviders.of(this,viewModelFactory).get(ManageUserViewModel.class);
+        return ViewModelProviders.of(this, viewModelFactory).get(ManageUserViewModel.class);
     }
 
     @Override
@@ -52,94 +53,130 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+    public void onPointerCaptureChanged(boolean hasCapture) {}
 
-    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mViewModel.setmNavigator(this);
         setupBottomnagivation();
         setupTabLayout();
-
     }
-
+    //using event bus
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseMessage message){
+    public void onEvent(BaseMessage message) {
 
     }
 
     //setup bottom nagivationview
     public void setupBottomnagivation() {
-
-        Menu mmenu = mActivityBinding.mbottomNavigation.getMenu();
-
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) mActivityBinding.mbottomNavigation.getChildAt(0);
-            Field shiftingMode = null;
-            try
-            {
-                shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            }
-            catch (NoSuchFieldException e)
-            {
-                e.printStackTrace();
-            }
-            shiftingMode.setAccessible(true);
-            try
-            {
-                shiftingMode.setBoolean(menuView, false);
-            } catch (IllegalAccessException e)
-            {
-                e.printStackTrace();
-            }
-            shiftingMode.setAccessible(false);
-
-        mActivityBinding.mbottomNavigation.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener(){
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId())
-                        {
-                            case R.id.action_favorites:
-                                item.setIcon(R.drawable.icon_admin_delete);
-                                break;
-                            case R.id.action_schedules:
-                                item.setIcon(R.drawable.icon_admin_block);
-                                break;
-                            case  R.id.action_promoted:
-                                item.setIcon(R.drawable.icon_admin_promoted);
-                                break;
-                        }
-                        return true;
-                    }
-                });
+        Field shiftingMode = null;
+        try {
+            shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        shiftingMode.setAccessible(true);
+        try {
+            shiftingMode.setBoolean(menuView, false);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        shiftingMode.setAccessible(false);
+        mActivityBinding.mbottomNavigation.setOnNavigationItemSelectedListener(this);
+        mActivityBinding.mbottomNavigationUnblock.setOnNavigationItemSelectedListener(this);
     }
+
     //setup viewpager and tablayout
-    public void setupTabLayout()
-    {
-        if(mActivityBinding.toolbar!=null)
-        {
+    public void setupTabLayout() {
+        if (mActivityBinding.toolbar != null) {
             setSupportActionBar(mActivityBinding.toolbar);
         }
-        mActivityBinding.mpager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()));
+        mActivityBinding.mpager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()) );
         mActivityBinding.mtabLayout.setupWithViewPager(mActivityBinding.mpager);
         mActivityBinding.toolbar.setVisibility(View.GONE);
+        mActivityBinding.mpager.addOnPageChangeListener(this);//onpage view pager
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_schedules:
+                item.setIcon(R.drawable.icon_admin_block);
+                callBlockUser();
+                break;
+            case R.id.action_promoted:
+                item.setIcon(R.drawable.icon_admin_promoted);
+                callPromoteUser();
+                break;
+            case R.id.action_unlock:
+                item.setIcon(R.drawable.icon_admin_unblock);
+                callUnlockUer();
+                break;
+        }
+        return false;
+    }
+
+    //fun callUnlockUser
+    void callUnlockUer(){
+
+        if(allUserFragment!=null){
+            ungradeUserFragment.callUnlockUser();
+        }
+    }
+
+    //function block user
+    void callBlockUser() {
+        //mViewModel.gotoBlockUser();
+        if (allUserFragment != null) {
+            allUserFragment.callBlockUser();
+        }
+    }
+
+
+    //function promote user
+    void callPromoteUser() {
+
+    }
+
+    //event scroll viewpager
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if(position==0)
+        {
+            mActivityBinding.mbottomNavigation.setVisibility(View.VISIBLE);
+            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.GONE);
+        }
+        else{
+            mActivityBinding.mbottomNavigation.setVisibility(View.GONE);
+            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {}//scroll viewpager
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}//event viewpager
 
     //Custom viewpager and tablayout
     static class SectionPagerAdapter extends FragmentPagerAdapter {
-        public SectionPagerAdapter(FragmentManager fm) {
+
+
+        public SectionPagerAdapter(FragmentManager fm ) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new AllUserFragment();
+                    //iBotomNagivationView.showBotom();
+                    return allUserFragment;
                 case 1:
                 default:
-                    return new UngradeUserFragment();
+                    //iBotomNagivationView.hideBotom();
+                    return ungradeUserFragment;
             }
         }
         @Override
@@ -155,11 +192,20 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel,Activit
                     return "All Account";
                 case 1:
                 default:
-                    return "New Account";
+                    return "Block Account";
             }
         }
     }
 
+    //set new user
+    public void gotoAddnewUser(View view) {
+        Intent inten1 = new Intent(this, AddUserActivity.class);
+        startActivity(inten1);
+    }
 
+    //finish activity
+    public void finish(View view){
+        finish();
+    }
 
 }

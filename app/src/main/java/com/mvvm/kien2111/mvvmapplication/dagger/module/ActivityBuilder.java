@@ -10,6 +10,10 @@ import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalAc
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserModule;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserModule;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentModule;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
@@ -54,10 +58,17 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector (modules = {AdminManageProfileModule.class})
     abstract AdminManageProfileActivity binAdminManageProfileActivity();
 
+    @PerActivity
+    @ContributesAndroidInjector(modules = {AddUserModule.class})
+    abstract AddUserActivity binAddUserActivity();
 
     @PerActivity
     @ContributesAndroidInjector(modules = {ManageUserModule.class,FragmentManageUserBuilder.class})
     abstract ManageUserActivity binManageUserActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector (modules = {UserEditProfileModule.class})
+    abstract UserEditProfileActivity binUserEditProfileActivity();
 
     @PerActivity
     @ContributesAndroidInjector

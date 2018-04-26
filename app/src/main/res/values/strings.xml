@@ -43,8 +43,13 @@
     <string name="admin_add_newuser__email">Email</string>
     <string name="admin_add_newuser_uplaypassword">Uplay Password</string>
     <string name="admin_add_newuser_confirmpassword">Confirm Password</string>
-    <string name="admin_add_newuser_age">Age</string>
+    <string name="admin_add_newuser_age">Birthday</string>
     <string name="admin_add_newuser_picture">Avatar</string>
+
+    edit profile user
+    <string name="admin_title_editprofile_user">Edit Profile User</string>
+    <string name="admin_button_editprofile_user">Update</string>
+
 
     edit account
     <string name="admin_edit_myinfo">Change Profile</string>

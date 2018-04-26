@@ -12,8 +12,6 @@ import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.model.Credential;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
-import com.mvvm.kien2111.mvvmapplication.model.Priority;
-import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -19,7 +19,8 @@ import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
  * Created by WhoAmI on 07/02/2018.
  */
 
-public abstract class BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
+public abstract class
+BaseDialog<VB extends ViewDataBinding> extends DialogFragment {
     protected BaseActivity mActivity;
     protected VB mDialogBinding;
     protected View rootView;

@@ -2,7 +2,6 @@ package com.mvvm.kien2111.mvvmapplication.ui;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
@@ -59,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
                         final String account_name = future.getResult().getString(AccountManager.KEY_ACCOUNT_NAME);
                         final Account account = new Account(account_name,accountType);
                         final String rolepicked = mAccountManager.getUserData(account,AccountAuthenticator.KEY_RECENTLY_LOGIN_AS);
-                        if(Role.RoleName.mapRoleName(rolepicked)== Role.RoleName.ADMIN){
+                        if(Role.RoleMap.mapRoleName(rolepicked)== Role.RoleMap.ADMIN){
                             startActivity(new Intent(SplashActivity.this, AdminMainActivity.class));
                             //this is admin
                         }else{

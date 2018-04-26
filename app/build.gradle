@@ -70,7 +70,7 @@ dependencies {
 
         */
     implementation "com.github.humazed:RoomAsset:$assetRoomDbVersion"
-
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.12.0'
     implementation "io.reactivex.rxjava2:rxjava:$rxJava2LibraryVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2LibraryVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2LibraryVersion"

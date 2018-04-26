@@ -4,8 +4,10 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserViewModel"/>
+            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileViewModel"/>
+        <variable name="user" type="com.mvvm.kien2111.mvvmapplication.model.User"/>
     </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:gravity="center"
-                    android:text="@string/admin_add_newuser"
+                    android:text="@string/admin_title_editprofile_user"
                     android:textColor="@color/color_admin_text_title"
                     android:textSize="@dimen/admin_textsize_20dp" />
             </LinearLayout>
@@ -62,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/admin_edittext_border"
+                android:text="@{user.userName}"
                 android:padding="3dp"/>
             <TextView
                 android:layout_marginTop="10dp"
@@ -74,28 +77,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:background="@drawable/admin_edittext_border"/>
-            <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/admin_add_newuser_uplaypassword"
-            android:textSize="@dimen/admin_textsize_16dp"/>
-            <EditText
-                android:id="@+id/edt_uplaypass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:inputType="textPassword"
+                android:text="@{user.email}"
                 android:background="@drawable/admin_edittext_border"/>
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/admin_add_newuser_confirmpassword"
+                android:text="Password"
                 android:textSize="@dimen/admin_textsize_16dp"/>
             <EditText
-                android:id="@+id/edt_confirmpass"
+                android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
@@ -112,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/admin_add_newuser_age"
@@ -133,10 +123,9 @@
                             android:scaleType="center"
                             android:src="@drawable/icon_user_calendar"
                             android:paddingLeft="10dp"
-                            android:onClick="setbirthday"
                             android:paddingTop="5dp"/>
                     </LinearLayout>
-               </LinearLayout>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imv_show_avatar"
@@ -149,7 +138,6 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:text="Browse"
-                    android:onClick="selectImage"
                     android:layout_marginTop="20dp"
                     android:textSize="@dimen/admin_textsize_10dp" />
 
@@ -172,12 +160,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create Account"
+                android:text="@string/admin_button_editprofile_user"
                 android:gravity="center"
                 android:background="#9EC3D3"
                 android:paddingTop="10dp"
-                android:onClick="@{()-> vm.callinsertUser()}"
                 android:paddingBottom="10dp"
+                android:onClick="callUpdateUser"
                 android:textColor="@color/color_admin_black"
                 android:textSize="@dimen/admin_textsize_16dp"/>
         </LinearLayout>
