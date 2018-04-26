@@ -14,8 +14,6 @@ public class BaseMessage {
     }
     public BaseMessage(){}
 
-    public BaseMessage(Throwable throwable){this.throwable=throwable;}
-
     public Throwable getThrowable() {
         return throwable;
     }

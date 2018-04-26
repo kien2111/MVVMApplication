@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,7 +162,7 @@ public class User implements Parcelable {
 
     @Expose
     @SerializedName("birthday")
-    private java.sql.Date birthday;
+    private java.util.Date birthday;
 
     @Expose
     @SerializedName("phone_individual")
@@ -300,7 +300,9 @@ public class User implements Parcelable {
         dest.writeString(userId);
     }
 
+    public User(){
 
+    }
 
 
 }
