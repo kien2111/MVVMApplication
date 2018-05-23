@@ -5,13 +5,27 @@ package com.mvvm.kien2111.mvvmapplication.data.remote.model;
  */
 
 public class RateRequest {
-    public RateRequest(float average_point, String userid) {
+
+    private String content;
+    private float average_point;
+    private String user_who_receive_this_rate;
+    private String user_who_rate_this;
+
+
+    public RateRequest(float average_point, String user_who_receive_this_rate, String user_who_rate_this,String content) {
         this.average_point = average_point;
-        this.userid = userid;
+        this.user_who_receive_this_rate = user_who_receive_this_rate;
+        this.user_who_rate_this = user_who_rate_this;
+        this.content = content;
     }
 
-    private float average_point;
-    private String userid;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public float getAverage_point() {
         return average_point;
@@ -21,11 +35,21 @@ public class RateRequest {
         this.average_point = average_point;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUser_who_receive_this_rate() {
+        return user_who_receive_this_rate;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUser_who_receive_this_rate(String user_who_receive_this_rate) {
+        this.user_who_receive_this_rate = user_who_receive_this_rate;
     }
+
+    public String getUser_who_rate_this() {
+        return user_who_rate_this;
+    }
+
+    public void setUser_who_rate_this(String user_who_rate_this) {
+        this.user_who_rate_this = user_who_rate_this;
+    }
+
+
 }

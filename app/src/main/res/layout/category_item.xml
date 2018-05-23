@@ -19,14 +19,23 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imageCategory"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                app:imageUrl="@{category.image_path}"
-                app:defaultImg="@{@drawable/defaultimage}"
-                app:errorImg="@{@drawable/errorimg}"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+           <android.support.v7.widget.CardView
+               card_view:cardElevation="0dp"
+               card_view:cardCornerRadius="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.mvvm.kien2111.mvvmapplication.util.AspectRatioImageView
+                   android:id="@+id/imageCategory"
+                   app:aspectRatioEnabled="true"
+                   app:dominantMeasurement="width"
+                   android:scaleType="fitCenter"
+                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                   app:imageUrl="@{category.image_path}"
+                   app:defaultImg="@{@drawable/defaultimage}"
+                   app:errorImg="@{@drawable/errorimg}"
+                   android:layout_width="match_parent"
+                   android:layout_height="150dp" />
+           </android.support.v7.widget.CardView>
             <TextView
                 android:layout_marginStart="2dp"
                 android:textColor="@android:color/black"

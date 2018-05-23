@@ -64,9 +64,50 @@ public class Profile extends BaseObservable implements Parcelable{
     @Expose
     @SerializedName("district")
     private District district;
+
+    protected Profile(Parcel in) {
+        idprofile = in.readString();
+        career_objective = in.readString();
+        salary_expected_to = in.readDouble();
+        salary_expected_from = in.readDouble();
+        experienced_description = in.readString();
+        attachment_resume_url = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        summary = in.readString();
+        city = in.readParcelable(City.class.getClassLoader());
+        district = in.readParcelable(District.class.getClassLoader());
+    }
+
+    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
+        @Override
+        public Profile createFromParcel(Parcel in) {
+            return new Profile(in);
+        }
+
+        @Override
+        public Profile[] newArray(int size) {
+            return new Profile[size];
+        }
+    };
+
     @Bindable
     public City getCity() {
         return city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Profile profile = (Profile) o;
+
+        return idprofile.equals(profile.idprofile);
+    }
+
+    @Override
+    public int hashCode() {
+        return idprofile.hashCode();
     }
 
     public void setCity(City city) {
@@ -83,29 +124,7 @@ public class Profile extends BaseObservable implements Parcelable{
         notifyPropertyChanged(BR.district);
     }
 
-
-    protected Profile(Parcel in) {
-        idprofile = in.readString();
-        career_objective = in.readString();
-        salary_expected_to = in.readDouble();
-        salary_expected_from = in.readDouble();
-        experienced_description = in.readString();
-        attachment_resume_url = in.readString();
-        category = in.readParcelable(Category.class.getClassLoader());
-        summary = in.readString();
-    }
     public Profile(){}
-    public static final Creator<Profile> CREATOR = new Creator<Profile>() {
-        @Override
-        public Profile createFromParcel(Parcel in) {
-            return new Profile(in);
-        }
-
-        @Override
-        public Profile[] newArray(int size) {
-            return new Profile[size];
-        }
-    };
 
     @NonNull
     @Bindable
@@ -213,8 +232,10 @@ public class Profile extends BaseObservable implements Parcelable{
         dest.writeString(experienced_description);
         dest.writeString(attachment_resume_url);
         dest.writeParcelable(category, flags);
-        dest.writeParcelable(city,flags);
-        dest.writeParcelable(district,flags);
         dest.writeString(summary);
+        dest.writeParcelable(city, flags);
+        dest.writeParcelable(district, flags);
     }
+
+
 }

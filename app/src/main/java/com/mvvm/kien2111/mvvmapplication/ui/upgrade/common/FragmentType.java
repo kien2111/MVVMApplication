@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
 
 import com.mvvm.kien2111.mvvmapplication.R;
 
@@ -12,28 +11,28 @@ import com.mvvm.kien2111.mvvmapplication.R;
  * Created by WhoAmI on 04/05/2018.
  */
 
-public enum  UpgradeFragmentHolder implements Parcelable{
+public enum FragmentType implements Parcelable{
     FREELANCER_BASIC(android.R.color.white,
-            R.color.blue_material,
+            R.drawable.ripple_freelancer_basic,
             android.R.color.white,
             R.drawable.bronze_trophy,
             R.color.light_blue_material),
-    FREELANCER_MEDIUM(android.R.color.white, R.color.teal_material,android.R.color.white,R.drawable.silver_trophy,R.color.light_teal_material),
-    FREELANCER_PREMIUM(android.R.color.white, android.R.color.holo_red_dark,android.R.color.white,R.drawable.gold_trophy,R.color.orange_material),
-    BUSINESS_BASIC(android.R.color.white, R.color.blue_material,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material),
-    BUSINESS_MEDIUM(android.R.color.white, R.color.blue_material,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material),
-    BUSINESS_PREMIUM(android.R.color.white, R.color.blue_material,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material);
+    FREELANCER_MEDIUM(android.R.color.white, R.drawable.ripple_freelancer_medium,android.R.color.white,R.drawable.silver_trophy,R.color.light_teal_material),
+    FREELANCER_PREMIUM(android.R.color.white,R.drawable.ripple_freelancer_premium,android.R.color.white,R.drawable.gold_trophy,R.color.orange_material),
+    BUSINESS_BASIC(android.R.color.white,R.drawable.ripple_freelancer_basic,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material),
+    BUSINESS_MEDIUM(android.R.color.white,R.drawable.ripple_freelancer_basic,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material),
+    BUSINESS_PREMIUM(android.R.color.white,R.drawable.ripple_freelancer_basic,android.R.color.white,R.drawable.bronze_trophy,R.color.blue_material);
     @ColorRes private int titlecolor;
     @ColorRes private int btnbgcolor;
     @ColorRes private int btntextcolor;
     @DrawableRes private int img;
     @ColorRes private int bg_color;
 
-    UpgradeFragmentHolder(@ColorRes int titlecolor,
-                          @ColorRes int btnbgcolor,
-                          @ColorRes int btntextcolor,
-                          @DrawableRes int img,
-                          @ColorRes int bg_color) {
+    FragmentType(@ColorRes int titlecolor,
+                 @DrawableRes int btnbgcolor,
+                 @ColorRes int btntextcolor,
+                 @DrawableRes int img,
+                 @ColorRes int bg_color) {
         this.titlecolor = titlecolor;
         this.btnbgcolor = btnbgcolor;
         this.btntextcolor = btntextcolor;
@@ -42,7 +41,7 @@ public enum  UpgradeFragmentHolder implements Parcelable{
     }
 
 
-    UpgradeFragmentHolder(Parcel in) {
+    FragmentType(Parcel in) {
         titlecolor = in.readInt();
         btnbgcolor = in.readInt();
         btntextcolor = in.readInt();
@@ -64,15 +63,15 @@ public enum  UpgradeFragmentHolder implements Parcelable{
         return 0;
     }
 
-    public static final Creator<UpgradeFragmentHolder> CREATOR = new Creator<UpgradeFragmentHolder>() {
+    public static final Creator<FragmentType> CREATOR = new Creator<FragmentType>() {
         @Override
-        public UpgradeFragmentHolder createFromParcel(Parcel in) {
-            return UpgradeFragmentHolder.values()[in.readInt()];
+        public FragmentType createFromParcel(Parcel in) {
+            return FragmentType.values()[in.readInt()];
         }
 
         @Override
-        public UpgradeFragmentHolder[] newArray(int size) {
-            return new UpgradeFragmentHolder[size];
+        public FragmentType[] newArray(int size) {
+            return new FragmentType[size];
         }
     };
 

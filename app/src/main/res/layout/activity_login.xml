@@ -10,7 +10,7 @@
     <LinearLayout
         android:fitsSystemWindows="true"
         android:animateLayoutChanges="true"
-        android:background="@drawable/background_login"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -29,15 +29,14 @@
             android:visibility="@{vm.loading?View.VISIBLE : View.GONE}" />
         <!-- Login progress -->
         <ImageView
+            android:contentDescription="@string/logo"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:src="@drawable/logo_text"/>
-
         <LinearLayout
-
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:background="@drawable/border_rectangle_edittext_blur"
@@ -47,7 +46,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_margin="15dp"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/username"
                     android:src="@drawable/user_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
@@ -75,7 +74,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_margin="15dp"
-                    android:contentDescription="TODO"
+                    android:contentDescription="@string/password"
                     android:src="@drawable/lock_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
@@ -84,6 +83,7 @@
                     android:layout_height="match_parent"
                     android:background="#FFF" />
                 <EditText
+                    android:textColor="@android:color/white"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
                     android:id="@+id/password"
@@ -97,9 +97,6 @@
                     android:maxLines="1"
                     android:singleLine="true" />
             </LinearLayout>
-
-
-
             <Button
                 android:onClick="@{() -> vm.serverlogin()}"
                 android:id="@+id/email_sign_in_button"
@@ -116,7 +113,6 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:id="@+id/tvText"
                     android:layout_width="wrap_content"
@@ -149,7 +145,7 @@
                 android:weightSum="2"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:background="@drawable/rounded_facebook_button"
                     android:id="@+id/facebook_login"
@@ -204,6 +200,35 @@
                 </LinearLayout>
 
             </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:onClick="onClickSignUp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@android:color/white"
+                android:text="@string/signup"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:background="@android:color/white"
+                android:layout_width="2dp"
+                android:layout_height="20dip"/>
+            <TextView
+                android:onClick="onClickLostPassword"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@android:color/white"
+                android:text="@string/lostpassword"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

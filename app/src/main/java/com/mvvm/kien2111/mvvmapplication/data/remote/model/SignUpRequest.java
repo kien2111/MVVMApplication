@@ -14,9 +14,12 @@ public class SignUpRequest {
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("email")
+    @Expose
+    private String email;
 
     public static class Builder{
-        private String username,password;
+        private String username,password,email;
         public Builder setPassword(String password){
             this.password = password;
             return this;
@@ -25,6 +28,12 @@ public class SignUpRequest {
             this.username = username;
             return this;
         }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
         public SignUpRequest build(){
             return new SignUpRequest(this);
         }
@@ -33,6 +42,7 @@ public class SignUpRequest {
     private SignUpRequest(Builder builder){
         this.username = builder.username;
         this.password = builder.password;
+        this.email = builder.email;
     }
 
     public  static  class AdminInsertUser

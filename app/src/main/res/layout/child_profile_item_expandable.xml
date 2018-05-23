@@ -15,7 +15,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                app:imageCircleUrl="@{profileitem.profile_avatar}"
+                android:id="@+id/img_circle"
+                app:imageStaticCircleUrl="@{profileitem.profile_avatar}"
                 app:border_color="#fff"
                 app:border_width="2dp"
                 android:layout_width="match_parent"

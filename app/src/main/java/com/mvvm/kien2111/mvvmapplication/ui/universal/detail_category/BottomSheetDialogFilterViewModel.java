@@ -28,6 +28,7 @@ public class BottomSheetDialogFilterViewModel extends BaseViewModel {
     private final LiveData<Resource<List<District>>> listDistrictMutableLiveData;
     private final MutableLiveData<List<City>> resourceListCityLiveData = new MutableLiveData<>();
     private final MutableLiveData<City> cityMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<FilterAction> filterActionMutableLiveData = new MutableLiveData<>();
     private final ProfileRepository profileRepository;
     @Inject
     public BottomSheetDialogFilterViewModel(EventBus eventBus,ProfileRepository profileRepository) {
@@ -38,9 +39,12 @@ public class BottomSheetDialogFilterViewModel extends BaseViewModel {
                 .subscribe(resourceListCityLiveData::setValue, throwable -> {
 
                 }));
-        listDistrictMutableLiveData = Transformations.switchMap(cityMutableLiveData,input -> {
-           return MyLiveDataReactiveStream.fromPublisher(profileRepository.getAllDistrict(input));
-        });
+        listDistrictMutableLiveData = Transformations.switchMap(cityMutableLiveData,input ->
+                MyLiveDataReactiveStream.fromPublisher(profileRepository.getAllDistrict(input)));
+    }
+
+    public MutableLiveData<FilterAction> getFilterActionMutableLiveData() {
+        return filterActionMutableLiveData;
     }
 
     public void pickCity(City city){
@@ -55,6 +59,42 @@ public class BottomSheetDialogFilterViewModel extends BaseViewModel {
 
     public LiveData<List<City>> getResourceListCityLiveData() {
         return resourceListCityLiveData;
+    }
+
+    public void doActionFilter(FilterAction action){
+        if(action!=null && filterActionMutableLiveData.getValue()!=action){
+            filterActionMutableLiveData.setValue(action);
+        }
+    }
+
+    public void saveCitiesPosition(int position){
+        profileRepository.saveCitiesPosition(position);
+    }
+
+    public void saveDistrictsPosition(int position){
+        profileRepository.saveDistrictsPosition(position);
+    }
+
+    public int getCitiesPosition(){
+        return profileRepository.getSaveCitiesPosition();
+    }
+
+    public int getDistrictsPosition(){
+        return profileRepository.getSaveDistrictsPosition();
+    }
+
+    public FilterAction getAction(){
+        return filterActionMutableLiveData.getValue()!=null?filterActionMutableLiveData.getValue():FilterAction.CITY_FILTER;
+    }
+
+    public enum FilterAction{
+        CITY_FILTER("Tỉnh thành phố"),DISTRICT_FILTER("Quận huyện");
+        private final String title;
+        FilterAction(String title){this.title = title;}
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
 }

@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+
     </style>
     <style name="FeedAppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -14,8 +15,9 @@
     </style>
     <style name="MyTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyTabLayoutTitle</item>
-        <item name="tabSelectedTextColor">@color/lime</item>
-        <item name="tabIndicatorColor">@color/lime</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
     </style>
     <style name="MyTabLayoutTitle" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
@@ -67,7 +69,12 @@
         <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
-
+    <style name="AppTheme.PopupOverlay" parent="AppTheme.PopupOverlay">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
@@ -98,5 +105,41 @@
 
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">@color/colorPrimaryBlueGrey</item>
+    </style>
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">#ffff</item>
+    </style>
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="layout">@layout/toolbar_search_view</item>
+        <item name="commitIcon">@drawable/ic_search_commit</item>
+        <item name="closeIcon">@drawable/ic_close_gray_24dp</item>
+        <item name="voiceIcon">@drawable/ic_keyboard_voice_gray_24dp</item>
+        <item name="colorControlNormal">#747474</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
+        <item name="suggestionRowLayout">@layout/search_view_suggestion_row</item>
+        <item name="android:maxWidth">9999dp</item>
+    </style>
+
+    <style name="AutoCompleteTextViewStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:popupBackground">@drawable/search_suggestions_bg</item>
+        <item name="android:popupElevation" tools:targetApi="lollipop">0dp</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="searchViewStyle">@style/SearchViewTheme</item>
+    </style>
+
+    <style name="PremiumRaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/red_material</item>
+        <item name="colorButtonNormal">@color/red_material</item>
+    </style>
+    <style name="MediumRaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/teal_material</item>
+        <item name="colorButtonNormal">@color/teal_material</item>
+    </style>
+    <style name="BasicRaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/indigo_material</item>
+        <item name="colorButtonNormal">@color/indigo_material</item>
     </style>
 </resources>

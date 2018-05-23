@@ -10,6 +10,7 @@ import com.mvvm.kien2111.mvvmapplication.data.ProfileRepository;
 import com.mvvm.kien2111.mvvmapplication.data.RateRepository;
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceLiveData;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.RateRequest;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.model.User;
@@ -30,15 +31,18 @@ import io.reactivex.Completable;
 
 public class DetailProfileViewModel extends BaseViewModel {
     private MutableLiveData<String> useridlivedata = new MutableLiveData<>();
-    private LiveData<Resource<DetailProfileWithPoint>> resourceLiveData;
+    private LiveData<Resource<User>> resourceLiveData;
     private UserRepository repository;
     private RateRepository rateRepository;
+    private PreferenceLiveData preferenceLiveData;
     @Inject
-    public DetailProfileViewModel(EventBus eventBus,UserRepository repository,RateRepository rateRepository)
+    public DetailProfileViewModel(EventBus eventBus, UserRepository repository, RateRepository rateRepository, PreferenceLiveData preferenceLiveData)
     {
         super(eventBus);
         this.repository = repository;
         this.rateRepository = rateRepository;
+        this.preferenceLiveData = preferenceLiveData;
+        this.preferenceLiveData.setUser(repository.getUserData().getUser());
         resourceLiveData = Transformations.switchMap(useridlivedata,input -> {
            if(null==input || "".equals(input)){
                return AbsentLiveData.create();
@@ -46,6 +50,10 @@ public class DetailProfileViewModel extends BaseViewModel {
                 return MyLiveDataReactiveStream.fromPublisher(repository.getDetailProfile(input));
            }
         });
+    }
+
+    public PreferenceLiveData getPreferenceLiveData() {
+        return preferenceLiveData;
     }
 
     public void doRate(RateRequest rateRequest){
@@ -68,7 +76,7 @@ public class DetailProfileViewModel extends BaseViewModel {
     }
 
 
-    public LiveData<Resource<DetailProfileWithPoint>> getResourceUserLiveData() {
+    public LiveData<Resource<User>> getResourceUserLiveData() {
         return resourceLiveData;
     }
 

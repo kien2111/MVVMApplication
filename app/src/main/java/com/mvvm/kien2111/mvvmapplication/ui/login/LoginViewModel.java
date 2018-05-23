@@ -53,7 +53,10 @@ public class LoginViewModel extends BaseViewModel {
                     setShowLoading(false);
                     eventBus.post(new LoginMessage(response));
                     //getNavigator().onLoginSuccess(username,password,remote.getAccessToken());
-                },throwable -> eventBus.post(new LoginMessage(throwable.getMessage()))));
+                },throwable ->{
+                    setShowLoading(false);
+                    eventBus.post(new LoginMessage(throwable.getMessage()));
+                }));
     }
     public void serverlogin(){
         eventBus.post(new TriggerLoginServer());

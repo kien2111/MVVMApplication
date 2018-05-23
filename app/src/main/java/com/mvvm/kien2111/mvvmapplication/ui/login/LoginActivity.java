@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,7 @@ import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityLoginBinding;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -85,6 +87,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         return BR.vm;
     }
 
+    public void onClickSignUp(View v){
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -193,7 +199,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 data.putString(PARAM_USER_PASS,loginResponse.getUser().getUserName());
                 showLogginAsRolePicker(new Intent().putExtras(data),loginResponse.getUser());//show role picker if user is both admin and user
             }else{
-                handleLoginError(message.getErrorMessage());
+                handleLoginError(message.getMessage());
             }
 
         }else if(message instanceof LoginViewModel.TriggerLoginServer){

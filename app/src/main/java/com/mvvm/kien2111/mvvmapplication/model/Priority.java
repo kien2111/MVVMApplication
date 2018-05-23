@@ -10,7 +10,8 @@ public enum Priority {
     FREE(0,"Free Profile"),
     BASIC(1,"Basic Profile"),
     MEDIUM(2,"Medium Profile"),
-    PREMIUM(3,"Premium Profile");
+    PREMIUM(3,"Premium Profile"),
+    ALL(4,"All");
 
     private final int type;
     private final String name;
@@ -33,6 +34,11 @@ public enum Priority {
                 return priority;
             }
         }
-        return FREE;
+        return ALL;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

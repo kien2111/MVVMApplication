@@ -16,8 +16,4 @@ public class UserProfileModule {
     ViewPagerAdapter provideViewPagerAdapter(UserProfileActivity activity){
         return new ViewPagerAdapter(activity.getSupportFragmentManager());
     }
-    @Provides
-    User provideUser(PreferenceHelper preferenceHelper){
-        return preferenceHelper.getUserData().getUser();
-    }
 }

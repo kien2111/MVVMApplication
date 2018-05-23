@@ -2,6 +2,9 @@ package com.mvvm.kien2111.mvvmapplication.ui.universal.search;
 
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.MainThread;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -34,12 +37,19 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final static int PROFILE_VIEWTYPE = 2;
     private final static int HEADER_VIEWTYPE = 1;
     private final static int NODATA_VIEWTYPE = 0;
-    private final DataBindingComponent dataBindingComponent;
+
+    public interface ListenerClickSearchResult{
+        void onClickSearchResult(ExpandableChildItem childItem, Bitmap bitmap);
+    }
+
+
+    private ListenerClickSearchResult callback;
+
     private List<ExpandableChildItem> arrayListItem;
     private int dataVersion = 0;
-    public SearchAdapter(FragmentBindingComponent fragmentBindingComponent){
+    public SearchAdapter(ListenerClickSearchResult callback){
         arrayListItem = new ArrayList<>();
-        this.dataBindingComponent = fragmentBindingComponent;
+        this.callback = callback;
         this.setHasStableIds(true);
     }
     @Override
@@ -73,26 +83,32 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private ChildNodataItemExpandableBinding createNoDataBinding(ViewGroup parent) {
         ChildNodataItemExpandableBinding binding =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_nodata_item_expandable,parent,false,dataBindingComponent);
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_nodata_item_expandable,parent,false);
         return binding;
     }
 
     private ChildProfileItemExpandableBinding createProfileBinding(ViewGroup parent) {
         ChildProfileItemExpandableBinding binding =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_profile_item_expandable,parent,false,dataBindingComponent);
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_profile_item_expandable,parent,false);
+        binding.getRoot().setOnClickListener(v->{
+            callback.onClickSearchResult(binding.getProfileitem(),((BitmapDrawable)binding.imgCircle.getDrawable()).getBitmap());
+        });
         return binding;
     }
 
     private ChildCategoryItemExpandableBinding createCategoryBinding(ViewGroup parent) {
         ChildCategoryItemExpandableBinding binding =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_category_item_expandable,parent,false,dataBindingComponent);
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.child_category_item_expandable,parent,false);
+        binding.getRoot().setOnClickListener(v->{
+            callback.onClickSearchResult(binding.getCategoryitem(),((BitmapDrawable)binding.imgCircle.getDrawable()).getBitmap());
+        });
         return binding;
     }
 
 
     private HeaderItemExpandableBinding createHeaderBinding(ViewGroup parent) {
         HeaderItemExpandableBinding binding =
-                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.header_item_expandable,parent,false,dataBindingComponent);
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.header_item_expandable,parent,false);
         return binding;
     }
 

@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/title_search_view"
+        android:id="@+id/menu_toolbarsearch"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionLayout="@layout/search_view_layout"/>
+    <item
+        android:title="@string/deleterecentquery"
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
+        />
 </menu>

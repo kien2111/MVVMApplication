@@ -49,6 +49,7 @@ public final class ApiException extends RuntimeException{
         UnExpected,
         NetWorkProblem,
         TaskFailed,
+        HandledException,
         Test
     }
     public ApiException(String message,String url,Response response,ErrorType errorType,Throwable cause,Retrofit retrofit){
@@ -67,6 +68,7 @@ public final class ApiException extends RuntimeException{
             case 303: localErrorType = ErrorType.NotPermit;break;
             case 304: localErrorType = ErrorType.TaskFailed;break;
             case 305: localErrorType = ErrorType.Test;break;
+            case 403: localErrorType = ErrorType.HandledException;break;
             case 511: localErrorType = ErrorType.BlockedAccount;break;
             case 512: localErrorType = ErrorType.BlockedAccount;break;
         }

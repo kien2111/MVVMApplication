@@ -19,6 +19,9 @@ public interface CategoryDao {
     @Query("SELECT * FROM categories")
     List<Category> getLocalCategories();
 
+    @Query("SELECT * FROM categories WHERE `idcategory`=:id")
+    public abstract Single<Category> fetchCategoryId(String id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Category> categoryList);
 }

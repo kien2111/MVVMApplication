@@ -3,17 +3,21 @@ package com.mvvm.kien2111.mvvmapplication.data;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.graphics.Bitmap;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.mvvm.kien2111.mvvmapplication.AppExecutors;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.CategoryDao;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.RecentSearchDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RecentSearch;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.retrofit.Envelope;
+import com.mvvm.kien2111.mvvmapplication.util.ImageUtil;
 import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
 
 import java.util.List;
@@ -41,12 +45,17 @@ import io.reactivex.schedulers.Schedulers;
 public class CategoryRepository {
     private final UserService userService;
     private final CategoryDao categoryDao;
+    private final RecentSearchDao recentSearchDao;
     private AppExecutors appExecutors;
     private LimitFetch<String> limitFetch = new LimitFetch<>(2, TimeUnit.MINUTES);
     @Inject
-    public CategoryRepository(UserService userService,CategoryDao categoryDao,AppExecutors appExecutors){
+    public CategoryRepository(UserService userService,
+                              RecentSearchDao recentSearchDao,
+                              CategoryDao categoryDao,
+                              AppExecutors appExecutors){
         this.userService=userService;
         this.categoryDao=categoryDao;
+        this.recentSearchDao = recentSearchDao;
         this.appExecutors = appExecutors;
     }
     public Single<Resource<List<Category>>> getListCategory(){
@@ -57,4 +66,25 @@ public class CategoryRepository {
                 .subscribeOn(Schedulers.io());
     }
 
+    public Completable saveQuery(final RecentSearch recentSearch, Bitmap bitmap){
+        return Completable.fromRunnable(() -> {
+            try{
+                recentSearch.setImagePath(ImageUtil.saveBitmap(bitmap,recentSearch.getIdquery()));
+                recentSearchDao.insert(recentSearch);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }).subscribeOn(Schedulers.io());
+    }
+
+    public Single<Category> fetchCategoryWithId(final String id){
+        return categoryDao.fetchCategoryId(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Flowable<List<RecentSearch>> fetchRecentSearch(){
+        return recentSearchDao.fetchRecentSearch()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -23,6 +23,7 @@ import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminManageAddnewus
 import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel;
+import com.mvvm.kien2111.mvvmapplication.util.GlideApp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -132,7 +133,7 @@ public class AddUserActivity extends BaseActivity<AddUserViewModel, ActivityAdmi
 
         if (requestCode == REQUEST_CODE) {
             List<Image> listimage = ImagePicker.getImages(data);
-            Glide.with(mActivityBinding.imvShowAvatar)
+            GlideApp.with(mActivityBinding.imvShowAvatar)
                     .load(listimage.get(0).getPath())
                     .into(mActivityBinding.imvShowAvatar);
             avatar = listimage.get(0).getPath();

@@ -54,7 +54,6 @@ public class ProfileModel extends Profile implements Parcelable {
     }
 
 
-
     public String getName() {
         return name;
     }
@@ -63,7 +62,17 @@ public class ProfileModel extends Profile implements Parcelable {
         this.name = name;
     }
 
+    public static final Creator<ProfileModel> CREATOR = new Creator<ProfileModel>() {
+        @Override
+        public ProfileModel createFromParcel(Parcel in) {
+            return new ProfileModel(in);
+        }
 
+        @Override
+        public ProfileModel[] newArray(int size) {
+            return new ProfileModel[size];
+        }
+    };
 
     public String getAvatar() {
         return avatar;

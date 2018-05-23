@@ -1,14 +1,17 @@
 package com.mvvm.kien2111.mvvmapplication.base;
 
-import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,12 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
-import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
-import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
-import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
+import com.mvvm.kien2111.mvvmapplication.broadcast.NetworkChangeReceiver;
 import com.mvvm.kien2111.mvvmapplication.exception.ApiException;
 import com.mvvm.kien2111.mvvmapplication.model.ErrorResponse;
-import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
 import com.mvvm.kien2111.mvvmapplication.util.NetworkUtil;
 
@@ -40,7 +40,8 @@ import dagger.android.support.DaggerAppCompatActivity;
  * Created by WhoAmI on 21/01/2018.
  */
 
-public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBinding> extends DaggerAppCompatActivity{
+public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBinding> extends DaggerAppCompatActivity
+    implements NetworkChangeReceiver.ListenNetWorkChange{
 
     @Inject
     public AccountManager mAccountManager;
@@ -73,6 +74,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bind();
+        setUpNetworkReceiver();
         if(this instanceof LoginActivity){
             mAccountAuthenticatorResponse =
                     getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
@@ -82,6 +84,16 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
             }
         }
         //mApplication = getApplication();
+    }
+
+    private void setUpNetworkReceiver() {
+        mNetWorkReceiver = new NetworkChangeReceiver();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            registerReceiver(mNetWorkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            registerReceiver(mNetWorkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
     }
 
     public final void setAccountAuthenticatorResult(Bundle result) {
@@ -105,6 +117,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
     @Override
     protected void onDestroy() {
         mActivityBinding.unbind();
+        unregisterReceiver(mNetWorkReceiver);
         //unbinder.unbind();
         super.onDestroy();
     }
@@ -153,6 +166,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
         return viewModelFactory;
     }
 
+    @Deprecated
     public void showErrorDialog(String title,String message){
         if(message==null)throw new IllegalArgumentException("Not supply message");
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -164,6 +178,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
         alertDialog.show();
     }
 
+    @Deprecated
     public void showSuccessDialog(String title,String message){
         if(message==null)throw new IllegalArgumentException("Not supply message");
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -175,6 +190,7 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
         alertDialog.show();
     }
 
+    @Deprecated
     public void showServerErrorDialog(ApiException apiException) throws IOException {
         if(apiException==null)throw new IllegalArgumentException("no throwable supply");
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
@@ -187,5 +203,28 @@ public abstract class BaseActivity<VM extends ViewModel,VB extends ViewDataBindi
             dialog.dismiss();
         })).create();
         alertDialog.show();
+    }
+
+    public void showDialog(String title,String message){
+        if(message==null)throw new IllegalArgumentException("Not supply message");
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Dismiss",((dialog, which) -> {
+                    dialog.dismiss();
+                })).create();
+        alertDialog.show();
+    }
+
+    private BroadcastReceiver mNetWorkReceiver;
+
+    @Override
+    public void onNetWorkOff() {
+        //TODO
+    }
+
+    @Override
+    public void onNetWorkOn() {
+        //TODO
     }
 }

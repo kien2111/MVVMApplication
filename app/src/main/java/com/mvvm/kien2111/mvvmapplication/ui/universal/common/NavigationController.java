@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
+import android.util.ArrayMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +34,9 @@ import timber.log.Timber;
 public class NavigationController {
     private final int containerId;
     private final FragmentManager fragmentManager;
-
+    private final static String KEY_SEARCH_FRAGMENT = "search-fragment";
+    private final static String KEY_USER_FRAGMENT = "user-fragment";
+    private final static String KEY_FEED_FRAGMENT = "feed-fragment";
     @Inject
     NavigationController(UniversalActivity activity){
         fragmentManager = activity.getSupportFragmentManager();
@@ -41,21 +44,27 @@ public class NavigationController {
     }
     public void navigateToSearch(){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        SearchFragment searchFragment = (SearchFragment) fragmentManager.findFragmentByTag("search");
+        SearchFragment searchFragment = (SearchFragment) fragmentManager.findFragmentByTag(KEY_SEARCH_FRAGMENT);
+        //Fragment searchFragment = arrayMap.get(KEY_SEARCH_FRAGMENT);
         if(searchFragment==null){
             searchFragment = new SearchFragment();
+            transaction.addToBackStack(KEY_SEARCH_FRAGMENT);
+            //this.arrayMap.put(KEY_SEARCH_FRAGMENT,searchFragment);
         }
-        transaction.replace(containerId,searchFragment).addToBackStack(null);
+        transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
+        transaction.replace(containerId,searchFragment,KEY_SEARCH_FRAGMENT);
         transaction.setPrimaryNavigationFragment(searchFragment);
         transaction.commitAllowingStateLoss();
     }
     public void navigateToUser(){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        UserFragment userFragment = (UserFragment) fragmentManager.findFragmentByTag("user");
+        UserFragment userFragment = (UserFragment) fragmentManager.findFragmentByTag(KEY_USER_FRAGMENT);
         if(userFragment==null){
             userFragment = new UserFragment();
+            transaction.addToBackStack(KEY_USER_FRAGMENT);
         }
-        transaction.replace(containerId,userFragment);
+        transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
+        transaction.replace(containerId,userFragment,KEY_USER_FRAGMENT);
         transaction.setPrimaryNavigationFragment(userFragment);
         transaction.commitAllowingStateLoss();
     }
@@ -65,11 +74,13 @@ public class NavigationController {
             return;
         }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment feedFragment = fragmentManager.findFragmentByTag("feed");
+        Fragment feedFragment = fragmentManager.findFragmentByTag(KEY_FEED_FRAGMENT);
         if(!(feedFragment != null && feedFragment instanceof FeedFragment)){
             feedFragment = new FeedFragment();
+            transaction.addToBackStack(KEY_FEED_FRAGMENT);
         }
-        transaction.replace(containerId,feedFragment,"feed").addToBackStack("feed");
+        transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
+        transaction.replace(containerId,feedFragment,KEY_FEED_FRAGMENT);
         transaction.commitAllowingStateLoss();
         /*if(fragmentManager.getPrimaryNavigationFragment() instanceof DetailCategoryFragment
                     && ((DetailCategoryFragment) fragmentManager.getPrimaryNavigationFragment()).getCurrentCategory()!=null){
@@ -89,10 +100,25 @@ public class NavigationController {
         }else{
             DetailProfileFragment detailProfileFragment = DetailProfileFragment.newInstance(profileModel);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-
+            transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
             transaction.replace(containerId,detailProfileFragment,"detailprofile_"+profileModel.getIdprofile())
                     .addToBackStack("detailprofile_"+profileModel.getIdprofile());
             transaction.addSharedElement(imageView, ViewCompat.getTransitionName(imageView));
+            transaction.setPrimaryNavigationFragment(detailProfileFragment);
+            transaction.commit();
+        }
+    }
+
+    public void navigateToDetailProfile(ProfileModel profileModel){
+        if(fragmentManager.getPrimaryNavigationFragment() instanceof DetailProfileFragment
+                && ((DetailProfileFragment)fragmentManager.getPrimaryNavigationFragment()).getCurrentProfile()!=null){
+            //do nothing
+        }else{
+            DetailProfileFragment detailProfileFragment = DetailProfileFragment.newInstance(profileModel);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
+            transaction.replace(containerId,detailProfileFragment,"detailprofile_"+profileModel.getIdprofile())
+                    .addToBackStack("detailprofile_"+profileModel.getIdprofile());
             transaction.setPrimaryNavigationFragment(detailProfileFragment);
             transaction.commit();
         }
@@ -122,6 +148,7 @@ public class NavigationController {
         if(detailCategoryFragment==null){
             detailCategoryFragment = DetailCategoryFragment.newInstance(category);
         }
+        transaction.setCustomAnimations(R.anim.fade_in_fragment,R.anim.fade_out_fragment,R.anim.fade_in_fragment,R.anim.fade_out_fragment);
         transaction.replace(containerId,detailCategoryFragment).addToBackStack(category.getNamecategory());
         transaction.setPrimaryNavigationFragment(detailCategoryFragment);
         transaction.commitAllowingStateLoss();

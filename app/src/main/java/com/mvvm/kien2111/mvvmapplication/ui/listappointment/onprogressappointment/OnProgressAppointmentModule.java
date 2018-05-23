@@ -4,7 +4,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.mvvm.kien2111.mvvmapplication.binding.FragmentBindingComponent;
-import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentAdapter;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentBusinessAdapter;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentFreelancerAdapter;
+import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentFreelancerAdapter;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate.ListRateFragment;
 
 import dagger.Module;
@@ -20,12 +22,16 @@ public class OnProgressAppointmentModule {
         return new FragmentBindingComponent(onProgressAppointmentFragment);
     }
     @Provides
-    AppointmentAdapter provideAppointmentAdapter(FragmentBindingComponent bindingComponent){
-        return new AppointmentAdapter(bindingComponent);
+    AppointmentFreelancerAdapter provideAppointmentAdapter(FragmentBindingComponent bindingComponent){
+        return new AppointmentFreelancerAdapter(bindingComponent);
     }
     @Provides
     DividerItemDecoration provideDecoration(OnProgressAppointmentFragment onProgressAppointmentFragment){
         return new DividerItemDecoration(onProgressAppointmentFragment.getContext(), LinearLayoutManager.VERTICAL);
+    }
+    @Provides
+    AppointmentBusinessAdapter provideBusinessAppointmentAdapter(FragmentBindingComponent bindingComponent){
+        return new AppointmentBusinessAdapter(bindingComponent);
     }
 
 }

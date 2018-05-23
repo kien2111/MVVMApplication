@@ -1,6 +1,8 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -19,9 +21,11 @@ import java.util.List;
 
 public class BottomSpinnerAdapter<T> extends ArrayAdapter<T> {
     private final List<T> data ;
+    private Context context;
     public BottomSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
         super(context, resource, objects);
         this.data = objects;
+        this.context = context;
     }
 
     @NonNull

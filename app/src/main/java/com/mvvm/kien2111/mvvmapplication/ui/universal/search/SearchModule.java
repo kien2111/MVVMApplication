@@ -26,7 +26,7 @@ public class SearchModule {
     }
 
     @Provides
-    SearchAdapter provideSearchAdapter(SearchFragment searchFragment,FragmentBindingComponent fragmentBindingComponent){
-        return new SearchAdapter(fragmentBindingComponent);
+    RecentSearchAdapter provideRecentSearchAdapter(SearchFragment searchFragment,FragmentBindingComponent fragmentBindingComponent){
+        return new RecentSearchAdapter(fragmentBindingComponent,searchFragment);
     }
 }

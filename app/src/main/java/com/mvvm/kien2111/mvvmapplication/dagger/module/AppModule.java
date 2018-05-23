@@ -1,10 +1,5 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
-import android.app.Application;
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
-
 import com.huma.room_for_asset.RoomAsset;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
@@ -14,11 +9,11 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.CityDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.DistrictDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.ProfileDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.RateDao;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.RecentSearchDao;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -74,4 +69,8 @@ public class AppModule {
     @Provides
     @Singleton
     DistrictDao provideDistrictDao(RoomDb roomDb){return roomDb.districtDao();}
+
+    @Provides
+    @Singleton
+    RecentSearchDao provideRecentDao(RoomDb roomDb){return roomDb.recentSearchDao();}
 }

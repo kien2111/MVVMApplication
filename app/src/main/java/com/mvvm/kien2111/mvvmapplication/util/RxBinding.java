@@ -3,6 +3,7 @@ package com.mvvm.kien2111.mvvmapplication.util;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -32,6 +33,11 @@ public class RxBinding {
                 return true;
             }
         });
+        return subject;
+    }
+    public static Observable<View> fromViewRaplidClick(@NonNull final View v){
+        final BehaviorSubject<View> subject = BehaviorSubject.create();
+        v.setOnClickListener(subject::onNext);
         return subject;
     }
 }

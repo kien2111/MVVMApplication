@@ -1,6 +1,53 @@
 <resources>
     <string name="app_name">MVVMApplication</string>
 
+    <string-array name="actionSpinnerFilter">
+        <item>Tỉnh thành phố</item>
+        <item>Quận huyện</item>
+    </string-array>
+    <string-array name="minutePickerValue">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="salaryPicker">
+        <item>0</item>
+        <item>100000</item>
+        <item>200000</item>
+        <item>500000</item>
+        <item>1000000</item>
+        <item>2000000</item>
+        <item>5000000</item>
+        <item>10000000</item>
+        <item>20000000</item>
+        <item>50000000</item>
+        <item>100000000</item>
+        <item>200000000</item>
+        <item>500000000</item>
+        <item>1000000000</item>
+        <item>2000000000</item>
+        <item>5000000000</item>
+        <item>10000000000</item>
+        <item>20000000000</item>
+        <item>50000000000</item>
+    </string-array>
+
+    <string name="publish_accept">Đang công khai hồ sơ</string>
+    <string name="publish_do_nothing">Công khai hồ sơ</string>
+    <string name="publish_conflict">Đã có xung đột xảy ra</string>
+    <string name="publish_admin_blocked">Hồ sơ của bạn đã bị blocked bởi admin</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -147,8 +194,8 @@
     <string name="let_employer_know_something_about_you">Hãy giới thiệu bản thân của bạn</string>
     <string name="publish_profile">Công khai hồ sơ</string>
     <string name="filter">LỌC</string>
-    <string name="city">Lọc theo thành phố</string>
-    <string name="district">Lọc theo quận huyện</string>
+    <string name="city">Thành phố</string>
+    <string name="district">Quận huyện</string>
     <string name="name_hint">display name</string>
     <string name="save_change">Lưu thay đổi</string>
     <string name="sync_profile">Đồng bộ dữ liệu</string>
@@ -157,4 +204,45 @@
     <string name="company_title">Thông tin doanh nghiệp</string>
     <string name="brand_name">Tên công ty</string>
     <string name="logo_title">Logo công ty</string>
+    <string name="filter_follow">Bộ lọc</string>
+    <string name="hour">Tiếng</string>
+    <string name="minute">Phút</string>
+    <string name="set">Thiết lập</string>
+    <string name="exchange_table">Bảng quy đổi</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="serial_number">Số serial</string>
+    <string name="pin_code">Mã pin</string>
+    <string name="real_money">Tiền thật</string>
+    <string name="value">Giá trị quy đổi</string>
+    <string name="expand_more">Expand more</string>
+    <string name="acceptAppointment">Chấp nhận cuộc hẹn</string>
+    <string name="declineAppointment">Hủy cuộc hẹn</string>
+    <string name="title_freelancer_basic">Basic</string>
+    <string name="deleterecentquery">Delete recent query</string>
+    <string name="recent_search">Tìm kiếm gần đây</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="logo">logo</string>
+    <string name="signup">Đăng kí tài khoản</string>
+    <string name="lostpassword">Quên mật khẩu</string>
+    <string name="email">email</string>
+    <string name="place">địa điểm</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="title_rating">Đánh giá</string>
+    <string name="content">hãy bình luận gì đó</string>
+    <string name="tosalary">to</string>
+    <string name="fromsalary">from</string>
+    <string name="no_appointment_available">Chưa thực hiện bất kỳ cuộc hẹn nào</string>
+    <string name="no_history_appointment_available">Không có dữ liệu lịch sử cuộc hẹn</string>
+    <string name="invitation_title">Mời sử dụng App</string>
+    <string name="invitation_message">App này thật tuyệt vời</string>
+    <string name="invitation_custom_image">https://developers.google.com/identity/images/g-logo.png</string>
+    <string name="invitation_cta">Install!</string>
+    <string name="filter_follow_location">Lọc theo địa điểm</string>
+    <string name="expand_more_filter">Mở rộng</string>
+    <string name="filter_follow_level">Lọc theo cấp</string>
+    <string name="filter_follow_salary_expected">Lọc theo lương mong muốn</string>
+    <string name="collapse">Thu gọn</string>
+
 </resources>

@@ -4,17 +4,21 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentBussinessProfileBinding;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.WatcherEdittext;
 import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
@@ -26,14 +30,18 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by WhoAmI on 26/04/2018.
  */
 
-public class BussinessProfileFragment extends BaseFragment<BussinessProfileViewModel,FragmentBussinessProfileBinding> implements View.OnClickListener{
+public class BussinessProfileFragment extends BaseFragment<BussinessProfileViewModel,FragmentBussinessProfileBinding> implements View.OnClickListener,UserProfileActivity.OnImageBussinessChange{
     public static final int PICK_SINGLE_IMAGE_BUSSINESS = 1;
-
     public static BussinessProfileFragment newInstance(){
         BussinessProfileFragment fragment = new BussinessProfileFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onImageChange(Uri uri) {
+        updateImage(uri);
     }
 
     @Override
@@ -58,8 +66,12 @@ public class BussinessProfileFragment extends BaseFragment<BussinessProfileViewM
         }
     }
 
+
+
     private void updateImage(Uri uri) {
-        mFragmentBinding.logoImageView.setImageURI(uri);
+        fragmentBindingComponent.getFragmentBindingAdapter().setImageUri(mFragmentBinding.logoImageView,
+                uri, ContextCompat.getDrawable(this.getActivity(),R.drawable.defaultimage),
+                ContextCompat.getDrawable(this.getActivity(),R.drawable.errorimg));
     }
 
     @Nullable
@@ -67,8 +79,38 @@ public class BussinessProfileFragment extends BaseFragment<BussinessProfileViewM
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setUpDataChange();
+        bindingUserData();
         setOnClick();
+        setOnListenImageChange();
         return view;
+    }
+
+    private void bindingUserData() {
+        mViewModel.getPreferenceLiveData().observe(this,user -> {
+            if(user!=null){
+                try{
+                    new Handler().postDelayed(()->{
+                        fragmentBindingComponent.getFragmentBindingAdapter()
+                                .setImageUrl(mFragmentBinding.logoImageView,user.getLogo_company(),
+                                        ContextCompat.getDrawable(this.getActivity(),R.drawable.defaultimage),
+                                        ContextCompat.getDrawable(this.getActivity(),R.drawable.errorimg));
+                        mFragmentBinding.edtBrandname.setText(user.getBrandname());
+                        mFragmentBinding.edtPhonenumber.setText(user.getPhone_company());
+                        mFragmentBinding.executePendingBindings();
+                    },800);
+                }catch (Exception e){
+
+                }
+
+            }else{
+
+            }
+        });
+
+    }
+
+    private void setOnListenImageChange() {
+        ((UserProfileActivity)getActivity()).setOnImageBussinessChange(this);
     }
 
     private void setOnClick() {
@@ -77,10 +119,10 @@ public class BussinessProfileFragment extends BaseFragment<BussinessProfileViewM
 
     private void setUpDataChange() {
         mFragmentBinding.edtBrandname.addTextChangedListener(new WatcherEdittext(this.getActivity(), textChanged->{
-            ((UserProfileActivity)getActivity()).getBindingUser().setBrandname(textChanged);
+            ((UserProfileActivity)getActivity()).getCurrentUser().setBrandname(textChanged);
         }));
         mFragmentBinding.edtPhonenumber.addTextChangedListener(new WatcherEdittext(this.getActivity(),textChanged->{
-            ((UserProfileActivity)getActivity()).getBindingUser().setPhone_company(textChanged);
+            ((UserProfileActivity)getActivity()).getCurrentUser().setPhone_company(textChanged);
         }));
     }
 

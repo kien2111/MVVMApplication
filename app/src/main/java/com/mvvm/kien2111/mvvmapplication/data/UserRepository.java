@@ -13,11 +13,15 @@ import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.SignUpRequest;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.TopUpRequest;
 import com.mvvm.kien2111.mvvmapplication.model.Approve_Publish;
 import com.mvvm.kien2111.mvvmapplication.model.LoggedInMode;
+import com.mvvm.kien2111.mvvmapplication.model.TableExchangeModel;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileWithPoint;
 import com.mvvm.kien2111.mvvmapplication.util.LimitFetch;
+import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import timber.log.Timber;
 
 
 /**
@@ -79,11 +84,33 @@ public class UserRepository {
         preferenceHelper.saveCurrentAccount(account);
     }
 
+    public Single<User> fetchRemoteData(final String iduser){
+        return userLoggedInService.fetchRemoteData(iduser)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public void updateUser(LoginResponse response){
+        preferenceHelper.setUserData(response);
+    }
+
+    public Completable signUp(final SignUpRequest signUpRequest){
+        return userService.signUp(signUpRequest)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Single<LoginResponse> syncLocalVersusPromoteData(){
+        return userService.syncData(preferenceHelper.getUserData().getUser().getUserId())
+                .doOnSuccess(preferenceHelper::setUserData)
+                .subscribeOn(Schedulers.io());
+    }
+
     public LoginResponse getUserData(){
         return preferenceHelper.getUserData();
     }
 
-    public Flowable<DetailProfileWithPoint> getDetailProfile(String userid){
+    public Flowable<User> getDetailProfile(String userid){
         return userService
                 .getDetailProfile(userid)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,36 +136,80 @@ public class UserRepository {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Completable updateProfile(final User user){
+    public Completable updateBothImage(final User user){
         RequestBody userDetail = RequestBody.create(MultipartBody.FORM,gson.toJson(user));
         List<MultipartBody.Part> partList = new ArrayList<>();
-        if(user.getAvatar()!=null){
-            File avatarfile = new File(user.getAvatar());
-            RequestBody avatarRequest = RequestBody.create(MediaType.parse("image/*"),avatarfile);
-            MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("avatar",avatarfile.getName(),avatarRequest);
-            partList.add(avatarPart);
-        }
-        if(user.getLogo_company()!=null){
-            File logofile = new File(user.getLogo_company());
-            RequestBody logoRequest = RequestBody.create(MediaType.parse("image/*"),logofile);
-            MultipartBody.Part logoPart = MultipartBody.Part.createFormData("logo",logofile.getName(),logoRequest);
-            partList.add(logoPart);
-        }
-        LoginResponse loginResponse = preferenceHelper.getUserData();
-        loginResponse.setUser(user);
+        File avatarfile = new File(user.getAvatar());
+        RequestBody avatarRequest = RequestBody.create(MediaType.parse("image/*"),avatarfile);
+        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("avatar",avatarfile.getName(),avatarRequest);
+        partList.add(avatarPart);
+        user.setAvatar(StringUtil.getFileNameFromPath(user.getAvatar()));
+        File logofile = new File(user.getLogo_company());
+        RequestBody logoRequest = RequestBody.create(MediaType.parse("image/*"),logofile);
+        MultipartBody.Part logoPart = MultipartBody.Part.createFormData("logo",logofile.getName(),logoRequest);
+        partList.add(logoPart);
+        user.setLogo_company(StringUtil.getFileNameFromPath(user.getLogo_company()));
         return userLoggedInService
                 .updateProfile(userDetail,partList)
-                .doOnComplete(() -> {
-                    preferenceHelper.setUserData(loginResponse);
-                })
+                .doOnComplete(() -> syncLocalRemoteData(user))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
-    public Completable publishProfile(final Approve_Publish approve_publish){
+
+
+    public Completable updateLogoOnly(final User user){
+        RequestBody userDetail = RequestBody.create(MultipartBody.FORM,gson.toJson(user));
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        File logofile = new File(user.getLogo_company());
+        RequestBody logoRequest = RequestBody.create(MediaType.parse("image/*"),logofile);
+        MultipartBody.Part logoPart = MultipartBody.Part.createFormData("logo",logofile.getName(),logoRequest);
+        partList.add(logoPart);
+        user.setLogo_company(StringUtil.getFileNameFromPath(user.getLogo_company()));
         return userLoggedInService
-                .publishProfile(approve_publish.getType())
+                .updateProfile(userDetail,partList)
+                .doOnComplete(() -> syncLocalRemoteData(user))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
+    }
+    public Completable updateAvatarOnly(final User user){
+        RequestBody userDetail = RequestBody.create(MultipartBody.FORM,gson.toJson(user));
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        File avatarfile = new File(user.getAvatar());
+        RequestBody avatarRequest = RequestBody.create(MediaType.parse("image/*"),avatarfile);
+        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("avatar",avatarfile.getName(),avatarRequest);
+        partList.add(avatarPart);
+        user.setAvatar(StringUtil.getFileNameFromPath(user.getAvatar()));
+        return userLoggedInService
+                .updateProfile(userDetail,partList)
+                .doOnComplete(() -> syncLocalRemoteData(user))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    private void syncLocalRemoteData(User user){
+        LoginResponse loginResponse = preferenceHelper.getUserData();
+        loginResponse.setUser(user);
+        preferenceHelper.setUserData(loginResponse);
+    }
+
+    public Completable topUpMoney(TopUpRequest topUpRequest){
+        return userLoggedInService.topUpMoney(topUpRequest)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io());
+    }
+
+    public Single<List<TableExchangeModel>> fetchTableExchange(){
+        return userLoggedInService.fetchTableExchange()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io());
+    }
+
+    public void clearUserData(){
+        preferenceHelper.clearPreference();
+    }
+
+    public Account getCurrentAccount(){
+        return preferenceHelper.getCurrentAccount();
     }
 
 }

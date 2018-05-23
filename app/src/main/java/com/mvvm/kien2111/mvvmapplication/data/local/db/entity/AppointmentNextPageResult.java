@@ -19,14 +19,21 @@ public class AppointmentNextPageResult {
     public final int option;
     @NonNull
     public final String iduser;
+    @NonNull
+    public final int historyOrOnProgress;
     public final List<Integer> idappointments;
     public final int totalcount;
     @Nullable
     public final Integer next;
 
-    public AppointmentNextPageResult(@NonNull int option,@NonNull String iduser,List<Integer> idappointments,int totalcount,@Nullable Integer next){
+    public AppointmentNextPageResult(@NonNull int option,
+                                     @NonNull String iduser,
+                                     @NonNull int historyOrOnProgress,
+                                     List<Integer> idappointments,
+                                     int totalcount,@Nullable Integer next){
         this.option = option;
         this.iduser = iduser;
+        this.historyOrOnProgress = historyOrOnProgress;
         this.idappointments = idappointments;
         this.next = next;
         this.totalcount = totalcount;

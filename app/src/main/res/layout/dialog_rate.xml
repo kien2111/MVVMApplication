@@ -10,11 +10,11 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="300dp">
         <ImageView
+            android:id="@+id/imv_avatar"
             android:layout_marginTop="20dp"
             android:contentDescription="@{profilemodel.name}"
             android:scaleType="fitCenter"
-            app:defaultImg="@{@drawable/defaultimage}"
-            app:imageUrl="@{profilemodel.avatar}"
+            android:src="@{profilemodel.avatar}"
             android:layout_width="100dp"
             android:layout_height="100dp" />
         <TextView
@@ -32,6 +32,18 @@
             android:rating="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:background="@drawable/border_bottomtopline"
+            android:id ="@+id/edt_content"
+            android:layout_width ="match_parent"
+            android:layout_height ="wrap_content"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines ="4"
+            android:maxLength ="2000"
+            android:hint ="@string/content"
+            android:scrollHorizontally="false" />
         <LinearLayout
             android:weightSum="2"
             android:orientation="horizontal"

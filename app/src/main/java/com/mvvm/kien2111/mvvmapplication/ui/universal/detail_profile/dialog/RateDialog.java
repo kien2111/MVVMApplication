@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseDialog;
+import com.mvvm.kien2111.mvvmapplication.binding.BindingAdapters;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.databinding.DialogRateBinding;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileFragment;
@@ -30,7 +32,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class RateDialog extends BaseDialog<DialogRateBinding>{
     public interface RateListener{
-        void onDoRate(float average_point);
+        void onDoRate(float average_point,String content);
         void onDismiss();
     }
     private static String KEY_PROFILE_MODEL = "key profile";
@@ -54,6 +56,7 @@ public class RateDialog extends BaseDialog<DialogRateBinding>{
         int width = size.x;
 
         window.setLayout((int) (width * 0.9), WindowManager.LayoutParams.WRAP_CONTENT);
+
         window.setGravity(Gravity.CENTER);
     }
 
@@ -61,7 +64,6 @@ public class RateDialog extends BaseDialog<DialogRateBinding>{
         this.rateListener = listenRate;
     }
     RateListener rateListener;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Override
     protected int getLayoutRes() {
         return R.layout.dialog_rate;
@@ -71,8 +73,14 @@ public class RateDialog extends BaseDialog<DialogRateBinding>{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mDialogBinding.acceptBtn.setOnClickListener(v-> rateListener.onDoRate(mDialogBinding.ratting.getRating()));
+        mDialogBinding.acceptBtn.setOnClickListener(v-> rateListener.onDoRate(mDialogBinding.ratting.getRating(),mDialogBinding.edtContent.getText().toString()));
         mDialogBinding.dismissBtn.setOnClickListener(v-> rateListener.onDismiss());
+        ProfileModel profileModel = getArguments().getParcelable(KEY_PROFILE_MODEL);
+        mDialogBinding.setProfilemodel(profileModel);
+        BindingAdapters.setImageUrl(mDialogBinding.imvAvatar,
+                profileModel.getAvatar(),
+                ContextCompat.getDrawable(mActivity,R.drawable.defaultimage),
+                ContextCompat.getDrawable(mActivity,R.drawable.errorimg));
         return view;
     }
 

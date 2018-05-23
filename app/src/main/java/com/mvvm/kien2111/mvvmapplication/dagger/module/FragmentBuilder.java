@@ -12,6 +12,7 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchModule;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserModule;
+import com.mvvm.kien2111.mvvmapplication.ui.upgrade.common.BaseIndicatorFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -45,5 +46,7 @@ public abstract class FragmentBuilder {
     @PerFragment
     @ContributesAndroidInjector
     abstract BottomSheetDialogFilter bindBottomSheetDialogFilter();
+
+
 
 }

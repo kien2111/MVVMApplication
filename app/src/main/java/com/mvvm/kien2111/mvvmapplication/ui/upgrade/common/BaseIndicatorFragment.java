@@ -1,23 +1,38 @@
 package com.mvvm.kien2111.mvvmapplication.ui.upgrade.common;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
+import com.mvvm.kien2111.mvvmapplication.base.BaseFragment;
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.IncludeUpgradeLayoutBinding;
+import com.mvvm.kien2111.mvvmapplication.model.Pakage_Upgrade;
+import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.mvvmapplication.ui.upgrade.freelancerupgrade.FreelancerUpgradeViewModel;
+import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
+import com.mvvm.kien2111.mvvmapplication.util.UpgradeProfileButton;
+
+import org.greenrobot.eventbus.EventBus;
+
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by WhoAmI on 03/05/2018.
  */
 
-public abstract class BaseIndicatorFragment extends Fragment implements View.OnClickListener{
+public class BaseIndicatorFragment extends BaseFragment<FreelancerUpgradeViewModel,IncludeUpgradeLayoutBinding> implements UpgradeProfileButton.OnClickUpgrade,View.OnClickListener{
     /*private static final String KEY_PRICE = "key price";
     private static final String KEY_CONTENT = "key content";
     private static final String KEY_TITLE_CONTENT = "key title content";
@@ -56,77 +71,154 @@ public abstract class BaseIndicatorFragment extends Fragment implements View.OnC
         return indicatorFragment;
     }*/
 
-    private FragmentType fragmentType;
 
-    private IncludeUpgradeLayoutBinding mBinding;
+    private static final String KEY_TYPE = "key type";
+    private static final String KEY_PAKAGE_UPGRADE = "key pakage upgrade";
 
-    public FragmentType getFragmentType() {
-        return fragmentType;
-    }
-
-    public void setFragmentType(FragmentType fragmentType) {
-        this.fragmentType = fragmentType;
+    private static final String KEY_USER_DATA = "key user data";
+    public static BaseIndicatorFragment newInstance(FragmentType type
+    , Pakage_Upgrade pakage_upgrade){
+        BaseIndicatorFragment fragment = new BaseIndicatorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(KEY_TYPE,type);
+        bundle.putParcelable(KEY_PAKAGE_UPGRADE,pakage_upgrade);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
+    protected FreelancerUpgradeViewModel createViewModel() {
+        return ViewModelProviders.of(this,viewModelFactory).get(FreelancerUpgradeViewModel.class);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.include_upgrade_layout;
+    }
+
+    @Override
+    protected int getBindVariable() {
+        return BR.vm;
+    }
+
+    private FragmentType fragmentType;
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (fragmentType){
+            case FREELANCER_BASIC:
+                eventBus.post(new UpgradeTaskMessage(fragmentType,
+                        new RequestUpgradeModel(mViewModel.getPreferenceLiveData().getValue().getUserId(),
+                                ((Pakage_Upgrade)getArguments().getParcelable(KEY_PAKAGE_UPGRADE)).getIdpakage_update(),
+                                Priority.BASIC)));
+                break;
+            case FREELANCER_MEDIUM:
+                eventBus.post(new UpgradeTaskMessage(fragmentType,
+                        new RequestUpgradeModel(mViewModel.getPreferenceLiveData().getValue().getUserId(),
+                                ((Pakage_Upgrade)getArguments().getParcelable(KEY_PAKAGE_UPGRADE)).getIdpakage_update(),
+                                Priority.MEDIUM)));
+                break;
+            case FREELANCER_PREMIUM:
+                eventBus.post(new UpgradeTaskMessage(fragmentType,
+                        new RequestUpgradeModel(mViewModel.getPreferenceLiveData().getValue().getUserId(),
+                                ((Pakage_Upgrade)getArguments().getParcelable(KEY_PAKAGE_UPGRADE)).getIdpakage_update(),
+                                Priority.PREMIUM)));
+                break;
 
         }
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public BaseIndicatorFragment(){}
 
-
+    protected View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater,getLayoutId(),container,false);
+        View v = super.onCreateView(inflater,container,savedInstanceState);
         setUpLayout();
-        return mBinding.getRoot();
+        return v;
     }
-
-    protected abstract int getLayoutId();
-
 
     private void setUpLayout() {
-        mBinding.btn.setBackgroundColor(getBtnBackGroundColor());
-        mBinding.mainContainer.setBackgroundColor(getBackGroundColorContainer());
-        mBinding.title.setTextColor(getTitleColor());
-        mBinding.btn.setTextColor(getBtnTextColor());
-        mBinding.content.setText(getContentText());
-        mBinding.btn.setText(getBtnText());
-        mBinding.title.setText(getTitleText());
-        mBinding.img.setImageResource(getImageResource());
-        mBinding.content.setTextColor(getContentColor());
-        /*mBinding.setVariable(BR.btn_bg_color,getArguments().getInt(KEY_BTN_BG_COLOR,0));
-        mBinding.setVariable(BR.bg_color,getArguments().getInt(KEY_BG_COLOR,0));
-        mBinding.setVariable(BR.title_color,getArguments().getInt(KEY_COLOR_TITLE,0));
-        mBinding.setVariable(BR.btn_text_color,getArguments().getInt(KEY_BTN_TEXT_COLOR,0));
-        mBinding.setVariable(BR.content,getArguments().getString(KEY_CONTENT,""));
-        mBinding.setVariable(BR.price,getArguments().getDouble(KEY_PRICE,0d));
-        mBinding.setVariable(BR.title,getArguments().getString(KEY_TITLE_CONTENT));
-        mBinding.setVariable(BR.main_img,getArguments().getInt(KEY_IMG_MAIN,0));
-        mBinding.setVariable(BR.content_color,getArguments().getInt(KEY_COLOR_CONTENT,0));*/
-        mBinding.executePendingBindings();
+        try{
+            /*User user = ((User)getArguments().getParcelable(KEY_USER_DATA));
+
+
+            setCurrrentLevelDrawableButton(user);
+            mBinding.executePendingBindings();*/
+            mFragmentBinding.setViewHolder( getArguments().getParcelable(KEY_TYPE));
+            mFragmentBinding.title.setText((((Pakage_Upgrade)getArguments().getParcelable(KEY_PAKAGE_UPGRADE)).getPakage_name()));
+            mFragmentBinding.btn.setText(String.format("%s đ", StringUtil.formatDecimal((((Pakage_Upgrade)getArguments().getParcelable(KEY_PAKAGE_UPGRADE)).getPakage_fee()))));
+            mFragmentBinding.btn.setOnClickUpgrade(this);
+            fragmentType = getArguments().getParcelable(KEY_TYPE);
+            mViewModel.getPreferenceLiveData().observe(this,user -> {
+                if(user!=null){
+                    setCurrrentLevelDrawableButton(user);
+                }
+            });
+            mViewModel.getLastestRequest().observe(this,requestUpdateModelResource -> {
+                if(requestUpdateModelResource!=null){
+                    setOnProcessButton(requestUpdateModelResource.getData());
+                }else{
+                    //ignore
+                }
+            });
+            mFragmentBinding.executePendingBindings();
+        }catch (Exception e){
+
+        }
     }
 
-    protected abstract String getContentText();
+    private void setCurrrentLevelDrawableButton(User user) {
+        if(user.getProfile().getPriority()== Priority.BASIC && fragmentType==FragmentType.FREELANCER_BASIC){
+            mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.CURRENT_LEVEL);
+        }else if(user.getProfile().getPriority()== Priority.MEDIUM && fragmentType==FragmentType.FREELANCER_MEDIUM){
+            mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.CURRENT_LEVEL);
+        }else if(user.getProfile().getPriority()== Priority.PREMIUM && fragmentType==FragmentType.FREELANCER_PREMIUM){
+            mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.CURRENT_LEVEL);
+        }else{
+            //do nothing
+        }
+    }
 
-    protected abstract int getImageResource();
+    private void setOnProcessButton(RequestUpgradeModel requestUpgradeModel){
+        if(requestUpgradeModel!=null){
+            if(requestUpgradeModel.getLevel_expected()==Priority.BASIC && fragmentType==FragmentType.FREELANCER_BASIC){
+                mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.ON_PROCESS);
+            }else if(requestUpgradeModel.getLevel_expected()==Priority.MEDIUM && fragmentType==FragmentType.FREELANCER_MEDIUM){
+                mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.ON_PROCESS);
+            }else if(requestUpgradeModel.getLevel_expected()==Priority.PREMIUM && fragmentType==FragmentType.FREELANCER_PREMIUM){
+                mFragmentBinding.btn.setDrawableFollowStatusRequestUpgrade(RequestUpgradeModel.Status_Request_Update_Profile.ON_PROCESS);
+            }
+        }else{
+            //do nothing
+        }
 
-    protected abstract String getTitleText();
 
-    protected abstract String getBtnText();
+    }
 
-    protected abstract int getContentColor();
 
-    protected abstract int getBtnTextColor();
+    public static class UpgradeTaskMessage extends BaseMessage{
+        FragmentType fragmentType;
+        RequestUpgradeModel requestUpgradeModel;
+        public UpgradeTaskMessage(FragmentType fragmentType,RequestUpgradeModel requestUpgradeModel){
+            this.fragmentType = fragmentType;
+            this.requestUpgradeModel = requestUpgradeModel;
+        }
 
-    protected abstract int getTitleColor();
+        public FragmentType getFragmentType() {
+            return fragmentType;
+        }
 
-    protected abstract int getBackGroundColorContainer();
-
-    protected abstract int getBtnBackGroundColor();
+        public RequestUpgradeModel getRequestUpdateModel() {
+            return requestUpgradeModel;
+        }
+    }
 }

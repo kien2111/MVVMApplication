@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="tb"
+            type="com.mvvm.kien2111.mvvmapplication.model.TableExchangeModel"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/nominal_value"
+            android:gravity="center"
+            app:firsttextColor="@{@color/colorPrimaryBlueGrey}"
+            app:secondtextcolor="@{@color/green_money_color}"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/amount_of_coint"
+            android:gravity="center"
+            app:firsttextColor="@{@color/colorPrimaryBlueGrey}"
+            app:secondtextcolor="@{@color/green_money_color}"
+            android:textSize="14sp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

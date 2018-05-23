@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="VMsearch"
@@ -7,33 +9,27 @@
         </variable>
     </data>
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--<android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:navigationIcon="@drawable/ic_menu_24dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <TextView
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/recent_search"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="@android:color/darker_gray"
-            android:layout_height="?attr/actionBarSize">
-
-        </android.support.v7.widget.Toolbar>-->
+            android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/expandable_listview"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
-        <!--<ExpandableListView
-            android:groupIndicator="@null"
-            android:id="@+id/expandable_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ExpandableListView>-->
     </LinearLayout>
 </layout>

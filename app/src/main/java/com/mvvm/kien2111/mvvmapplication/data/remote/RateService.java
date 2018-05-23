@@ -25,6 +25,6 @@ public interface RateService {
     @GET("/Rates/getlistrate")
     Single<RateWrapper> getRateList(@Query("iduser")String iduser);
 
-    @POST("/Rates/dorate")
+    @POST("/Rates/ratefreelancer")
     Completable doRate(@Body RateRequest rateRequest);
 }

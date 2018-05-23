@@ -1,14 +1,18 @@
 package com.mvvm.kien2111.mvvmapplication.data.local.db.converter;
 
 import android.arch.persistence.room.TypeConverter;
+import android.support.annotation.NonNull;
 
 
 import com.google.gson.Gson;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RecentSearch;
 import com.mvvm.kien2111.mvvmapplication.model.Approve_Publish;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.City;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.District;
+import com.mvvm.kien2111.mvvmapplication.model.Deposit_Fee;
 import com.mvvm.kien2111.mvvmapplication.model.Gender;
+import com.mvvm.kien2111.mvvmapplication.model.Option;
 import com.mvvm.kien2111.mvvmapplication.model.Priority;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
@@ -49,12 +53,7 @@ public class AppConverter {
     }
     @TypeConverter
     public static Gender intToGender(int data){
-        switch (data){
-            case 0:return Gender.MALE;
-            case 1:return Gender.FEMALE;
-            case 2:return Gender.UNKNOWN;
-            default:return Gender.MALE;
-        }
+        return Gender.mapGender(data);
     }
     @TypeConverter
     public static int GenderToInt(Gender gender){
@@ -62,26 +61,28 @@ public class AppConverter {
     }
     @TypeConverter
     public static int PriorityToInt(Priority priority){
+        if(priority==null){
+            return Priority.ALL.getType();
+        }
         return priority.getType();
     }
     @TypeConverter
     public static Priority IntToPriority(int type){
-        switch (type){
-            case 0:return Priority.BASIC;
-            case 1:return Priority.MEDIUM;
-            case 2:return Priority.PREMIUM;
-            default:return Priority.BASIC;
-        }
+        return Priority.mapPriority(type);
+    }
+
+    @TypeConverter
+    public static RecentSearch.SearchType IntToSearchType(int type){
+        return RecentSearch.SearchType.mapSearchType(type);
     }
     @TypeConverter
+    public static int SearchTypeToInt(@NonNull RecentSearch.SearchType searchType){
+        return searchType.getType();
+    }
+
+    @TypeConverter
     public static Approve_Publish IntToApprovePublish(int type){
-        switch (type){
-            case 0:return Approve_Publish.ON_PROGRESS;
-            case 1:return Approve_Publish.DECLINE;
-            case 2:return Approve_Publish.ACCEPT;
-            case 3:return Approve_Publish.CONFLICT;
-            default:return Approve_Publish.ON_PROGRESS;
-        }
+        return Approve_Publish.mapApprovePublish(type);
     }
     @TypeConverter
     public static int ApprovePublishToInt(Approve_Publish approve_publish){
@@ -106,12 +107,12 @@ public class AppConverter {
     }
 
     @TypeConverter
-    public static ListAppointmentViewModel.PickOption.Option optionToInt(int type){
-        return ListAppointmentViewModel.PickOption.Option.mapOption(type);
+    public static Option optionToInt(int type){
+        return Option.mapOption(type);
     }
 
     @TypeConverter
-    public static int IntToPickOption(ListAppointmentViewModel.PickOption.Option option){
+    public static int IntToPickOption(Option option){
         return option.getType();
     }
 
@@ -179,5 +180,13 @@ public class AppConverter {
         }else{
             return timestamp.getTime();
         }
+    }
+    @TypeConverter
+    public static String DepositFeeToString(Deposit_Fee deposit_fee){
+        return new Gson().toJson(deposit_fee);
+    }
+    @TypeConverter
+    public static Deposit_Fee StringToDepositFee(String json){
+        return new Gson().fromJson(json,Deposit_Fee.class);
     }
 }

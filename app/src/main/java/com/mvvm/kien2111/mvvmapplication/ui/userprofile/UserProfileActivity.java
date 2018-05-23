@@ -3,13 +3,17 @@ package com.mvvm.kien2111.mvvmapplication.ui.userprofile;
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -17,10 +21,12 @@ import android.widget.LinearLayout;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
+import com.mvvm.kien2111.mvvmapplication.binding.BindingAdapters;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityUserprofileBinding;
 import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.ViewPagerAdapter;
+import com.mvvm.kien2111.mvvmapplication.ui.upgrade.freelancerupgrade.FreelancerUpgradeActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.bussiness.BussinessProfileFragment;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.IndividualProfileFragment;
 import com.mvvm.kien2111.mvvmapplication.util.StringUtil;
@@ -30,17 +36,20 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Created by WhoAmI on 20/04/2018.
  */
 
-public class UserProfileActivity extends BaseActivity<UserProfileViewModel,ActivityUserprofileBinding> implements View.OnClickListener {
+public class UserProfileActivity extends BaseActivity<UserProfileViewModel,ActivityUserprofileBinding> implements
+        View.OnClickListener {
     private static final int PICK_SINGLE_IMAGE = 18;
 
-    private boolean FLAG_IMAGE_HAS_CHANGED = false;
     private int REQUEST_ACCEPT_PERMISSION_CODE = 19;
-    @Inject
-    User user;
+
+
+    User currentUser;
 
     @Override
     protected int getLayoutRes() {
@@ -64,16 +73,29 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
         setOnClick();
     }
 
+    public void onClickUpgradeProfile(View v){
+        Intent intent = new Intent(this, FreelancerUpgradeActivity.class);
+        startActivity(intent);
+    }
+
 
     private void setUpUserData() {
-        mViewModel.getUserMutableLiveData().observe(this,user -> {
-            mActivityBinding.setPriorityProfileName(user.getProfile().getPriority().getName());
-            mActivityBinding.setOlduser(user);
-            mActivityBinding.executePendingBindings();
+        mViewModel.getPreferenceLiveData().observe(this,changedUser -> {
+            this.currentUser = changedUser;
+            new Handler().postDelayed(()->{
+                mActivityBinding.txtPriorityProfile.setText(changedUser.getProfile().getPriority().getName());
+                mActivityBinding.priorityBtn.setStateChangeWhenPriorityChange(changedUser.getProfile().getPriority());
+                BindingAdapters.setImageUrl(mActivityBinding.imvAvatar,changedUser.getAvatar(),
+                        ContextCompat.getDrawable(this,R.drawable.defaultimage),
+                        ContextCompat.getDrawable(this,R.drawable.errorimg));
+                mActivityBinding.txtName.setText(changedUser.getRealname());
+            },500);
         });
-        setUpViewPagerAdapter(mViewModel.getStaticUserData());
+        setUpViewPagerAdapter();
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -96,7 +118,7 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
     public void onEvent(BaseMessage message) {
         if (message instanceof UserProfileViewModel.UserActionMessage) {
             if (((UserProfileViewModel.UserActionMessage) message).message != null) {
-                showSuccessDialog("Thông báo", "Đồng bộ thành công");
+                showDialog("Thông báo", "Đồng bộ thành công");
             } else {
                 showErrorDialog("Lỗi", "Đồng bộ thất bại");
             }
@@ -109,8 +131,8 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
         super.onBackPressed();
     }
 
-    private void setUpViewPagerAdapter(final User user) {
-        viewPagerAdapter.addFragment(IndividualProfileFragment.newInstance(user),"Hồ sơ cá nhân");
+    private void setUpViewPagerAdapter() {
+        viewPagerAdapter.addFragment(IndividualProfileFragment.newInstance(),"Hồ sơ cá nhân");
         viewPagerAdapter.addFragment(BussinessProfileFragment.newInstance(),"Hồ sơ doanh nghiệp");
         mActivityBinding.viewPager.setAdapter(viewPagerAdapter);
         mActivityBinding.tabLayout.setupWithViewPager(mActivityBinding.viewPager);
@@ -132,22 +154,29 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
         }
     }
 
-    public User getBindingUser(){
-        return user;
+    public User getCurrentUser(){
+        return currentUser;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void saveChangeHandle() {
-        if(FLAG_IMAGE_HAS_CHANGED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCEPT_PERMISSION_CODE);
-            mViewModel.updateProfile(user);
-            FLAG_IMAGE_HAS_CHANGED = false;
-
-        }else{
-            mViewModel.updateProfileWithoutImage(user);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCEPT_PERMISSION_CODE);
+        switch (mViewModel.getStrategy()){
+            case UPDATE_LOGO_ONLY:
+                mViewModel.updateLogoOnly(currentUser);
+                break;
+            case NONE_UPDATE:
+                mViewModel.updateProfileWithoutImage(currentUser);
+                break;
+            case UPDATE_BOTH_IMAGE:
+                mViewModel.updateBothImage(currentUser);
+                break;
+            case UPDATE_AVATAR_ONLY:
+                mViewModel.updateAvatarOnly(currentUser);
+                break;
         }
-        hideButtonSaveChangeAnimation();
+        mViewModel.resetStategyAfterUpdate();
     }
 
 
@@ -171,57 +200,25 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
         if(resultCode == RESULT_OK ){
             String fullUri = StringUtil.getRealPathFromURI(this,data.getData());
             if(requestCode == PICK_SINGLE_IMAGE){
-                if(data==null){
-                    //error
-                    showErrorDialog("Error","Can't receive image from Gallery App");
-                } else if(requestCode==REQUEST_ACCEPT_PERMISSION_CODE){
-
-                }
-                else{
-
-                    if(!(fullUri.substring(fullUri.lastIndexOf("/")+1,fullUri.length()).equals(mActivityBinding.getOlduser().getAvatar()))){
-                        //mActivityBinding.getUser().setAvatar(StringUtil.getFileNameFromUri(this,data.getData()));
-                        FLAG_IMAGE_HAS_CHANGED = true;
-                        showButtonSaveChangeAnimation();
-                        user.setAvatar(fullUri);
-                        mActivityBinding.imvAvatar.setImageURI(data.getData());
-                        mActivityBinding.executePendingBindings();
-                    }
-
-
+                if(!(StringUtil.getFileNameFromPath(fullUri).equals(mViewModel.getPreferenceLiveData().getValue().getAvatar()))){
+                    currentUser.setAvatar(StringUtil.getRealPathFromURI(this,data.getData()));
+                    BindingAdapters.setImageUri(mActivityBinding.imvAvatar,data.getData(),
+                            ContextCompat.getDrawable(this,R.drawable.defaultimage),
+                            ContextCompat.getDrawable(this,R.drawable.errorimg));
+                    mViewModel.getImageChange()[0] = true;
                 }
             }else if(requestCode == BussinessProfileFragment.PICK_SINGLE_IMAGE_BUSSINESS){
-                if(!(fullUri.substring(fullUri.lastIndexOf("/")+1,fullUri.length()).equals(mActivityBinding.getOlduser().getLogo_company()))){
-                    FLAG_IMAGE_HAS_CHANGED = true;
-                    showButtonSaveChangeAnimation();
-                    user.setLogo_company(fullUri);
-                    eventBus.post(new UpdateImageInFragmentMessage(data.getData()));
+                if(!(StringUtil.getFileNameFromPath(fullUri).equals(mViewModel.getPreferenceLiveData().getValue().getLogo_company()))){
+                    currentUser.setLogo_company(StringUtil.getRealPathFromURI(this,data.getData()));
+                    onImageBussinessChange.onImageChange(data.getData());
+                    mViewModel.getImageChange()[1] = true;
                 }
             }
         }
     }
 
-
-
     private void backPressHandle() {
         finish();
-    }
-
-
-    public void showButtonSaveChangeAnimation(){
-        LinearLayout buttonSaveChange = mActivityBinding.saveChangeButton;
-        if(buttonSaveChange.getVisibility()!=View.VISIBLE){
-            buttonSaveChange.setAnimation(AnimationUtils.loadAnimation(this,R.anim.slide_in_up));
-            buttonSaveChange.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideButtonSaveChangeAnimation(){
-        LinearLayout buttonSaveChange = mActivityBinding.saveChangeButton;
-        if(buttonSaveChange.getVisibility()!=View.GONE){
-            buttonSaveChange.setAnimation(AnimationUtils.loadAnimation(this,R.anim.slide_out_down));
-            buttonSaveChange.setVisibility(View.GONE);
-        }
     }
 
     public static class UpdateImageInFragmentMessage extends BaseMessage{
@@ -229,5 +226,15 @@ public class UserProfileActivity extends BaseActivity<UserProfileViewModel,Activ
         public UpdateImageInFragmentMessage(Uri filePath){
             this.filePath = filePath;
         }
+    }
+
+    public void setOnImageBussinessChange(OnImageBussinessChange onImageBussinessChange){
+        this.onImageBussinessChange = onImageBussinessChange;
+    }
+
+    OnImageBussinessChange onImageBussinessChange;
+
+    public interface OnImageBussinessChange{
+        void onImageChange(Uri uri);
     }
 }

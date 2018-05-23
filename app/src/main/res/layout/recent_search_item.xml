@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="recentitem"
+            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RecentSearch"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:weightSum="5"
+        android:layout_height="70dp">
+        <FrameLayout
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_height="match_parent">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_circle"
+                app:imageCircleFilePath="@{recentitem.imagePath}"
+                android:layout_gravity="center"
+                app:border_color="#fff"
+                app:border_width="2dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
 
-</LinearLayout>
+        </FrameLayout>
+        <TextView
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:gravity="center_vertical"
+            android:id="@+id/name_category"
+            android:text="@{recentitem.name}"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>

@@ -5,6 +5,7 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.SignUpRequest;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileWithPoint;
 
 import java.util.List;
@@ -30,11 +31,8 @@ public interface UserService {
     @POST("/facebook")
     Single<LoginResponse> loginFacebook(@Body LoginRequest.FacebookLoginRequest facebookLoginRequest);
 
-    @POST("/Users/signupemployer")
-    Completable SignUpEmployer(@Body SignUpRequest mSignUpEmployer);
-
-    @POST("/Accounts/signupemployee")
-    Completable SignUpEmployee(@Body SignUpRequest mSignUpEmployee);
+    @POST("/Users/SignUp")
+    Completable signUp(@Body SignUpRequest mSignUpEmployer);
 
     @GET("/Categories/GetAllCategories")
     Single<List<Category>> getListCategory();
@@ -43,8 +41,9 @@ public interface UserService {
     Single<Category> getTest();
 
     @GET("/Users/getdetailprofile")
-    Single<DetailProfileWithPoint> getDetailProfile(@Query("iduser") String iduser);
+    Single<User> getDetailProfile(@Query("iduser") String iduser);
 
-
+    @GET("/Users/syncdata")
+    Single<LoginResponse> syncData(@Query("iduser") String iduser);
 
 }

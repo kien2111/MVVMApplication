@@ -6,8 +6,119 @@
             type="com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel"/>
     </data>
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="match_parent">
-
+        <ImageView
+            android:contentDescription="@string/signup"
+            android:src="@drawable/signup_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:weightSum="6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="15dp"
+                android:src="@drawable/icon_user_white"
+                android:contentDescription=""
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="@color/colorAccent"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/username"
+                    android:hint="@string/username"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/colorPrimaryBlueGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"/>
+        <LinearLayout
+            android:weightSum="6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="15dp"
+                android:src="@drawable/email_white"
+                android:contentDescription=""
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="@color/colorAccent"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:textSize="16sp"
+                    android:inputType="textEmailAddress"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/edt_email"
+                    android:hint="@string/email"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/colorPrimaryBlueGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"/>
+        <LinearLayout
+            android:weightSum="6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="15dp"
+                android:src="@drawable/lock_white"
+                android:contentDescription=""
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="@color/colorAccent"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/edt_password"
+                    android:inputType="textPassword"
+                    android:hint="@string/password"
+                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/colorPrimaryBlueGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"/>
+        <Button
+            android:onClick="onClickSignUpRequest"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:textColor="@android:color/white"
+            android:text="@string/signup"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:background="@drawable/ripple_purple_accent_background"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </layout>

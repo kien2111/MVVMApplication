@@ -34,16 +34,8 @@ public abstract class ProfileDao {
     public abstract Flowable<ProfileNextPageResult> findNextPageResultFlowable(String query);
 
     public Flowable<List<ProfileModel>> loadOrdered(List<String> idProfilelist){
-        return loadById(idProfilelist).map(new Function<List<ProfileModel>, List<ProfileModel>>() {
-            @Override
-            public List<ProfileModel> apply(List<ProfileModel> profileModelList) throws Exception {
-                Collections.sort(profileModelList,(o1, o2) -> {
-                    return o1.getPriority().compareTo(o2.getPriority());
-                });
-                return profileModelList;
-            }
-        });
+        return loadById(idProfilelist);
     }
-    @Query("SELECT * FROM profiles WHERE idprofile in (:idprofiles)")
-    protected abstract Flowable<List<ProfileModel>> loadById(List<String> idprofiles);
+    @Query("SELECT * FROM profiles WHERE idprofile in (:idprofiles) ORDER BY priority DESC")
+    public abstract Flowable<List<ProfileModel>> loadById(List<String> idprofiles);
 }

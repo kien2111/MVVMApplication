@@ -20,9 +20,9 @@ import io.reactivex.functions.Function;
  */
 @Dao
 public abstract class AppointmentDao {
-    @Query("SELECT * FROM appointmentnextpageresult WHERE `iduser` = :iduser AND `option`=:option")
+    @Query("SELECT * FROM appointmentnextpageresult WHERE `iduser` = :iduser AND `option`=:option AND `historyOrOnProgress`=:historyOrOnProgress")
     public abstract AppointmentNextPageResult
-    findAppointmentNextPageResult(int option,String iduser);
+    findAppointmentNextPageResult(int option,String iduser,int historyOrOnProgress);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(AppointmentModel... appointmentModels);
@@ -33,9 +33,9 @@ public abstract class AppointmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(AppointmentNextPageResult result);
 
-    @Query("SELECT * FROM appointmentnextpageresult WHERE `option` = :option AND `iduser`=:iduser")
+    @Query("SELECT * FROM appointmentnextpageresult WHERE `option` = :option AND `iduser`=:iduser AND `historyOrOnProgress`=:historyOrOnProgress")
     public abstract Flowable<AppointmentNextPageResult>
-    findNextPageAppointmentResultFlowable(int option,String iduser);
+    findNextPageAppointmentResultFlowable(int option,String iduser,int historyOrOnProgress);
 
     public Flowable<List<AppointmentModel>> loadOrdered(List<Integer> idappointments){
         return loadById(idappointments).map(appointmentModelList -> {

@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="detailprofile"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileWithPoint"/>
+            type="com.mvvm.kien2111.mvvmapplication.model.User"/>
         <variable
             name="vm"
             type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel"/>
@@ -30,7 +30,7 @@
                     android:layout_height="250dp">
                 </LinearLayout>
                 <FrameLayout
-                    android:padding="5dp"
+                    android:padding="3dp"
                     android:background="@drawable/stroke_imageview_detail_profile"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"/>
                     <TextView
-                        android:text="Computer Science"
+                        android:text="@{detailprofile.profile.category.namecategory}"
                         android:layout_marginTop="6dp"
                         android:layout_gravity="center"
                         android:textSize="15sp"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textColor="@color/colorPrimaryDark"
-                            android:text="@{String.valueOf(detailprofile.point)}"
+                            android:text="@{String.valueOf(detailprofile.rate_point)}"
                             android:textSize="16sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -145,7 +145,7 @@
                             android:layout_marginStart="15dp"
                             android:stepSize="0.1"
                             android:isIndicator="true"
-                            android:rating="@{detailprofile.point}"
+                            android:rating="@{detailprofile.rate_point}"
                             style="@style/RattingBarSetting"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -159,7 +159,9 @@
             </FrameLayout>
             <android.support.design.widget.TabLayout
                 style="@style/MyTabLayoutStyle"
-                app:tabMode="scrollable"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
                 android:background="@color/colorPrimary"
                 android:id="@+id/tablayout_detailprofile"
                 app:tabTextColor="@android:color/white"

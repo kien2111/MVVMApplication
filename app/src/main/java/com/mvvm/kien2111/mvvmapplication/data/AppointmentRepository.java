@@ -8,6 +8,8 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.AppointmentNextPageResult;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileNextPageResult;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AppointmentService;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.AppointmentTaskRequest;
+import com.mvvm.kien2111.mvvmapplication.model.Deposit_Fee;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.common.AppointmentModel;
@@ -22,6 +24,8 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -46,7 +50,8 @@ public class AppointmentRepository {
         return appointmentService
                 .getListAppointment(
                         pickOption.getOption().getType()
-                        ,pickOption.getIduser())
+                        ,pickOption.getIduser()
+                        ,pickOption.getHistoryOrOnProgress())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(appointmentWrapper -> appExecutors.getDiskIO().execute(()-> doOnNext(appointmentWrapper)))
@@ -54,8 +59,33 @@ public class AppointmentRepository {
                 .flatMap(appointmentWrapper -> roomDb.appointmentDao()
                         .findNextPageAppointmentResultFlowable(
                                 pickOption.getOption().getType()
-                                ,pickOption.getIduser())
+                                ,pickOption.getIduser()
+                                ,pickOption.getHistoryOrOnProgress())
                         .switchMap(result -> roomDb.appointmentDao().loadOrdered(result.idappointments)));
+    }
+
+    public Single<Deposit_Fee> getDepositFee(){
+        return appointmentService.getAvalableDepositFree()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable createAppointment(final AppointmentModel appointmentModel){
+        return appointmentService.createAppointment(appointmentModel)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable acceptAppointment(final AppointmentTaskRequest appointmentTaskRequest){
+        return appointmentService.acceptAppointment(appointmentTaskRequest)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable declineAppointment(final AppointmentTaskRequest appointmentTaskRequest){
+        return appointmentService.declineAppointment(appointmentTaskRequest)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
     }
 
     @WorkerThread
@@ -64,6 +94,7 @@ public class AppointmentRepository {
         AppointmentNextPageResult appointmentNextPageResult = new AppointmentNextPageResult(
                 appointmentWrapper.getOption(),
                 appointmentWrapper.getIduser(),
+                appointmentWrapper.getHistoryOrOnProgress(),
                 appointmentids,
                 appointmentWrapper.getTotalcount(),
                 appointmentWrapper.getNextpage());
@@ -104,7 +135,9 @@ public class AppointmentRepository {
         @Override
         public void run() {
             AppointmentNextPageResult current = roomDb.appointmentDao()
-                    .findAppointmentNextPageResult(pickOption.getOption().getType(),pickOption.getIduser());
+                    .findAppointmentNextPageResult(pickOption.getOption().getType(),
+                            pickOption.getIduser(),
+                            pickOption.getHistoryOrOnProgress());
             if(current==null){
                 emitter.onNext(null);
                 return;
@@ -118,14 +151,17 @@ public class AppointmentRepository {
                 AppointmentWrapper response = service
                         .getNextPageAppointment(
                                 pickOption.getOption().getType(),
-                                pickOption.getIduser(),nextPage)
-                        .blockingSingle();
+                                pickOption.getIduser(),
+                                pickOption.getHistoryOrOnProgress(),
+                                nextPage)
+                        .blockingGet();
                 if(response != null){
                     List<Integer> ids = new ArrayList<>();
                     ids.addAll(current.idappointments);
                     ids.addAll(response.getIntergerAppointmentsFromApi());
                     AppointmentNextPageResult merged = new AppointmentNextPageResult(pickOption.getOption().getType(),
                             pickOption.getIduser(),
+                            pickOption.getHistoryOrOnProgress(),
                             ids,
                             response.getTotalcount(),
                             response.getNextpage());
@@ -149,5 +185,4 @@ public class AppointmentRepository {
             }
         }
     }
-
 }

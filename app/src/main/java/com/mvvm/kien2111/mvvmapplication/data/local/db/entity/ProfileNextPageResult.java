@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.mvvm.kien2111.mvvmapplication.data.local.db.converter.AppConverter;
+import com.mvvm.kien2111.mvvmapplication.model.Priority;
 
 import java.util.List;
 
@@ -17,20 +18,32 @@ import java.util.List;
 public class ProfileNextPageResult {
     @NonNull
     public final String query;
-    public final String filter;
+    public final String distid;
+    public final String cityid;
+    public final Double salaryFrom;
+    public final Double salaryTo;
+    public final Priority priority;
     public final List<String> idprofiles;
     public final int totalcount;
     @Nullable
     public final Integer next;
 
     public ProfileNextPageResult(@NonNull String query,
-                                 String filter,
+                                 String distid,
+                                 String cityid,
+                                 Double salaryFrom,
+                                 Double salaryTo,
+                                 Priority priority,
                                  List<String> idprofiles,
                                  int totalcount,
                                  @Nullable Integer next){
         this.query = query;
-        this.filter = filter;
         this.idprofiles = idprofiles;
+        this.cityid = cityid;
+        this.distid = distid;
+        this.salaryFrom = salaryFrom;
+        this.salaryTo = salaryTo;
+        this.priority = priority;
         this.next = next;
         this.totalcount = totalcount;
     }

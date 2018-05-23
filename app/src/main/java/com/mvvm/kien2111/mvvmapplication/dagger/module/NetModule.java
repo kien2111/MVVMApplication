@@ -1,21 +1,17 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
+import android.accounts.NetworkErrorException;
 import android.accounts.OperationCanceledException;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
-import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AppointmentService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
@@ -25,6 +21,7 @@ import com.mvvm.kien2111.mvvmapplication.data.remote.UserService;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnumTypeAdapterFactory;
 import com.mvvm.kien2111.mvvmapplication.retrofit.EnvelopeConverterFactory;
 import com.mvvm.kien2111.mvvmapplication.retrofit.RxErrorHandlingCallAdapterFactory;
+import com.mvvm.kien2111.mvvmapplication.util.NetworkUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Logger;
@@ -42,7 +39,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -94,9 +90,12 @@ public class NetModule {
 
     @Provides
     @Named("protected_OkHttp")
-    OkHttpClient provideProtectedOkHttpClient(Cache cache,
+    OkHttpClient provideProtectedOkHttpClient(MyApplication myApplication,Cache cache,
                                               HttpLoggingInterceptor httpLoggingInterceptor,
                                               AccountManager accountManager){
+        /*if(!NetworkUtil.isNetworkConnected(myApplication.getApplicationContext())){
+            throw new NetworkErrorException("No network exception");
+        }*/
         final String[] auth_token = new String[2];
         accountManager.getAuthTokenByFeatures(AccountAuthenticator.ACCOUNT_TYPE,
                 AccountAuthenticator.DEFAULT_AUTHTOKEN_TYPE_BEARER, null, null, null, null,future -> {
@@ -134,7 +133,10 @@ public class NetModule {
     @Provides
     @Singleton
     @Named("no_protected_OkHttp")
-    OkHttpClient provideOkHttpClient(Cache cache,HttpLoggingInterceptor httpLoggingInterceptor) {
+    OkHttpClient provideOkHttpClient(MyApplication myApplication,Cache cache,HttpLoggingInterceptor httpLoggingInterceptor) {
+        /*if(!NetworkUtil.isNetworkConnected(myApplication.getApplicationContext())){
+            throw new NetworkErrorException("No network exception");
+        }*/
         return new OkHttpClient.Builder()
                 .addNetworkInterceptor(httpLoggingInterceptor)
                 .connectTimeout(BuildConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -143,6 +145,7 @@ public class NetModule {
                 .cache(cache)
                 .build();
     }
+
 
     @Provides
     @Singleton

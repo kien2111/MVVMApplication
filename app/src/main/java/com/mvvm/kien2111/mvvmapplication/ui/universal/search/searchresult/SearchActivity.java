@@ -1,17 +1,21 @@
-package com.mvvm.kien2111.mvvmapplication.ui;
+package com.mvvm.kien2111.mvvmapplication.ui.universal.search.searchresult;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -30,24 +34,28 @@ import com.mvvm.kien2111.mvvmapplication.BR;
 import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
+import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RecentSearch;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivitySearchBinding;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.DividerItemDecoration;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.search.CategoryItem;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.search.ExpandableChildItem;
+import com.mvvm.kien2111.mvvmapplication.ui.universal.search.ProfileItem;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchAdapter;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SuggestionSearchProvider;
+import com.mvvm.kien2111.mvvmapplication.util.PermissionUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.List;
-
 import javax.inject.Inject;
 
 /**
  * Created by WhoAmI on 05/05/2018.
  */
 
-public class SearchActivity extends BaseActivity<SearchViewModel,ActivitySearchBinding> {
+public class SearchActivity extends BaseActivity<SearchViewModel,ActivitySearchBinding> implements SearchAdapter.ListenerClickSearchResult{
 
     @Inject
     SearchAdapter expandableListAdapter;
@@ -256,5 +264,78 @@ public class SearchActivity extends BaseActivity<SearchViewModel,ActivitySearchB
             suggestions.saveRecentQuery(query, null);
             mViewModel.setNewQuery(query);
         }
+    }
+
+    private static final int READ_WRITE_PERMISSION_REQUEST_CODE = 10;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        switch (requestCode){
+            case READ_WRITE_PERMISSION_REQUEST_CODE: {
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //granted
+                    mViewModel.saveQuery(getIntent().getParcelableExtra(KEY_PICK_SEARCH_ITEM),
+                            getIntent().getParcelableExtra(KEY_PICK_BITMAP_IN_SEARCH_ITEM));
+                    startAnotherUniversalResult(getIntent());
+                }else{
+                    //deny
+                }
+                return;
+            }
+            default:break;
+        }
+    }
+
+    public static final String KEY_PICK_SEARCH_ITEM = "key pick search item";
+    private static final String KEY_PICK_BITMAP_IN_SEARCH_ITEM = "key pick bitmap in search";
+    @Override
+    public void onClickSearchResult(ExpandableChildItem childItem, Bitmap bitmap) {
+        Intent intent = new Intent();
+        if(childItem instanceof CategoryItem){
+            intent.putExtra(KEY_PICK_SEARCH_ITEM,new RecentSearch.Builder()
+                    .setIdquery(((CategoryItem) childItem).getIdcategory())
+                    .setName(((CategoryItem) childItem).getNamecategory())
+                    .setSearchType(RecentSearch.SearchType.CATEGORY)
+                    .setCreated_at(System.currentTimeMillis()).build());
+            intent.putExtra(KEY_PICK_BITMAP_IN_SEARCH_ITEM,bitmap);
+            setIntent(intent);
+            if(PermissionUtil.checkWriteExternalPermission(this)){
+                mViewModel.saveQuery(new RecentSearch.Builder()
+                        .setIdquery(((CategoryItem) childItem).getIdcategory())
+                        .setName(((CategoryItem) childItem).getNamecategory())
+                        .setSearchType(RecentSearch.SearchType.CATEGORY)
+                        .setCreated_at(System.currentTimeMillis()).build(),bitmap);
+                startAnotherUniversalResult(intent);
+            }else{
+                PermissionUtil.requestWritePersmission(this,READ_WRITE_PERMISSION_REQUEST_CODE);
+            }
+        }else if(childItem instanceof ProfileItem){
+            intent.putExtra(KEY_PICK_SEARCH_ITEM,new RecentSearch.Builder()
+                    .setIdquery(((ProfileItem) childItem).getProfile_id())
+                    .setName(((ProfileItem) childItem).getProfile_name())
+                    .setSearchType(RecentSearch.SearchType.PROFILE)
+                    .setCreated_at(System.currentTimeMillis()).build());
+            intent.putExtra(KEY_PICK_BITMAP_IN_SEARCH_ITEM,bitmap);
+            setIntent(intent);
+            if(PermissionUtil.checkWriteExternalPermission(this)){
+                mViewModel.saveQuery(new RecentSearch.Builder()
+                        .setIdquery(((ProfileItem) childItem).getProfile_id())
+                        .setName(((ProfileItem) childItem).getProfile_name())
+                        .setSearchType(RecentSearch.SearchType.PROFILE)
+                        .setCreated_at(System.currentTimeMillis()).build(),bitmap);
+                startAnotherUniversalResult(intent);
+            }else{
+                PermissionUtil.requestWritePersmission(this,READ_WRITE_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            //do nothing
+        }
+    }
+
+    private void startAnotherUniversalResult(Intent datareturn){
+        datareturn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        datareturn.setClass(SearchActivity.this, UniversalActivity.class);
+        startActivity(datareturn);
     }
 }

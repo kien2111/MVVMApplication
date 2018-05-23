@@ -2,6 +2,7 @@ package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -26,6 +27,8 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.mvvmapplication.databinding.FragmentDetailcategoryBinding;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.City;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.District;
+import com.mvvm.kien2111.mvvmapplication.model.Priority;
+import com.mvvm.kien2111.mvvmapplication.ui.createappointment.CreateAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.common.NavigationController;
 
@@ -81,7 +84,16 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message){
         if(message instanceof BottomSheetDialogFilter.FilterMessage){
-            if(((BottomSheetDialogFilter.FilterMessage) message).regionDivision instanceof City){
+            profileAdapter.getFilter().filter(message.toString());
+            mViewModel.setProfileRequest(new ProfileRequest.Builder()
+                                        .setQuery(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory())
+                                        .setCityid(((BottomSheetDialogFilter.FilterMessage) message).cityid)
+                                        .setDistid(((BottomSheetDialogFilter.FilterMessage) message).distid)
+                                        .setPriority(((BottomSheetDialogFilter.FilterMessage) message).priority)
+                                        .setSalaryFrom(((BottomSheetDialogFilter.FilterMessage) message).fromSalary)
+                                        .setSalaryTo(((BottomSheetDialogFilter.FilterMessage) message).toSalary)
+                                        .build());
+            /*if(((BottomSheetDialogFilter.FilterMessage) message).regionDivision instanceof City){
                 profileAdapter.getFilter().filter(((City) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamecity());
                 mViewModel.setProfileRequest(new ProfileRequest(
                         ((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory(),
@@ -93,7 +105,7 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
                         ((District) ((BottomSheetDialogFilter.FilterMessage) message).regionDivision).getNamedist()));
             }else{
                 Timber.d(TAG,"no filter select");
-            }
+            }*/
         }
     }
 
@@ -104,7 +116,10 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
         setHasOptionsMenu(true);
         setUpToolBar(getArguments().getParcelable(KEY_PICK_CATEGORY));
         setUpProfileAdapter();
-        mViewModel.setProfileRequest(new ProfileRequest(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory(),null));
+        mViewModel.setProfileRequest(new ProfileRequest.Builder()
+                .setPriority(Priority.ALL)
+                .setQuery(((Category)getArguments().getParcelable(KEY_PICK_CATEGORY)).getIdcategory())
+                .build());
         return view;
     }
 
@@ -116,9 +131,10 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     private void setUpToolBar(Category category){
         UniversalActivity activity = (UniversalActivity)getActivity();
         //activity.setSupportActionBar(mFragmentBinding.toolbar);
+        activity.reSupportToolbar();
         activity.getDrawerToggle().setDrawerIndicatorEnabled(false);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        //activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setTitle(category.getNamecategory());
         /*mFragmentBinding.toolbar.setTitle(category.getNamecategory());
         mFragmentBinding.toolbar.setTitleTextColor(Color.WHITE);*/
@@ -134,7 +150,7 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            Toast.makeText(DetailCategoryFragment.this.getActivity(),"back",Toast.LENGTH_LONG).show();
+            getActivity().onBackPressed();
             return true;
         }else if(item.getItemId()==R.id.action_filter){
             /*Rotate3dAnimation rotate3dAnimation = new Rotate3dAnimation(-90f,0f,0.5f,0f,0.0f,false);
@@ -142,7 +158,7 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
             mFragmentBinding.filtercontainer.startAnimation(rotate3dAnimation);*/
             new Handler().postDelayed(()->{
                 bottomSheetDialogFilter.show(getActivity().getSupportFragmentManager(),null);
-            },10);
+            },200);
         }
 
         return super.onOptionsItemSelected(item);
@@ -196,4 +212,12 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
         navigationController.navigateToDetailProfile(profileModel,sharedImageView);
     }
 
+    public static final String KEY_BOOKING_PROFILE = "key booking profile";
+
+    @Override
+    public void onClickBooking(ProfileModel profileModel) {
+        Intent intent = new Intent(this.getActivity(), CreateAppointmentActivity.class);
+        intent.putExtra(KEY_BOOKING_PROFILE,profileModel);
+        startActivity(intent);
+    }
 }

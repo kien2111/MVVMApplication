@@ -12,4 +12,55 @@
             <enum name="trimModeLength" value="1"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="AspectRatioImageView">
+        <attr name="aspectRatio" format="float" />
+        <attr name="aspectRatioEnabled" format="boolean" />
+        <attr name="dominantMeasurement">
+            <enum name="width" value="0"/>
+            <enum name="height" value="1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="PriorityButton">
+        <attr name="Priority">
+            <enum name="FREE" value="0"/>
+            <enum name="BASIC" value="1"/>
+            <enum name="MEDIUM" value="2"/>
+            <enum name="PREMIUM" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ImageViewState">
+        <attr name="drawableOn" format="integer"/>
+        <attr name="drawableOff" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="UpgradeProfileButton">
+        <attr name="bg_drawable" format="integer"/>
+        <attr name="text_color" format="color"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="text" format="string"/>
+        <attr name="statusrequestupgrade" format="enum">
+            <enum name="NORMAL" value="1"/>
+            <enum name="ON_PROCESS" value="2"/>
+            <enum name="CURRENT_LEVEL" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="PublishButton">
+        <attr name="publish_bg_drawable" format="integer"/>
+        <attr name="publish_text_color" format="color"/>
+        <attr name="publish_text_size" format="dimension"/>
+        <attr name="publish_text" format="string"/>
+        <attr name="statusapprove_publish" format="enum">
+            <enum name="NOT_DO_ANYTHING" value="0"/>
+            <enum name="ACCEPT" value="1"/>
+            <enum name="CONFLICT" value="2"/>
+            <enum name="ADMIN_BLOCKED" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="NoAvailableData">
+        <attr name="no_available_img" format="integer"/>
+        <attr name="no_available_textsize" format="dimension"/>
+        <attr name="no_available_img_width" format="dimension"/>
+        <attr name="no_available_img_height" format="dimension"/>
+        <attr name="no_available_text_content" format="string"/>
+        <attr name="no_available_textcolor" format="color"/>
+    </declare-styleable>
 </resources>

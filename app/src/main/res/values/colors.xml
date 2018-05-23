@@ -45,4 +45,20 @@
     <color name="green_accept_color">#50AF00</color>
 
     <color name="cyan_light">#18ffff</color>
+    
+    material color
+    <color name="indigo_material">#3f51b5</color>
+    <color name="teal_material">#009688</color>
+    <color name="light_teal_material">#4db6ac</color>
+    <color name="orange_material">#ff5722</color>
+    <color name="red_material">#e53935</color>
+    <color name="purple_material">#9c27b0</color>
+    <color name="black_material">#303030</color>
+    <color name="yellow_material">#FFEB3B</color>
+    <color name="blue_material">#1e88e5</color>
+    <color name="light_blue_material">#03a9f4</color>
+
+
+    <color name="light_light_gray">#bdbdbd</color>
+    <color name="much_lighter_gray">#efefef</color>
 </resources>

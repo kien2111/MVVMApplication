@@ -21,6 +21,18 @@ public class AppointmentWrapper extends BaseWrapper {
     @SerializedName("appointments")
     @Expose
     private List<AppointmentModel> lst_appointment;
+    @SerializedName("historyOrOnProgress")
+    @Expose
+    private int historyOrOnProgress;
+
+
+    public int getHistoryOrOnProgress() {
+        return historyOrOnProgress;
+    }
+
+    public void setHistoryOrOnProgress(int historyOrOnProgress) {
+        this.historyOrOnProgress = historyOrOnProgress;
+    }
 
     public String getIduser() {
         return iduser;

@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.model;
 
+import android.arch.persistence.room.Ignore;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
@@ -17,6 +18,64 @@ import java.util.List;
  */
 
 public class User extends BaseObservable implements Parcelable {
+
+    protected User(Parcel in) {
+        realname = in.readString();
+        rate_point = in.readFloat();
+        phone_individual = in.readString();
+        profile = in.readParcelable(Profile.class.getClassLoader());
+        brandname = in.readString();
+        budget_from = in.readDouble();
+        budget_to = in.readDouble();
+        phone_company = in.readString();
+        logo_company = in.readString();
+        about_company = in.readString();
+        role_list = in.createTypedArrayList(Role.CREATOR);
+        account_balance = in.readDouble();
+        username = in.readString();
+        password = in.readString();
+        avatar = in.readString();
+        email = in.readString();
+        userId = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(realname);
+        dest.writeFloat(rate_point);
+        dest.writeString(phone_individual);
+        dest.writeParcelable(profile, flags);
+        dest.writeString(brandname);
+        dest.writeDouble(budget_from);
+        dest.writeDouble(budget_to);
+        dest.writeString(phone_company);
+        dest.writeString(logo_company);
+        dest.writeString(about_company);
+        dest.writeTypedList(role_list);
+        dest.writeDouble(account_balance);
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(avatar);
+        dest.writeString(email);
+        dest.writeString(userId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     @Bindable
     public String getRealname() {
@@ -47,7 +106,10 @@ public class User extends BaseObservable implements Parcelable {
     }
     @Bindable
     public String getPhone_individual() {
-        return phone_individual;
+        if(phone_individual!=null){
+            return phone_individual;
+        }
+        return "User not supply";
     }
 
     public void setPhone_individual(String phone_individual) {
@@ -157,7 +219,10 @@ public class User extends BaseObservable implements Parcelable {
     }
     @Bindable
     public String getEmail() {
-        return email;
+        if(email!=null){
+            return email;
+        }
+        return "User not supply";
     }
 
     public void setEmail(String email) {
@@ -174,6 +239,26 @@ public class User extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.userId);
     }
 
+    @Bindable
+    public float getRate_point() {
+        return rate_point;
+    }
+
+    public void setRate_point(float rate_point) {
+        this.rate_point = rate_point;
+        notifyPropertyChanged(BR.rate_point);
+    }
+
+    @Bindable
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+        notifyPropertyChanged(BR.userName);
+    }
+
     @Expose
     @SerializedName("realname")
     private String realname;
@@ -181,6 +266,10 @@ public class User extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("gender")
     private Gender gender;
+
+    @Expose
+    @SerializedName("rate_point")
+    private float rate_point;
 
     @Expose
     @SerializedName("birthday")
@@ -250,23 +339,6 @@ public class User extends BaseObservable implements Parcelable {
     private String userId;
 
 
-    protected User(Parcel in) {
-        realname = in.readString();
-        phone_individual = in.readString();
-        brandname = in.readString();
-        budget_from = in.readDouble();
-        budget_to = in.readDouble();
-        phone_company = in.readString();
-        logo_company = in.readString();
-        about_company = in.readString();
-
-        account_balance = in.readDouble();
-        username = in.readString();
-        password = in.readString();
-        avatar = in.readString();
-        email = in.readString();
-        userId = in.readString();
-    }
     @Bindable
     public List<Role> getRole_list() {
         return role_list;
@@ -277,20 +349,6 @@ public class User extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.role_list);
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-
-
     public List<String> getListRoleName(){
         List<String> lst_string = new ArrayList<>();
         for(Role role : role_list){
@@ -299,33 +357,157 @@ public class User extends BaseObservable implements Parcelable {
         return lst_string;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(realname);
-        dest.writeString(phone_individual);
-        dest.writeString(brandname);
-        dest.writeDouble(budget_from);
-        dest.writeDouble(budget_to);
-        dest.writeString(phone_company);
-        dest.writeString(logo_company);
-        dest.writeString(about_company);
-        dest.writeTypedList(role_list);
-        dest.writeDouble(account_balance);
-        dest.writeString(username);
-        dest.writeString(password);
-        dest.writeString(avatar);
-        dest.writeString(email);
-        dest.writeString(userId);
-    }
 
     public User(){
 
     }
 
+    @Ignore
+    private User(Builder builder){
+        this.realname = builder.realname;
+        this.gender = builder.gender;
+        this.birthday = builder.birthday;
+        this.phone_individual = builder.phone_individual;
+        this.profile = builder.profile;
+        this.brandname = builder.brandname;
+        this.budget_to = builder.budget_to;
+        this.budget_from = builder.budget_from;
+        this.phone_company = builder.phone_company;
+        this.logo_company = builder.logo_company;
+        this.about_company = builder.about_company;
+        this.role_list = builder.role_list;
+        this.account_balance = builder.account_balance;
+        this.username = builder.username;
+        this.userId = builder.userId;
+        this.password = builder.password;
+        this.avatar = builder.avatar;
+        this.email = builder.email;
+    }
+
+    public static class Builder{
+
+        private String realname;
+
+        private Gender gender;
+
+        private java.util.Date birthday;
+
+        private String phone_individual;
+
+        private Profile profile;
+
+        private String brandname;
+
+        private double budget_from;
+
+        private double budget_to;
+
+        private String phone_company;
+
+        private String logo_company;
+
+        private String about_company;
+
+        private List<Role> role_list;
+
+        private double account_balance;
+
+        private String username;
+
+        private String password;
+
+        private String avatar;
+
+        private String email;
+
+        private String userId;
+
+        public User build(){
+            return new User(this);
+        }
+
+        public Builder setRealname(String realname) {
+            this.realname = realname;
+            return this;
+        }
+
+        public Builder setGender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder setBirthday(Date birthday) {
+            this.birthday = birthday;
+            return this;
+        }
+
+        public Builder setPhone_individual(String phone_individual) {
+            this.phone_individual = phone_individual;
+            return this;
+        }
+
+        public Builder setProfile(Profile profile) {
+            this.profile = profile;
+            return this;
+        }
+
+        public Builder setBrandname(String brandname) {
+            this.brandname = brandname;
+            return this;
+        }
+
+        public Builder setBudget_from(double budget_from) {
+            this.budget_from = budget_from;
+            return this;
+        }
+
+        public Builder setBudget_to(double budget_to) {
+            this.budget_to = budget_to;
+            return this;
+        }
+
+        public Builder setPhone_company(String phone_company) {
+            this.phone_company = phone_company;
+            return this;
+        }
+
+        public Builder setLogo_company(String logo_company) {
+            this.logo_company = logo_company;
+            return this;
+        }
+
+        public Builder setAbout_company(String about_company) {
+            this.about_company = about_company;
+            return this;
+        }
+
+        public Builder setRole_list(List<Role> role_list) {
+            this.role_list = role_list;return this;
+        }
+
+        public Builder setAccount_balance(double account_balance) {
+            this.account_balance = account_balance;return this;
+        }
+
+        public Builder setUsername(String username) {
+            this.username = username;return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;return this;
+        }
+
+        public Builder setAvatar(String avatar) {
+            this.avatar = avatar;return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;return this;
+        }
+
+        public Builder setUserId(String userId) {
+            this.userId = userId;return this;
+        }
+    }
 
 }

@@ -22,6 +22,7 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityListAppoitmentBinding;
+import com.mvvm.kien2111.mvvmapplication.model.Option;
 import com.mvvm.kien2111.mvvmapplication.model.Role;
 import com.mvvm.kien2111.mvvmapplication.ui.SplashActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
@@ -43,7 +44,8 @@ import javax.inject.Inject;
  * Created by WhoAmI on 07/04/2018.
  */
 
-public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewModel,ActivityListAppoitmentBinding> implements PopupMenu.OnMenuItemClickListener{
+public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewModel,ActivityListAppoitmentBinding>
+        implements PopupMenu.OnMenuItemClickListener{
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_list_appoitment;
@@ -82,7 +84,6 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
         super.onCreate(savedInstanceState);
         defaultStateViewActivity();
         setUpViewPagerData();
-        observePickMenuItem();
     }
 
     private void setUpViewPagerData() {
@@ -97,7 +98,14 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
 
             @Override
             public void onPageSelected(int position) {
-
+               switch (position){
+                   case 0:
+                       doOnOnProgressAppointmentPage();
+                       break;
+                   case 1:
+                       doOnHistoryAppointmentPage();
+                       break;
+               }
             }
 
             @Override
@@ -108,21 +116,6 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
     }
 
 
-    private void observePickMenuItem() {
-        mViewModel.getRoleOptionMutableLiveData().observe(this,pickOption -> {
-            if(pickOption==null)return;
-            eventBus.post(new PickOptionMessage(pickOption));
-        });
-    }
-
-    public static class PickOptionMessage extends BaseMessage{
-        public ListAppointmentViewModel.PickOption pickOption;
-        public PickOptionMessage(ListAppointmentViewModel.PickOption pickOption){
-            this.pickOption = pickOption;
-        }
-    }
-
-
     public void defaultStateViewActivity(){
         List<ICommand> commands = new ArrayList<>();
         commands.add(new SwitchOnButton(mActivityBinding.onProgressButton));
@@ -130,13 +123,21 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
     }
 
     public void onClickOnProgressButton(View v){
+        doOnOnProgressAppointmentPage();
+    }
+    public void onClickHistoryAppointmentButton(View v){
+        doOnHistoryAppointmentPage();
+    }
+
+    private void doOnOnProgressAppointmentPage(){
         List<ICommand> commands = new ArrayList<>();
         commands.add(new SwitchOnButton(mActivityBinding.onProgressButton));
         commands.add(new SwitchOffButton(mActivityBinding.historyAppointmentButton));
         commands.add(new ChangeCurrentViewPager(mActivityBinding.viewPager,0));
         new ToggleButton(commands).toggle();
     }
-    public void onClickHistoryAppointmentButton(View v){
+
+    private void doOnHistoryAppointmentPage(){
         List<ICommand> commands = new ArrayList<>();
         commands.add(new SwitchOnButton(mActivityBinding.historyAppointmentButton));
         commands.add(new SwitchOffButton(mActivityBinding.onProgressButton));
@@ -144,21 +145,14 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
         new ToggleButton(commands).toggle();
     }
 
-    @Inject
-    PreferenceHelper preferenceHelper;
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_freelancer:
-                mViewModel.pickOption(new ListAppointmentViewModel.PickOption(
-                        ListAppointmentViewModel.PickOption.Option.FREELANCER,
-                        preferenceHelper.getUserData().getUser().getUserId()));
+                eventBus.post(new PickRoleMessage(Option.FREELANCER));
                 return true;
             case R.id.action_employer:
-                mViewModel.pickOption(new ListAppointmentViewModel.PickOption(
-                        ListAppointmentViewModel.PickOption.Option.EMPLOYER,
-                        preferenceHelper.getUserData().getUser().getUserId()));
+                eventBus.post(new PickRoleMessage(Option.EMPLOYER));
                 return true;
         }
         return false;
@@ -214,5 +208,10 @@ public class ListAppointmentActivity extends BaseActivity<ListAppointmentViewMod
     }
     interface ICommand{
         void execute();
+    }
+
+    public static class PickRoleMessage extends BaseMessage{
+        public Option option;
+        public PickRoleMessage(Option option){this.option = option;}
     }
 }

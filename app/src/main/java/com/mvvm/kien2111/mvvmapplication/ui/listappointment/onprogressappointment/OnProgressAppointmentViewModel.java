@@ -5,8 +5,12 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableField;
 
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.AppointmentRepository;
+import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceLiveData;
+import com.mvvm.kien2111.mvvmapplication.data.remote.model.AppointmentTaskRequest;
 import com.mvvm.kien2111.mvvmapplication.model.BaseNextPageHandler;
 import com.mvvm.kien2111.mvvmapplication.model.LoadMoreState;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
@@ -31,11 +35,18 @@ public class OnProgressAppointmentViewModel extends BaseViewModel {
     private final AppointmentRepository appointmentRepository;
     private final BaseNextPageHandler baseNextPageHandler;
     private final MutableLiveData<ListAppointmentViewModel.PickOption> roleOptionMutableLiveData = new MutableLiveData<>();
-
+    private final PreferenceLiveData preferenceLiveData;
+    private final UserRepository userRepository;
     @Inject
-    public OnProgressAppointmentViewModel(EventBus eventBus, AppointmentRepository appointmentRepository){
+    public OnProgressAppointmentViewModel(EventBus eventBus,
+            UserRepository userRepository,
+            PreferenceLiveData preferenceLiveData
+            ,AppointmentRepository appointmentRepository){
         super(eventBus);
+        this.userRepository = userRepository;
+        this.preferenceLiveData = preferenceLiveData;
         this.appointmentRepository = appointmentRepository;
+        this.preferenceLiveData.setUser(userRepository.getUserData().getUser());
         this.baseNextPageHandler = new BaseNextPageHandler() {
             @Override
             public LiveData<Resource<Boolean>> bindNextPageCall(Object... param) {
@@ -53,6 +64,10 @@ public class OnProgressAppointmentViewModel extends BaseViewModel {
         });
     }
 
+    public PreferenceLiveData getPreferenceLiveData() {
+        return preferenceLiveData;
+    }
+
     public ObservableField<String> getHeaderName() {
         return headerName;
     }
@@ -62,6 +77,24 @@ public class OnProgressAppointmentViewModel extends BaseViewModel {
             baseNextPageHandler.reload();
             roleOptionMutableLiveData.setValue(roleOption);
         }
+    }
+
+    public void acceptAppointment(AppointmentTaskRequest appointmentTaskRequest){
+        compositeDisposable.add(appointmentRepository.acceptAppointment(appointmentTaskRequest)
+                        .subscribe(() -> {
+                            eventBus.post(BaseMessage.success("Accept successfull"));
+                        },throwable -> {
+                            eventBus.post(BaseMessage.error(throwable));
+                        }));
+    }
+
+    public void declineAppointment(AppointmentTaskRequest appointmentTaskRequest){
+        compositeDisposable.add(appointmentRepository.declineAppointment(appointmentTaskRequest)
+                .subscribe(() -> {
+                    eventBus.post(BaseMessage.success("decline successfull"));
+                },throwable -> {
+                    eventBus.post(BaseMessage.error(throwable));
+                }));
     }
 
     public MutableLiveData<ListAppointmentViewModel.PickOption> getPickOptionMutableLiveData() {

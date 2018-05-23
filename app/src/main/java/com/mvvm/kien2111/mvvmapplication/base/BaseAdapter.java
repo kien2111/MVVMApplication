@@ -29,6 +29,7 @@ public abstract class BaseAdapter <T,VB extends ViewDataBinding> extends Recycle
     private List<T> lstData = Collections.emptyList();
 
     public void setLstData(List<T> lstData) {
+        if(lstData==null)return;
         this.lstData = lstData;
         notifyDataSetChanged();
     }

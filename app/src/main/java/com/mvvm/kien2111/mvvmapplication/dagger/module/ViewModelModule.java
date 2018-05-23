@@ -10,6 +10,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalVi
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.createappointment.CreateAppointmentViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.depositfund.DepositFundViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.historyappointment.HistoryAppointmentViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.onprogressappointment.OnProgressAppointmentViewModel;
@@ -25,6 +27,8 @@ import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.feed.category.CategoryViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.upgrade.businessupgrade.BusinessUpgradeViewModel;
+import com.mvvm.kien2111.mvvmapplication.ui.upgrade.freelancerupgrade.FreelancerUpgradeViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.bussiness.BussinessProfileViewModel;
 import com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.IndividualProfileViewModel;
@@ -161,6 +165,26 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(BussinessProfileViewModel.class)
     abstract ViewModel bindBussinessProfileViewModel(BussinessProfileViewModel bussinessProfileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateAppointmentViewModel.class)
+    abstract ViewModel bindCreateAppointmentViewModel(CreateAppointmentViewModel createAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DepositFundViewModel.class)
+    abstract ViewModel bindDepositFundViewModel(DepositFundViewModel depositFundViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FreelancerUpgradeViewModel.class)
+    abstract ViewModel bindFreelancerUpgradeViewModel(FreelancerUpgradeViewModel freelancerUpgradeViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BusinessUpgradeViewModel.class)
+    abstract ViewModel bindBusinessUpgradeViewModel(BusinessUpgradeViewModel businessUpgradeViewModel);
 
     @Binds
     @Singleton
