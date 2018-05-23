@@ -14,8 +14,12 @@ import com.mvvm.kien2111.mvvmapplication.databinding.AppointmentItemBinding;
 import com.mvvm.kien2111.mvvmapplication.databinding.HeaderItemExpandableBinding;
 import com.mvvm.kien2111.mvvmapplication.util.AnimationUtil;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by WhoAmI on 17/04/2018.
@@ -24,11 +28,32 @@ import java.util.List;
 public class AppointmentAdapter extends BaseAdapter<AppointmentModel,AppointmentItemBinding> {
 
     private final android.databinding.DataBindingComponent dataBindingComponent;
+    private final DecimalFormat decimalFormat;
+    private final SimpleDateFormat timeFormat;
+    private final SimpleDateFormat dateFormat;
     public AppointmentAdapter(FragmentBindingComponent fragmentBindingComponent){
         this.dataBindingComponent = fragmentBindingComponent;
+        this.decimalFormat = buildDecimalFormat();
+        this.timeFormat = buildTimeFormat();
+        this.dateFormat = buildDateFormat();
         this.setHasStableIds(true);
     }
 
+    private SimpleDateFormat buildTimeFormat() {
+        return new SimpleDateFormat("hh:mm a", Locale.getDefault());
+    }
+
+    private SimpleDateFormat buildDateFormat(){
+        return new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+    }
+
+    private DecimalFormat buildDecimalFormat(){
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        decimalFormatSymbols.setGroupingSeparator(',');
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", decimalFormatSymbols);
+        return decimalFormat;
+    }
 
     @Override
     protected BaseViewHolder<AppointmentItemBinding> instantiateViewHolder(AppointmentItemBinding mBinding) {
@@ -43,7 +68,11 @@ public class AppointmentAdapter extends BaseAdapter<AppointmentModel,Appointment
 
     @Override
     protected void bind(AppointmentItemBinding mBinding, AppointmentModel item) {
-        mBinding.setAppointmentmodel(item);
+        mBinding.txtTime.setText(String.format("%s",timeFormat.format(item.getEstimmate_time())));
+        mBinding.txtDepositMoney.setText(String.format("%s đ",decimalFormat.format(item.getDeposit_fee().getFee())));
+        mBinding.txtStatusAppointment.setText(item.getStatus().getName());
+        mBinding.txtNameReceiveAppointment.setText(item.getUser_who_receive_appointment().getRealname());
+        mBinding.txtDate.setText(String.format("%s",dateFormat.format(item.getEstimmate_time())));
         mBinding.executePendingBindings();
     }
 
@@ -55,6 +84,20 @@ public class AppointmentAdapter extends BaseAdapter<AppointmentModel,Appointment
     @Override
     protected boolean areItemsTheSame(AppointmentModel olditem, AppointmentModel newitem) {
         return false;
+    }
+
+    public void removeItem(int position) {
+        getLstData().remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(AppointmentModel item, int position) {
+        getLstData().add(position, item);
+        // notify item added by position
+        notifyItemInserted(position);
     }
 
     @Override

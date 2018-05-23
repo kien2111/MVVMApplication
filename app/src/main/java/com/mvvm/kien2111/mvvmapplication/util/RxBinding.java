@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject;
  * Created by WhoAmI on 21/03/2018.
  */
 
-public class RxBindingSearchView {
+public class RxBinding {
     @CheckResult
     @NonNull
     public static Observable<String> fromSearchView(@NonNull final SearchView searchView){
