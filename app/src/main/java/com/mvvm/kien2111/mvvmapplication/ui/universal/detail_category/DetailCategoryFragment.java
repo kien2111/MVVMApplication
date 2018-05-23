@@ -3,6 +3,7 @@ package com.mvvm.kien2111.mvvmapplication.ui.universal.detail_category;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -130,14 +131,12 @@ public class DetailCategoryFragment extends BaseFragment<DetailCategoryViewModel
     @SuppressLint("RestrictedApi")
     private void setUpToolBar(Category category){
         UniversalActivity activity = (UniversalActivity)getActivity();
-        //activity.setSupportActionBar(mFragmentBinding.toolbar);
-        activity.reSupportToolbar();
-        activity.getDrawerToggle().setDrawerIndicatorEnabled(false);
+        activity.setSupportActionBar(mFragmentBinding.toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setTitle(category.getNamecategory());
-        /*mFragmentBinding.toolbar.setTitle(category.getNamecategory());
-        mFragmentBinding.toolbar.setTitleTextColor(Color.WHITE);*/
+        mFragmentBinding.toolbar.setTitle(category.getNamecategory());
+        mFragmentBinding.toolbar.setTitleTextColor(Color.WHITE);
     }
 
     @Override

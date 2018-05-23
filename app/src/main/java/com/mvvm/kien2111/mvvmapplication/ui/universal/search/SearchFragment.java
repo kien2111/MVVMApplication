@@ -89,7 +89,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
-        //setUpToolBar();
+        setUpToolBar();
         setUpExpandableAdapter();
         return view;
     }
@@ -123,9 +123,9 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
 
 
     private void setUpToolBar(){
-        //AppCompatActivity activity = (BaseActivity)getActivity();
-        //activity.setSupportActionBar(mFragmentBinding.toolbar);
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        UniversalActivity activity = (UniversalActivity)getActivity();
+        activity.setSupportActionBar(mFragmentBinding.toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     protected int getLayoutId() {
@@ -214,7 +214,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel,FragmentSearchB
     }
 
     public void animateSearchToolbar(int numberOfMenuIcon, boolean containsOverflow, boolean show) {
-        Toolbar mToolbar = ((UniversalActivity)getActivity()).getToolBar();
+        Toolbar mToolbar = mFragmentBinding.toolbar;
         mToolbar.setBackgroundColor(ContextCompat.getColor(this.getActivity(), android.R.color.white));
 
         if (show) {

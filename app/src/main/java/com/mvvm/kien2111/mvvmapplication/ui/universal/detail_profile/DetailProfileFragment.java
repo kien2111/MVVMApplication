@@ -171,7 +171,6 @@ public class DetailProfileFragment extends BaseFragment<DetailProfileViewModel,F
     }
 
     private void setUpToolbar() {
-        ((UniversalActivity)getActivity()).getSupportActionBar().hide();
         ((UniversalActivity)getActivity()).setSupportActionBar(mFragmentBinding.anothertoolbar);
         ((UniversalActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((UniversalActivity)getActivity()).getSupportActionBar().setTitle(((ProfileModel)getArguments().getParcelable(KEY_PROFILE_MODEL)).getName());
@@ -239,7 +238,7 @@ public class DetailProfileFragment extends BaseFragment<DetailProfileViewModel,F
                         mFragmentBinding.imagedetailprofile.setBackgroundColor(resource.palette.getDarkMutedColor(ContextCompat.getColor(getContext(),android.R.color.white)));
                     }
                 });
-        ((UniversalActivity)getActivity()).hideBottomBar();
+        //((UniversalActivity)getActivity()).hideBottomBar();
     }
 
     @Override

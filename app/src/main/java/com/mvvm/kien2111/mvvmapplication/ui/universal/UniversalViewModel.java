@@ -55,11 +55,6 @@ public class UniversalViewModel extends BaseViewModel {
     public PreferenceLiveData getPreferenceLiveData() {
         return preferenceLiveData;
     }
-
-    public Account getCurrentAccout(){
-        return userRepository.getCurrentAccount();
-    }
-
     public void fetchCategoryWithId(final String id){
         compositeDisposable.add(categoryRepository
                 .fetchCategoryWithId(id).subscribe(category -> {

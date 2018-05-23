@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.mvvmapplication.ui.universal.feed;
 
+import android.accounts.Account;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -9,6 +10,7 @@ import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.CategoryRepository;
 import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category;
+import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceLiveData;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,9 +29,24 @@ import timber.log.Timber;
 
 public class FeedViewModel extends BaseViewModel {
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    private final PreferenceLiveData preferenceLiveData;
     @Inject
-    public FeedViewModel(EventBus eventBus, CategoryRepository categoryRepository){
+    public FeedViewModel(EventBus eventBus,
+                         UserRepository userRepository,
+                         PreferenceLiveData preferenceLiveData,
+                         CategoryRepository categoryRepository){
         super(eventBus);
+        this.userRepository = userRepository;
+        this.preferenceLiveData = preferenceLiveData;
         this.categoryRepository = categoryRepository;
+    }
+
+    public PreferenceLiveData getPreferenceLiveData() {
+        return preferenceLiveData;
+    }
+
+    public Account getCurrentAccout(){
+        return userRepository.getCurrentAccount();
     }
 }

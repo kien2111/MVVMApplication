@@ -20,7 +20,17 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />-->
+        <android.support.v7.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:collapseIcon="@drawable/ic_arrow_back_24dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ToolbarTheme"
+            style="@style/Widget.MyApp.Toolbar.Solid" />
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/toolbar"
             android:id="@+id/profile_adapter_recycleview"
             app:layoutManager="LinearLayoutManager"
             android:layout_width="match_parent"
