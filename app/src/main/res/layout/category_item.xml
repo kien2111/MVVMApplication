@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="category" type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category"/>
+        <variable name="category" type="com.mvvm.kien2111.fastjob.data.local.db.entity.Category"/>
     </data>
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -24,7 +24,7 @@
                card_view:cardCornerRadius="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-               <com.mvvm.kien2111.mvvmapplication.util.AspectRatioImageView
+               <com.mvvm.kien2111.fastjob.util.AspectRatioImageView
                    android:id="@+id/imageCategory"
                    app:aspectRatioEnabled="true"
                    app:dominantMeasurement="width"

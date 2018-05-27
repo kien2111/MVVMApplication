@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.upgrade.freelancerupgrade.FreelancerUpgradeViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.upgrade.freelancerupgrade.FreelancerUpgradeViewModel"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

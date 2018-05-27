@@ -6,13 +6,93 @@
             name="LoadingMoreState"
             type="Boolean"/>
         <variable
+            name="user"
+            type="com.mvvm.kien2111.fastjob.model.User"/>
+        <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.rate.ListRateViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.detail_profile.rate.ListRateViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:padding="20dp"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:contentDescription="@{user.userName}"
+                    android:scaleType="centerCrop"
+                    app:imageCircleUrl="@{user.avatar}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+            </FrameLayout>
+            <LinearLayout
+                android:layout_weight="8"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="@{user.realname}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RatingBar
+                        android:isIndicator="false"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:id="@+id/rating_bar"
+                        android:stepSize="0.01"
+                        android:numStars="5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/edt_note"
+                        android:theme="@style/MyEdittextStyle"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:hint="@string/ratinghint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <android.support.v7.widget.ButtonBarLayout
+                    android:id="@+id/button_container"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/cancel_button"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="@string/cancle"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/rate_button"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="@string/danhgia"
+                        android:textColor="@android:color/white"
+                        android:background="@color/blue_material"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </android.support.v7.widget.ButtonBarLayout>
+            </LinearLayout>
+        </LinearLayout>
         <android.support.v7.widget.RecyclerView
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:id="@+id/recycleViewRate"

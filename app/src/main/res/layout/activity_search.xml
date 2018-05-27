@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.search.SearchViewModel"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

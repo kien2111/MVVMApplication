@@ -4,11 +4,12 @@
     <data>
         <variable
             name="VMuniversal"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.UniversalViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.universal.UniversalViewModel">
 
         </variable>
     </data>
     <RelativeLayout
+        android:id="@+id/root"
         android:background="@color/colorPrimaryBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

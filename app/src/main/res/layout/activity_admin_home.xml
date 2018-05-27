@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.admin.main.AdminMainViewModel"/>
     </data>
 
     <LinearLayout

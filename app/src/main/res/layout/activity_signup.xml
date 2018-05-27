@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.signup.SignUpViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.signup.SignUpViewModel"/>
     </data>
     <LinearLayout
         android:padding="10dp"

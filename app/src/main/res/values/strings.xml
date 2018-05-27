@@ -1,9 +1,103 @@
 <resources>
     <string name="app_name">MVVMApplication</string>
-
+    <string name="invitation_email_html_content"><![CDATA[<!DOCTYPE html>
+        <html>
+            <body>
+                <div>
+                    <a href="%%APPINVITE_LINK_PLACEHOLDER%%">Install My App</a>
+                </div>
+            </body>
+        </html>]]>
+    </string>
     <string-array name="actionSpinnerFilter">
         <item>Tỉnh thành phố</item>
         <item>Quận huyện</item>
+    </string-array>
+    <string-array name="proverb">
+        <item>"Success is most often achieved by those who don't know that failure is inevitable"</item>
+        <item>"Things work out best for those who make the best of how things work out"</item>
+        <item>"Courage is grace under pressure"</item>
+        <item>"If you are not willing to risk the usual, you will have to settle for the ordinary."</item>
+        <item>"Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning."</item>
+        <item>"Sometimes you can't see yourself clearly until you see yourself through the eyes of others."</item>
+        <item>"All our dreams can come true if we have the courage to pursue them."</item>
+        <item>"It does not matter how slowly you go, so long as you do not stop."</item>
+        <item>"Success is walking from failure to failure with no loss of enthusiasm."</item>
+        <item>"Someone is sitting in the shade today because someone planted a tree a long time ago."</item>
+        <item>"Whenever you see a successful person, you only see the public glories, never the private sacrifices to reach them."</item>
+        <item>"Don't cry because it's over, smile because it happened."</item>
+        <item>"You only live once, but if you do it right, once is enough."</item>
+        <item>"Opportunities don't happen. You create them."</item>
+        <item>"Once you choose hope, anything's possible."</item>
+        <item>"Try not to become a person of success, but rather try to become a person of value."</item>
+        <item>"It is not the strongest of the species that survive, nor the most intelligent, but the one most responsive to change."</item>
+        <item>"The best and most beautiful things in the world cannot be seen or even touched &#8212; they must be felt with the heart."</item>
+        <item>"Great minds discuss ideas; average minds discuss events; small minds discuss people."</item>
+        <item>"Live as if you were to die tomorrow. Learn as if you were to live forever."</item>
+        <item>"The best revenge is massive success."</item>
+        <item>"The difference between winning and losing is most often not quitting."</item>
+        <item>"I have not failed. I've just found 10,000 ways that won't work."</item>
+        <item>"When you cease to dream you cease to live."</item>
+        <item>"A successful man is one who can lay a firm foundation with the bricks others have thrown at him."</item>
+        <item>"May you live every day of your life."</item>
+        <item>"No one can make you feel inferior without your consent."</item>
+        <item>"Failure is another steppingstone to greatness."</item>
+        <item>"The whole secret of a successful life is to find out what is one's destiny to do, and then do it."</item>
+        <item>"If you're going through hell, keep going."</item>
+        <item>"In order to be irreplaceable one must always be different."</item>
+        <item>"What seems to us as bitter trials are often blessings in disguise."</item>
+        <item>"You miss 100 percent of the shots you don't take."</item>
+        <item>"The distance between insanity and genius is measured only by success."</item>
+        <item>"The way I see it, if you want the rainbow, you gotta put up with the rain."</item>
+        <item>"To me, business isn't about wearing suits or pleasing stockholders. It's about being true to yourself, your ideas and focusing on the essentials."</item>
+        <item>"The longer I live, the more beautiful life becomes."</item>
+        <item>"Happiness is a butterfly, which when pursued, is always beyond your grasp, but which, if you will sit down quietly, may alight upon you."</item>
+        <item>"You must expect great things of yourself before you can do them."</item>
+        <item>"If you can't explain it simply, you don't understand it well enough."</item>
+        <item>"You can't please everyone, and you can't make everyone like you."</item>
+    </string-array>
+    <string-array name="author">
+        <item>Coco Chanel</item>
+        <item>John Wooden</item>
+        <item>Ernest Hemingway</item>
+        <item>Jim Rohn</item>
+        <item>Albert Einstein</item>
+        <item>Ellen DeGeneres</item>
+        <item>Walt Disney</item>
+        <item>Confucius</item>
+        <item>Winston Churchill</item>
+        <item>Warren Buffett</item>
+        <item>Vaibhav Shah</item>
+        <item>Dr. Seuss</item>
+        <item>Mae West</item>
+        <item>Chris Grosser</item>
+        <item>Christopher Reeve</item>
+        <item>Albert Einstein</item>
+        <item>Charles Darwin</item>
+        <item>Helen Keller</item>
+        <item>Eleanor Roosevelt</item>
+        <item>Mahatma Gandhi</item>
+        <item>Frank Sinatra</item>
+        <item>Walt Disney</item>
+        <item>Thomas Edison</item>
+        <item>Malcolm Forbes</item>
+        <item>David Brinkley</item>
+        <item>Jonathan Swift</item>
+        <item>Eleanor Roosevelt</item>
+        <item>Oprah Winfrey</item>
+        <item>Henry Ford</item>
+        <item>Winston Churchill</item>
+        <item>Coco Chanel</item>
+        <item>Oscar Wilde</item>
+        <item>Wayne Gretzky</item>
+        <item>Bruce Feirstein</item>
+        <item>Dolly Parton</item>
+        <item>Richard Branson</item>
+        <item>Frank Lloyd Wright</item>
+        <item>Nathaniel Hawthorne</item>
+        <item>Michael Jordan</item>
+        <item>Albert Einstein</item>
+        <item>Katie Couric</item>
     </string-array>
     <string-array name="minutePickerValue">
         <item>0</item>
@@ -244,5 +338,9 @@
     <string name="filter_follow_level">Lọc theo cấp</string>
     <string name="filter_follow_salary_expected">Lọc theo lương mong muốn</string>
     <string name="collapse">Thu gọn</string>
+    <string name="google_play_services_error">Google Play Services Error</string>
+    <string name="located_at">Sống ở</string>
+    <string name="ratinghint">Hãy đánh giá ứng viên</string>
+    <string name="danhgia">Đánh giá</string>
 
 </resources>

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="VMfeed"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.feed.FeedViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.universal.feed.FeedViewModel">
         </variable>
     </data>
     <android.support.v4.widget.DrawerLayout
@@ -18,6 +18,7 @@
             <android.support.v7.widget.Toolbar
                 android:background="@color/colorPrimary"
                 android:id="@+id/toolbar"
+                android:elevation="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:collapseIcon="@drawable/ic_arrow_back_24dp"
@@ -30,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
+                android:elevation="10dp"
                 app:tabMode="scrollable"
                 style="@style/MyTabLayoutStyle"
                 app:tabTextColor="@color/darker_gray"/>
@@ -44,7 +46,6 @@
             android:layout_width="300dp"
             android:background="@android:color/white"
             android:layout_gravity="start"
-            android:fitsSystemWindows="true"
             android:layout_height="match_parent">
             <LinearLayout
                 android:orientation="vertical"

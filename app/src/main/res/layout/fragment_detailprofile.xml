@@ -6,10 +6,10 @@
         <import type="android.view.View"/>
         <variable
             name="detailprofile"
-            type="com.mvvm.kien2111.mvvmapplication.model.User"/>
+            type="com.mvvm.kien2111.fastjob.model.User"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.detail_profile.DetailProfileViewModel"/>
     </data>
     <ScrollView
         android:background="@android:color/transparent"
@@ -168,12 +168,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp">
             </android.support.design.widget.TabLayout>
-            <com.mvvm.kien2111.mvvmapplication.ui.universal.common.WrapHeightViewPager
+            <com.mvvm.kien2111.fastjob.ui.universal.common.WrapHeightViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.mvvm.kien2111.mvvmapplication.ui.universal.common.WrapHeightViewPager>
+            </com.mvvm.kien2111.fastjob.ui.universal.common.WrapHeightViewPager>
 
         </LinearLayout>
     </ScrollView>

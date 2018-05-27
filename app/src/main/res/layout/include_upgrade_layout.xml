@@ -5,7 +5,7 @@
         <import type="android.support.v4.content.ContextCompat" />
         <variable
             name="viewHolder"
-            type="com.mvvm.kien2111.mvvmapplication.ui.upgrade.common.FragmentType"/>
+            type="com.mvvm.kien2111.fastjob.ui.upgrade.common.FragmentType"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:padding="20dp"
@@ -33,7 +33,7 @@
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <com.mvvm.kien2111.mvvmapplication.util.UpgradeProfileButton
+        <com.mvvm.kien2111.fastjob.util.UpgradeProfileButton
             android:textSize="16sp"
             app:statusrequestupgrade="NORMAL"
             android:clickable="true"

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.depositfund.DepositFundViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.depositfund.DepositFundViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

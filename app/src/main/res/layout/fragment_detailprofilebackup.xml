@@ -6,10 +6,10 @@
         <import type="android.view.View"/>
         <variable
             name="detailprofile"
-            type="com.mvvm.kien2111.mvvmapplication.model.User"/>
+            type="com.mvvm.kien2111.fastjob.model.User"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.DetailProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.detail_profile.DetailProfileViewModel"/>
     </data>
     <android.support.design.widget.CoordinatorLayout
         android:background="@android:color/transparent"
@@ -53,7 +53,7 @@
                     app:tabGravity="fill"
                     android:layout_gravity="bottom"
                     app:tabMode="fixed"
-                    android:background="@android:color/transparent"
+                    android:background="#38000000"
                     android:id="@+id/tablayout_detailprofile"
                     app:tabTextColor="@android:color/white"
                     android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="rateitem"
-            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.RateModel"/>
+            type="com.mvvm.kien2111.fastjob.data.local.db.entity.RateModel"/>
     </data>
     <LinearLayout
         android:weightSum="10"
@@ -38,14 +38,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RatingBar
-                android:theme="@style/RatingBar"
                 android:stepSize="0.01"
                 android:numStars="5"
                 android:rating="@{rateitem.ratepoint}"
                 style="?attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <com.mvvm.kien2111.mvvmapplication.ui.universal.common.ExpandTextView
+            <com.mvvm.kien2111.fastjob.ui.universal.common.ExpandTextView
                 android:paddingTop="5dp"
                 android:textSize="15sp"
                 android:textColor="@android:color/black"

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="VMmanagealluser"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.alluser.AllUserViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.admin.user.fragment.alluser.AllUserViewModel">
         </variable>
     </data>
     <LinearLayout

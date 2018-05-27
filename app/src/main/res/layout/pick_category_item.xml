@@ -4,7 +4,7 @@
     <data>
         <variable
             name="category"
-            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category"/>
+            type="com.mvvm.kien2111.fastjob.data.local.db.entity.Category"/>
     </data>
     <LinearLayout
         android:orientation="horizontal"

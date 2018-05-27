@@ -4,7 +4,7 @@
     <data>
         <variable
             name="categoryitem"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.CategoryItem"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.search.CategoryItem"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal" android:layout_width="match_parent"

@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
+        <import type="com.mvvm.kien2111.fastjob.util.StringUtil"/>
         <variable
             name="profile"
-            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel"/>
+            type="com.mvvm.kien2111.fastjob.data.local.db.entity.ProfileModel"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.detail_profile.about.AboutViewModel"/>
     </data>
     <ScrollView
-        android:background="#fafafa"
+        android:background="#cfcece"
         android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,207 +20,289 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:background="#E9EBEE"
-                android:visibility="visible"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:id="@+id/expand_container"
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="10dp"
+                app:cardElevation="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textSize="16sp"
-                        android:text="@{String.valueOf(profile.rating)}"
-                        android:textColor="@color/colorAccent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <RatingBar
-                        android:layout_marginStart="15dp"
-                        android:stepSize="0.1"
-                        android:isIndicator="true"
-                        android:rating="@{profile.rating}"
-                        style="@style/RattingBarSetting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <TextView
-                    android:padding="5dp"
-                    android:text="@{profile.category.namecategory}"
-                    android:layout_marginTop="6dp"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:baselineAligned="false"
-                android:weightSum="12"
-                android:orientation="horizontal" android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:background="@color/colorPrimary"
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    android:id="@+id/btn_toggle_container"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageButton
-                        android:src="@drawable/ic_about_24dp"
-                        android:padding="20dp"
-                        android:id="@+id/btn_toggle_about"
-                        android:background="@drawable/state_list_border_corner_bottom_left"
-                        android:contentDescription=""
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <ImageButton
-                        android:src="@drawable/ic_experienced_24dp"
-                        android:padding="20dp"
-                        android:background="@drawable/state_list_border_corner_bottom_left"
-                        android:id="@+id/btn_toggle_experienced_description"
-                        android:contentDescription=""
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <ImageButton
-                        android:id="@+id/btn_toggle_salary_expected"
-                        android:src="@drawable/ic_money"
-                        android:padding="20dp"
-                        android:background="@drawable/state_list_border_corner_bottom_left"
-                        android:contentDescription=""
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <ImageButton
-                        android:id="@+id/btn_toggle_rating"
-                        android:src="@drawable/ic_star_24dp"
-                        android:padding="20dp"
-                        android:background="@drawable/state_list_border_corner_bottom_left"
-                        android:contentDescription=""
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="10"
-                    android:id="@+id/content_container"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
                     <LinearLayout
+                        android:background="@drawable/border_bottomtopline"
                         android:padding="10dp"
-                        android:visibility="visible"
-                        android:id="@+id/about_container"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp"
-                            android:text="@string/summary"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:id="@+id/txt_summary"
-                            android:textSize="15sp"
-                            android:textColor="@android:color/black"
-                            android:text="@{profile.summary,default=@string/lorem_ipsum}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:padding="10dp"
-                        android:id="@+id/experienced_description_container"
-                        android:visibility="gone"
-                        android:orientation="vertical"
+                        android:weightSum="10"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:contentDescription=""
+                            android:layout_weight="3"
+                            android:src="@drawable/ic_home_24dp"
+                            android:tint="@color/darker_gray"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
                         <TextView
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp"
-                            android:text="@string/experienced_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:text="@{StringUtil.formatPlace(profile)}"
+                            android:layout_weight="7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:weightSum="4"
+                        android:background="@drawable/border_bottomtopline"
+                        android:orientation="horizontal"
+                        android:id="@+id/btn_toggle_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:id="@+id/btn_toggle_about"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp">
+                            <ImageView
+                                android:id="@+id/img_about"
+                                android:contentDescription=""
+                                android:src="@drawable/ic_about_24dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:gravity="center"
+                                android:textSize="10sp"
+                                android:text="@string/summary"
+                                android:id="@+id/txt_title_about"
+                                android:contentDescription=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/btn_toggle_experienced_description"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp">
+                            <ImageView
+                                android:contentDescription=""
+                                android:id="@+id/img_experienced_description"
+                                android:src="@drawable/ic_experienced_24dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:gravity="center"
+                                android:textSize="10sp"
+                                android:text="@string/experienced_description"
+                                android:id="@+id/txt_title_experienced_description"
+                                android:contentDescription=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/btn_toggle_salary_expected"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp">
+                            <ImageView
+                                android:contentDescription=""
+                                android:id="@+id/img_salary_expected"
+                                android:src="@drawable/ic_money"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:gravity="center"
+                                android:textSize="10sp"
+                                android:text="@string/salary_expected"
+                                android:id="@+id/txt_title_salary_expected"
+                                android:contentDescription=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <ImageButton
+                            android:layout_weight="1"
+                            android:id="@+id/btn_toggle_rating"
+                            android:src="@drawable/ic_star_24dp"
+                            android:background="@drawable/state_list_border_corner_bottom_left"
+                            android:contentDescription=""
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="@drawable/border_bottomtopline"
+                        android:visibility="visible"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:id="@+id/expand_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textSize="16sp"
+                                android:text="@{StringUtil.formatPoint(profile.rating)}"
+                                android:textColor="@color/colorAccent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <RatingBar
+                                android:layout_marginStart="15dp"
+                                android:stepSize="0.1"
+                                android:isIndicator="true"
+                                android:rating="@{profile.rating}"
+                                style="@style/RattingBarSetting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
                         <TextView
-                            android:id="@+id/txt_experienced_description"
-                            android:textSize="15sp"
-                            android:textColor="@android:color/black"
-                            android:text="@{profile.experienced_description,default=@string/lorem_ipsum}"
+                            android:padding="5dp"
+                            android:text="@{profile.category.namecategory}"
+                            android:layout_marginTop="6dp"
+                            android:layout_gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorPrimaryDark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                app:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:baselineAligned="false"
+                    android:weightSum="12"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <LinearLayout
-                        android:padding="10dp"
-                        android:id="@+id/salary_expected_container"
-                        android:visibility="gone"
+                        android:layout_weight="12"
+                        android:id="@+id/content_container"
                         android:orientation="vertical"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent">
-                        <TextView
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp"
-                            android:text="@string/salary_expected"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
                         <LinearLayout
+                            android:padding="10dp"
+                            android:visibility="visible"
+                            android:id="@+id/about_container"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textColor="@color/colorAccent"
+                                android:textSize="16sp"
+                                android:text="@string/summary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/txt_summary"
+                                android:textSize="15sp"
+                                android:textColor="@android:color/black"
+                                android:text="@{profile.summary,default=@string/lorem_ipsum}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:id="@+id/experienced_description_container"
+                            android:visibility="gone"
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <TextView
+                                android:textColor="@color/colorAccent"
+                                android:textSize="16sp"
+                                android:text="@string/experienced_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/txt_experienced_description"
+                                android:textSize="15sp"
+                                android:textColor="@android:color/black"
+                                android:text="@{profile.experienced_description,default=@string/lorem_ipsum}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:id="@+id/salary_expected_container"
+                            android:visibility="gone"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textColor="@color/colorAccent"
+                                android:textSize="16sp"
+                                android:text="@string/salary_expected"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
                             <LinearLayout
-                                android:orientation="horizontal"
+                                android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textSize="12sp"
-                                    android:textColor="@android:color/black"
-                                    android:text="@string/from"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:textAlignment="viewEnd"
-                                    android:textSize="18sp"
-                                    android:id="@+id/txt_salary_from"
-                                    android:textColor="@android:color/black"
-                                    android:text="@{String.valueOf(profile.salary_expected_from),default=VND}"
+                                <LinearLayout
+                                    android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-                            <View
-                                android:background="@android:color/black"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"/>
-                            <LinearLayout
-                                android:layout_marginTop="20dp"
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:layout_gravity="bottom"
-                                    android:textSize="12sp"
-                                    android:gravity="center"
-                                    android:textColor="@android:color/black"
-                                    android:text="@string/to"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:textAlignment="viewEnd"
-                                    android:textSize="18sp"
-                                    android:id="@+id/txt_salary_to"
-                                    android:textColor="@android:color/black"
-                                    android:text="@{String.valueOf(profile.salary_expected_to),default=VND}"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:textSize="12sp"
+                                        android:textColor="@android:color/black"
+                                        android:text="@string/from"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                    <TextView
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp"
+                                        android:id="@+id/txt_salary_from"
+                                        android:textColor="@android:color/black"
+                                        android:text="@{String.valueOf(profile.salary_expected_from),default=VND}"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                                <View
+                                    android:background="@android:color/black"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="1dp"/>
+                                <LinearLayout
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:layout_gravity="bottom"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:textColor="@android:color/black"
+                                        android:text="@string/to"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                    <TextView
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp"
+                                        android:id="@+id/txt_salary_to"
+                                        android:textColor="@android:color/black"
+                                        android:text="@{String.valueOf(profile.salary_expected_to),default=VND}"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                                <View
+                                    android:background="@android:color/black"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"/>
                             </LinearLayout>
-                            <View
-                                android:background="@android:color/black"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
 
     </ScrollView>

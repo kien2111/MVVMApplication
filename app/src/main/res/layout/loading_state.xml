@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.mvvm.kien2111.mvvmapplication.model.Resource"/>
-        <import type="com.mvvm.kien2111.mvvmapplication.model.Status"/>
+        <import type="com.mvvm.kien2111.fastjob.model.Resource"/>
+        <import type="com.mvvm.kien2111.fastjob.model.Status"/>
         <variable name="resource" type="Resource"/>
     </data>
     <LinearLayout android:orientation="vertical"

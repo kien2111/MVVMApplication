@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.mvvm.kien2111.mvvmapplication.model.Gender"/>
+        <import type="com.mvvm.kien2111.fastjob.model.Gender"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.userprofile.invidual.IndividualProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.userprofile.invidual.IndividualProfileViewModel"/>
     </data>
     <ScrollView
         android:fillViewport="true"
@@ -140,7 +140,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <com.mvvm.kien2111.mvvmapplication.util.CustomSpinner
+                        <com.mvvm.kien2111.fastjob.util.CustomSpinner
                             android:layout_weight="1"
                             android:id="@+id/spinnerCity"
                             style="@style/Widget.AppCompat.Spinner"
@@ -156,7 +156,7 @@
                             android:popupElevation="3dp"
                             android:layout_width="0dp"
                             tools:targetApi="lollipop" />
-                        <com.mvvm.kien2111.mvvmapplication.util.CustomSpinner
+                        <com.mvvm.kien2111.fastjob.util.CustomSpinner
                             android:layout_weight="1"
                             android:id="@+id/spinnerDistrict"
                             style="@style/Widget.AppCompat.Spinner"
@@ -382,7 +382,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-            <com.mvvm.kien2111.mvvmapplication.util.PublishButton
+            <com.mvvm.kien2111.fastjob.util.PublishButton
                 android:id="@+id/publish_btn"
                 android:elevation="20dp"
                 android:translationZ="10dp"

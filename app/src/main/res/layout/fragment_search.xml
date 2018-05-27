@@ -5,7 +5,7 @@
     <data>
         <variable
             name="VMsearch"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.universal.search.SearchViewModel">
         </variable>
     </data>
     <RelativeLayout
