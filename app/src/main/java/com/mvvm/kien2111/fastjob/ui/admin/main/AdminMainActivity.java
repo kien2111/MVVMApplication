@@ -1,7 +1,11 @@
 package com.mvvm.kien2111.fastjob.ui.admin.main;
 
+import android.accounts.Account;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,9 +13,11 @@ import android.view.View;
 
 import com.mvvm.kien2111.fastjob.BR;
 import com.mvvm.kien2111.fastjob.R;
+import com.mvvm.kien2111.fastjob.authenticate.AccountAuthenticator;
 import com.mvvm.kien2111.fastjob.base.BaseActivity;
 import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.databinding.ActivityAdminHomeBinding;
+import com.mvvm.kien2111.fastjob.ui.SplashActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.fastjob.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.statistical.AdminStatisticalActivity;
@@ -19,6 +25,8 @@ import com.mvvm.kien2111.fastjob.ui.admin.user.ManageUserActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 
 /**
  * Created by VAKHANHPR on 2/26/2018.
@@ -79,6 +87,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setOnClick();
         //mViewModel.setmNavigator(this);
        /* mViewModel.getResourceMutableLiveData().observe(this,listResource -> {
             switch (listResource.status){
@@ -106,8 +115,54 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
                 .show();*/
     }
 
+    private void setOnClick() {
+        mActivityBinding.
+    }
+
     private void handleError(String message) {
 
+    }
+
+    private void logoutHandle() {
+        Account account = mViewModel.getCurrentAccount();
+        mAccountManager.invalidateAuthToken(account.type,
+                mAccountManager.peekAuthToken(account, AccountAuthenticator.AUTHTOKEN_TYPE_BEARER_LABEL));
+        mAccountManager.clearPassword(account);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            if(mAccountManager.removeAccountExplicitly(account)){
+                successRemoveAccount();
+            }else{
+                failRemoveAccount();
+            }
+        }else{
+            mAccountManager.removeAccount(account,future -> {
+                try {
+                    if(future.getResult()){
+                        //success remove account
+                        successRemoveAccount();
+                    }else{
+                        //fail to remove account
+                        failRemoveAccount();
+                    }
+                } catch (OperationCanceledException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (AuthenticatorException e) {
+                    e.printStackTrace();
+                }
+            },null);
+        }
+    }
+
+    private void successRemoveAccount(){
+        Intent intent = new Intent(getActivity().getApplicationContext(), SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void failRemoveAccount(){
+        ((BaseActivity)getActivity()).showDialog("Error","Can't log out");
     }
 
     @Override

@@ -83,7 +83,6 @@ public class MapFragment extends BaseFragment<MapViewModel, FragmentGoogleMapBin
     private ClusterManager<ProfileModel> mClusterManager;
     private PopupWindow mPopupWindow;
     private LocationManager locationManager;
-    private static final String KEY_GOOGLE_MAP = "key google map";
     private static final int LOCATION_PERMISSTION_REQUEST_CODE = 100;
     private static final long MIN_TIME = 400;
     private static final float MIN_DISTANCE = 1000;
