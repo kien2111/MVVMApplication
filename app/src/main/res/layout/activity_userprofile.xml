@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.userprofile.UserProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.userprofile.UserProfileViewModel"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:layout_marginTop="5dp"/>
-                        <com.mvvm.kien2111.mvvmapplication.util.PriorityButton
+                        <com.mvvm.kien2111.fastjob.util.PriorityButton
                             android:onClick="onClickUpgradeProfile"
                             android:textAllCaps="false"
                             android:paddingEnd="50dp"

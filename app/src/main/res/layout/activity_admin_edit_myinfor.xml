@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.admin.profile.AdminManageProfileViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

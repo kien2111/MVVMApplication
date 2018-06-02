@@ -4,10 +4,10 @@
     <data>
         <variable
             name="user"
-            type="com.mvvm.kien2111.mvvmapplication.model.User"/>
+            type="com.mvvm.kien2111.fastjob.model.User"/>
         <variable
             name="VMuser"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.user.UserViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.universal.user.UserViewModel">
         </variable>
     </data>
     <ScrollView

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel">
         </variable>
     </data>
     <LinearLayout

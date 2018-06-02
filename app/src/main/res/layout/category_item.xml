@@ -2,60 +2,47 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="category" type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.Category"/>
+        <variable name="category" type="com.mvvm.kien2111.fastjob.data.local.db.entity.Category"/>
     </data>
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+        android:padding="0dp"
+        android:id="@+id/category_container"
         card_view:cardElevation="@dimen/cardview_category_elevation"
-        card_view:cardBackgroundColor="@color/cardview_category_item_background_color"
+        card_view:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:background="@color/cardview_category_item_background_color"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:padding="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-           <android.support.v7.widget.CardView
-               card_view:cardElevation="0dp"
-               card_view:cardCornerRadius="10dp"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <com.mvvm.kien2111.mvvmapplication.util.AspectRatioImageView
-                   android:id="@+id/imageCategory"
-                   app:aspectRatioEnabled="true"
-                   app:dominantMeasurement="width"
-                   android:scaleType="fitCenter"
-                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                   app:imageUrl="@{category.image_path}"
-                   app:defaultImg="@{@drawable/defaultimage}"
-                   app:errorImg="@{@drawable/errorimg}"
-                   android:layout_width="match_parent"
-                   android:layout_height="150dp" />
-           </android.support.v7.widget.CardView>
+            <com.mvvm.kien2111.fastjob.util.AspectRatioImageView
+                android:id="@+id/imageCategory"
+                app:aspectRatioEnabled="true"
+                app:dominantMeasurement="width"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
             <TextView
-                android:layout_marginStart="2dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/category_title"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textSize="@dimen/textsize_categoryname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{category.namecategory}" />
+            <TextView
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                android:textSize="@dimen/textsize_categoryname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{category.namecategory}"
-                />
-            <LinearLayout
-                android:layout_marginStart="2dp"
-                android:orientation="horizontal"
+                android:id="@+id/category_num"
+                android:padding="5dp"
+                android:textSize="@dimen/textsize_numberprofileincategories"
+                android:text="@{String.valueOf(category.num_profile)}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:textSize="@dimen/textsize_numberprofileincategories"
-                    android:text="@{String.valueOf(category.num_profile)}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

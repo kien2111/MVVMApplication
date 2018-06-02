@@ -7,7 +7,7 @@
             type="Boolean"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.listappointment.ListAppointmentViewModel"/>
     </data>
     <RelativeLayout
         android:orientation="vertical"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
-        <com.mvvm.kien2111.mvvmapplication.util.NoAvailableData
+        <com.mvvm.kien2111.fastjob.util.NoAvailableData
             app:no_available_img="@drawable/ic_no_appointment"
             app:no_available_img_width="100dp"
             app:no_available_img_height="100dp"
@@ -43,6 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </com.mvvm.kien2111.mvvmapplication.util.NoAvailableData>
+        </com.mvvm.kien2111.fastjob.util.NoAvailableData>
     </RelativeLayout>
 </layout>

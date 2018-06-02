@@ -5,8 +5,9 @@
         android:fromXScale="0.0"
         android:toYScale="1.0"
         android:toXScale="1.0"
-        android:pivotY="0"
-        android:pivotX="0"
-        android:duration="1200"/>
+        android:startOffset="50"
+        android:pivotY="100%"
+        android:pivotX="80%"
+        android:duration="50"/>
     <scale/>
 </set>

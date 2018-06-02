@@ -3,7 +3,7 @@
     <data>
         <variable
             name="profilemodel"
-            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel"/>
+            type="com.mvvm.kien2111.fastjob.data.local.db.entity.ProfileModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:gravity="center"

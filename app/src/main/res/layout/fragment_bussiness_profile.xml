@@ -5,7 +5,7 @@
         <import type="android.net.Uri"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.userprofile.bussiness.BussinessProfileViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.userprofile.bussiness.BussinessProfileViewModel"/>
     </data>
     <LinearLayout
         android:focusable="true"

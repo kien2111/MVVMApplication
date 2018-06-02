@@ -57,6 +57,7 @@
     <color name="yellow_material">#FFEB3B</color>
     <color name="blue_material">#1e88e5</color>
     <color name="light_blue_material">#03a9f4</color>
+    <color name="dark_blue">#25283d</color>
 
 
     <color name="light_light_gray">#bdbdbd</color>

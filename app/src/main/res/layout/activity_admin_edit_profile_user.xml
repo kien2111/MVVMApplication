@@ -4,8 +4,8 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileViewModel"/>
-        <variable name="user" type="com.mvvm.kien2111.mvvmapplication.model.User"/>
+            type="com.mvvm.kien2111.fastjob.ui.admin.user.fragment.edituser.UserEditProfileViewModel"/>
+        <variable name="user" type="com.mvvm.kien2111.fastjob.model.User"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

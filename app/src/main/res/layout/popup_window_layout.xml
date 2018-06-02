@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/map_title"
+            android:textColor="#9E9E9E"
+            android:text="Map Type"
+            android:padding="15dp"
+            android:textAllCaps="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:background="@android:color/white"
+            android:id="@+id/btn_close"
+            android:layout_alignParentEnd="true"
+            android:tint="#676767"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_clear_white_24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"/>
+        <LinearLayout
+            android:baselineAligned="false"
+            android:weightSum="3"
+            android:layout_below="@id/map_title"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_default"
+                    android:padding="2dp"
+                    android:cropToPadding="true"
+                    android:background="@drawable/state_pick_map_type"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/normal"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <TextView
+                    android:id="@+id/default_title"
+                    android:textColor="@color/state_color_title_map_type"
+                    android:text="Default"
+                    android:padding="5dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_satellite"
+                    android:background="@drawable/state_pick_map_type"
+                    android:padding="2dp"
+                    android:cropToPadding="true"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/satellite"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <TextView
+                    android:id="@+id/satellite_title"
+                    android:textColor="@color/state_color_title_map_type"
+                    android:text="Satellite"
+                    android:padding="5dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_terrain"
+                    android:background="@drawable/state_pick_map_type"
+                    android:padding="2dp"
+                    android:cropToPadding="true"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/terrain"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <TextView
+                    android:id="@+id/terrain_title"
+                    android:textColor="@color/state_color_title_map_type"
+                    android:text="Terrain"
+                    android:padding="5dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

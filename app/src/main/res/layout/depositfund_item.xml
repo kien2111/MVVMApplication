@@ -4,7 +4,7 @@
     <data>
         <variable
             name="tb"
-            type="com.mvvm.kien2111.mvvmapplication.model.TableExchangeModel"/>
+            type="com.mvvm.kien2111.fastjob.model.TableExchangeModel"/>
     </data>
     <LinearLayout
         android:orientation="horizontal"

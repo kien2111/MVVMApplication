@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.admin.statistical.AdminStatisticalViewModel"/>
     </data>
 
     <LinearLayout

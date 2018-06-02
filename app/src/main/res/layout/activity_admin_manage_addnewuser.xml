@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.admin.user.fragment.addnewuser.AddUserViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

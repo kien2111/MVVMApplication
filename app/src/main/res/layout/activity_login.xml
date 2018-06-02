@@ -5,7 +5,7 @@
         <import type="android.view.View" />
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.login.LoginViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.login.LoginViewModel"/>
     </data>
     <LinearLayout
         android:fitsSystemWindows="true"

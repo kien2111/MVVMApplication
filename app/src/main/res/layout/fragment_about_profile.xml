@@ -4,10 +4,10 @@
         <import type="android.view.View"/>
         <variable
             name="profile"
-            type="com.mvvm.kien2111.mvvmapplication.data.local.db.entity.ProfileModel"/>
+            type="com.mvvm.kien2111.fastjob.data.local.db.entity.ProfileModel"/>
         <variable
             name="vm"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.detail_profile.about.AboutViewModel"/>
+            type="com.mvvm.kien2111.fastjob.ui.universal.detail_profile.about.AboutViewModel"/>
     </data>
    <ScrollView
        android:fillViewport="true"

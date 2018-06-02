@@ -5,14 +5,29 @@
     <data>
         <variable
             name="VMsearch"
-            type="com.mvvm.kien2111.mvvmapplication.ui.universal.search.SearchViewModel">
+            type="com.mvvm.kien2111.fastjob.ui.universal.search.SearchViewModel">
         </variable>
     </data>
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:collapseIcon="@drawable/ic_arrow_back_24dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ToolbarTheme"
+            style="@style/Widget.MyApp.Toolbar.Solid" />
+        <View
+            android:layout_below="@id/toolbar"
+            android:id="@+id/anchor_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
         <TextView
+            android:id="@+id/txt_rencent_search_title"
+            android:layout_below="@id/toolbar"
             android:paddingStart="5dp"
             android:paddingEnd="0dp"
             android:textColor="@android:color/black"
@@ -24,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/txt_rencent_search_title"
             android:id="@+id/expandable_listview"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
@@ -31,5 +47,5 @@
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
