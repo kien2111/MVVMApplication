@@ -1,7 +1,7 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.model;
+package com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model;
 
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
-import com.mvvm.kien2111.mvvmapplication.model.User;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.model.User;
 
 import java.util.List;
 

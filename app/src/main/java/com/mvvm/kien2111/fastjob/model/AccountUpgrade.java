@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.model;
+package com.mvvm.kien2111.fastjob.model;
 
 /**
  * Created by donki on 5/15/2018.

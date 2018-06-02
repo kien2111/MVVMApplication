@@ -20,7 +20,6 @@ import com.mvvm.kien2111.fastjob.model.Income;
 import com.mvvm.kien2111.fastjob.model.RequestStaticfy;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

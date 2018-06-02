@@ -1,5 +1,6 @@
 package com.mvvm.kien2111.fastjob.ui.admin.main;
 
+import android.accounts.Account;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableField;
 
@@ -27,10 +28,17 @@ public class AdminMainViewModel extends BaseViewModel {
     private UserRepository userRepository;
     private final AdminRepository adminRepository;
     @Inject
-    public AdminMainViewModel(EventBus eventBus,AdminRepository adminRepository) {
+    public AdminMainViewModel(EventBus eventBus,
+                              UserRepository userRepository,
+                              AdminRepository adminRepository) {
         super(eventBus);
+        this.userRepository = userRepository;
         this.adminRepository = adminRepository;
 //        getData();
+    }
+
+    public Account getCurrentAccout(){
+        return userRepository.getCurrentAccount();
     }
 
     private void getData() {

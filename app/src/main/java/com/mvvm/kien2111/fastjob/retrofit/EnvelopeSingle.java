@@ -3,7 +3,6 @@ package com.mvvm.kien2111.fastjob.retrofit;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import javax.annotation.Nullable;
 
 
 import io.reactivex.Single;
@@ -18,7 +17,6 @@ import retrofit2.Retrofit;
  */
 
 public class EnvelopeSingle extends CallAdapter.Factory {
-    @Nullable
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         if(getRawType(returnType)!= Single.class)

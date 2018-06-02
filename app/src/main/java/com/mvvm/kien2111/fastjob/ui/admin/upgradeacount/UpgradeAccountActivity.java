@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.upgradeacount;
+package com.mvvm.kien2111.fastjob.ui.admin.upgradeacount;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mvvm.kien2111.mvvmapplication.BR;
-import com.mvvm.kien2111.mvvmapplication.R;
-import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
-import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminUpgradeAccountBinding;
-import com.mvvm.kien2111.mvvmapplication.model.AccountUpgrade;
-import com.mvvm.kien2111.mvvmapplication.model.UpgradeAccount;
-import com.mvvm.kien2111.mvvmapplication.ui.admin.dialog.BasicDialogAdmin;
+import com.mvvm.kien2111.fastjob.BR;
+import com.mvvm.kien2111.fastjob.R;
+import com.mvvm.kien2111.fastjob.base.BaseActivity;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.databinding.ActivityAdminUpgradeAccountBinding;
+import com.mvvm.kien2111.fastjob.model.AccountUpgrade;
+import com.mvvm.kien2111.fastjob.model.UpgradeAccount;
+import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

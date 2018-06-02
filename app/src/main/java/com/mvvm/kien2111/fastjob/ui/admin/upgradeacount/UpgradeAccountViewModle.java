@@ -1,13 +1,13 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.upgradeacount;
+package com.mvvm.kien2111.fastjob.ui.admin.upgradeacount;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
-import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
-import com.mvvm.kien2111.mvvmapplication.data.AdminRepository;
-import com.mvvm.kien2111.mvvmapplication.model.AccountUpgrade;
-import com.mvvm.kien2111.mvvmapplication.model.Resource;
-import com.mvvm.kien2111.mvvmapplication.model.UpgradeAccount;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.base.BaseViewModel;
+import com.mvvm.kien2111.fastjob.data.AdminRepository;
+import com.mvvm.kien2111.fastjob.model.AccountUpgrade;
+import com.mvvm.kien2111.fastjob.model.Resource;
+import com.mvvm.kien2111.fastjob.model.UpgradeAccount;
 
 import org.greenrobot.eventbus.EventBus;
 

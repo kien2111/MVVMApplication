@@ -19,6 +19,8 @@ import com.mvvm.kien2111.fastjob.databinding.ActivityAdminEditMyinforBinding;
 import com.mvvm.kien2111.fastjob.model.User;
 import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.addnewuser.AddUserViewModel;
+import com.mvvm.kien2111.fastjob.util.GlideApp;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -82,7 +84,7 @@ public class AdminManageProfileActivity extends BaseActivity<AdminManageProfileV
 
         if (requestCode == REQUEST_CODE) {
             List<Image> listimage = ImagePicker.getImages(data);
-            Glide.with(mActivityBinding.imvShowAvatar)
+            GlideApp.with(mActivityBinding.imvShowAvatar)
                     .load(listimage.get(0).getPath())
                     .into(mActivityBinding.imvShowAvatar);
             userUpdate.setAvatar(listimage.get(0).getPath());

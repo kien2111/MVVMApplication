@@ -27,6 +27,9 @@ import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.alluser.IUserClickItemLi
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.edituser.UserEditProfileActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model.TriggerSentFragment;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model.TriggerSentFragmentBlog;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model.TriggerSentFragment;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model.TriggerSentFragmentBlog;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -76,8 +79,8 @@ public class UngradeUserFragment extends BaseFragment<UngradeUserViewModel, Frag
                         .show();
             }
         }
-        if(message instanceof TriggerSentFragmentBlog){
-            for(int i=0;i<((TriggerSentFragmentBlog) message).getList().size();i++){
+        if(message instanceof TriggerSentFragment){
+            for(int i = 0; i<((TriggerSentFragmentBlog) message).getList().size(); i++){
                 listUser.add(((TriggerSentFragmentBlog) message).getList().get(i));
                 adapterUser();
             }

@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.apointment;
+package com.mvvm.kien2111.fastjob.ui.admin.apointment;
 
 import dagger.Module;
 

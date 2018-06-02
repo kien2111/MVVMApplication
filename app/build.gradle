@@ -49,7 +49,7 @@ ext{
     logginInterceptorLibraryVersion = '3.9.1'
     timberLoggingLibraryVersion = '4.6.0'
     glideLoadingImageLibraryVersion = '4.6.1'
-    dagger2LibraryVersion = '2.11'
+    dagger2LibraryVersion = '2.16'
     databindingCompilerVersion = '3.0.1'
     multidexVersion = '1.0.3'
     chartVersion = 'v2.2.4'

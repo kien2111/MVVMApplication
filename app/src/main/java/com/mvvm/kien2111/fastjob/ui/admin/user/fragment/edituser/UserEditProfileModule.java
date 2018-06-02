@@ -1,6 +1,6 @@
 package com.mvvm.kien2111.fastjob.ui.admin.user.fragment.edituser;
 
-import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.DatasetSpinnerRole;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.addnewuser.DatasetSpinnerRole;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

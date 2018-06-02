@@ -24,6 +24,8 @@ import com.mvvm.kien2111.fastjob.model.User;
 import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.addnewuser.DatasetSpinnerRole;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.alluser.AllUserFragment;
+import com.mvvm.kien2111.fastjob.util.GlideApp;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -155,7 +157,7 @@ public class UserEditProfileActivity extends BaseActivity<UserEditProfileViewMod
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String date = dateFormat.format(user.getBirthday());
             mActivityBinding.tvBirthday.setText(date);
-            Glide.with(this)
+            GlideApp.with(this)
                     .load(BuildConfig.IMG_URL + user.getAvatar())
                     .into(mActivityBinding.imvShowAvatar);
         }

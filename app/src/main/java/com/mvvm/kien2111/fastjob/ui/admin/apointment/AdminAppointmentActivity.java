@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.apointment;
+package com.mvvm.kien2111.fastjob.ui.admin.apointment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mvvm.kien2111.mvvmapplication.BR;
-import com.mvvm.kien2111.mvvmapplication.R;
-import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
-import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminAppointmentBinding;
-import com.mvvm.kien2111.mvvmapplication.model.AdminAppointment;
-import com.mvvm.kien2111.mvvmapplication.model.ImpactApointment;
-import com.mvvm.kien2111.mvvmapplication.ui.admin.dialog.BasicDialogAdmin;
+import com.mvvm.kien2111.fastjob.BR;
+import com.mvvm.kien2111.fastjob.R;
+import com.mvvm.kien2111.fastjob.base.BaseActivity;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.databinding.ActivityAdminAppointmentBinding;
+import com.mvvm.kien2111.fastjob.model.AdminAppointment;
+import com.mvvm.kien2111.fastjob.model.ImpactApointment;
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentViewModel;
+import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

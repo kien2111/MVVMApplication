@@ -12,11 +12,13 @@ import dagger.android.ContributesAndroidInjector;
 /**
  * Created by WhoAmI on 21/03/2018.
  */
-@PerChildFeedFragment
+
 @Module
 public abstract class ChildFeedFragmentBuilder {
+    @PerChildFeedFragment
     @ContributesAndroidInjector(modules = {CategoryModule.class})
     abstract CategoryFragment bindCategoryFragment();
+    @PerChildFeedFragment
     @ContributesAndroidInjector(modules = {MapModule.class})
     abstract MapFragment bindMapFragment();
 }

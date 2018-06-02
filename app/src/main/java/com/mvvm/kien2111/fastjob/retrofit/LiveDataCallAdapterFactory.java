@@ -5,9 +5,6 @@ import android.arch.lifecycle.LiveData;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import javax.annotation.Nullable;
-
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
 
@@ -23,7 +20,6 @@ public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
         }
         return factory;
     }
-    @Nullable
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         if(getRawType(returnType)!= LiveData.class){

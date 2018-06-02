@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.upgradeacount;
+package com.mvvm.kien2111.fastjob.ui.admin.upgradeacount;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +12,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.mvvm.kien2111.mvvmapplication.R;
-import com.mvvm.kien2111.mvvmapplication.model.AccountUpgrade;
-import com.mvvm.kien2111.mvvmapplication.model.UpgradeAccount;
+import com.mvvm.kien2111.fastjob.R;
+import com.mvvm.kien2111.fastjob.model.AccountUpgrade;
+import com.mvvm.kien2111.fastjob.model.UpgradeAccount;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

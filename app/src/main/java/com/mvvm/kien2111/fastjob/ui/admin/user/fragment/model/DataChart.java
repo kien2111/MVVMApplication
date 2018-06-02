@@ -1,7 +1,7 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.model;
+package com.mvvm.kien2111.fastjob.ui.admin.user.fragment.model;
 
 import com.github.mikephil.charting.data.BarEntry;
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
 
 import java.util.ArrayList;
 

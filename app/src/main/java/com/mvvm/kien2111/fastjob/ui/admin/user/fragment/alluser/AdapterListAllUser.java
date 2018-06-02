@@ -18,6 +18,8 @@ import com.mvvm.kien2111.fastjob.BuildConfig;
 import com.mvvm.kien2111.fastjob.R;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
 import com.mvvm.kien2111.fastjob.model.User;
+import com.mvvm.kien2111.fastjob.util.GlideApp;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +87,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder) holder).tv_email.setText("" + mFilteredList.get(position - 1).getUserId());
 
             if(mFilteredList.get(position-1).getAvatar()!=null) {
-                Glide.with(context).load(BuildConfig.IMG_URL +mFilteredList.get(position-1).getAvatar())
+                GlideApp.with(context).load(BuildConfig.IMG_URL +mFilteredList.get(position-1).getAvatar())
                         .into(((ViewHolder) holder).imageView);
 
             }

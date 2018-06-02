@@ -1,4 +1,4 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.apointment;
+package com.mvvm.kien2111.fastjob.ui.admin.apointment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +10,11 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.mvvm.kien2111.mvvmapplication.BuildConfig;
-import com.mvvm.kien2111.mvvmapplication.R;
-import com.mvvm.kien2111.mvvmapplication.model.AdminAppointment;
-import com.mvvm.kien2111.mvvmapplication.model.ImpactApointment;
+import com.mvvm.kien2111.fastjob.BuildConfig;
+import com.mvvm.kien2111.fastjob.R;
+import com.mvvm.kien2111.fastjob.model.AdminAppointment;
+import com.mvvm.kien2111.fastjob.model.ImpactApointment;
+import com.mvvm.kien2111.fastjob.util.GlideApp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,11 +81,11 @@ public class AdminApointmentAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((ViewHolder) holder).tv_name_employee.setText(mFilteredList.get(position-1).getUser_receive_appointment().getUserName());
             ((ViewHolder) holder).tv_date_appointment.setText(format.format(listAppointment.get(position-1).getUpdated_at()));
 
-            Glide.with(context)
+            GlideApp.with(context)
                     .load(BuildConfig.IMG_URL +mFilteredList.get(position-1)
                     .getUser_create_appointment().getAvatar())
                     .into(((ViewHolder) holder).avt_employee);
-            Glide.with(context)
+            GlideApp.with(context)
                     .load(BuildConfig.IMG_URL +mFilteredList.get(position-1)
                             .getUser_receive_appointment().getAvatar())
                     .into(((ViewHolder) holder).avt_employer);

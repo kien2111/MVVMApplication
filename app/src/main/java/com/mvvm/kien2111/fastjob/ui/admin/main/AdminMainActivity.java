@@ -24,6 +24,8 @@ import com.mvvm.kien2111.fastjob.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.statistical.AdminStatisticalActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.upgradeacount.UpgradeAccountActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.user.ManageUserActivity;
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentActivity;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -44,7 +46,6 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
 
     //Go to activity Satistical
     public void gotoSatisticalActivity(View view) {
-
         Intent mItent = new Intent(this, AdminStatisticalActivity.class);
         startActivity(mItent);
     }
@@ -129,7 +130,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     }
 
     private void logoutHandle() {
-        Account account = mViewModel.getCurrentAccount();
+        Account account = mViewModel.getCurrentAccout();
         mAccountManager.invalidateAuthToken(account.type,
                 mAccountManager.peekAuthToken(account, AccountAuthenticator.AUTHTOKEN_TYPE_BEARER_LABEL));
         mAccountManager.clearPassword(account);

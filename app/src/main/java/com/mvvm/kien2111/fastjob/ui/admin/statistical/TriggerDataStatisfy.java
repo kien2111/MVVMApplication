@@ -1,7 +1,7 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.statistical;
+package com.mvvm.kien2111.fastjob.ui.admin.statistical;
 
-import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
-import com.mvvm.kien2111.mvvmapplication.model.Income;
+import com.mvvm.kien2111.fastjob.base.BaseMessage;
+import com.mvvm.kien2111.fastjob.model.Income;
 
 import java.util.List;
 

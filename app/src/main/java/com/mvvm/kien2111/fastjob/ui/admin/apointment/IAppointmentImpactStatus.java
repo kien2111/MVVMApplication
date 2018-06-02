@@ -1,6 +1,6 @@
-package com.mvvm.kien2111.mvvmapplication.ui.admin.apointment;
+package com.mvvm.kien2111.fastjob.ui.admin.apointment;
 
-import com.mvvm.kien2111.mvvmapplication.model.ImpactApointment;
+import com.mvvm.kien2111.fastjob.model.ImpactApointment;
 
 /**
  * Created by donki on 5/7/2018.
