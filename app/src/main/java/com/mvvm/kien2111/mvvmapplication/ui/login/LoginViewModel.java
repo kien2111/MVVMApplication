@@ -62,6 +62,7 @@ public class LoginViewModel extends BaseViewModel {
     public static class LoginMessage extends BaseMessage {
         LoginResponse loginResponse;
 
+
         public LoginMessage(String errorMessage) {
             super(errorMessage);
         }

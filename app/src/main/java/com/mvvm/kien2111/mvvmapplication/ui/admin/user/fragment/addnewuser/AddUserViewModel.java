@@ -26,7 +26,7 @@ public class AddUserViewModel extends BaseViewModel {
         eventBus.post(new TriggerInsertServer());
     }
 
-    public void gotoinsertUser(User user) {
+    public void toInsertUser(User user) {
         adminRepository.insertUser(user)
                 .subscribe(() -> {
                     eventBus.post(new ResponseInsertServer("Insert user success"));
@@ -46,15 +46,5 @@ public class AddUserViewModel extends BaseViewModel {
             this.message = message;
         }
     }
-    /*public  void gotoBlockUser(List<BlockUser> listblockUser){
-        adminRepository.blockUser(listblockUser)
-                .subscribe(success -> {
-                    AdminBlockUserResponse response = success;
-                    eventBus.post(new AllUserViewModel.ResponseBlockServer(response));
-                }, throwable -> {
-                    eventBus.post(new AllUserViewModel.ResponseBlockServer(throwable));
-                });
-
-    }*/
 
 }

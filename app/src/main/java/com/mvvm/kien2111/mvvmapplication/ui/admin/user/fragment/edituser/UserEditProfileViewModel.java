@@ -1,11 +1,16 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser;
 
+import android.arch.lifecycle.MutableLiveData;
+
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
 import com.mvvm.kien2111.mvvmapplication.data.AdminRepository;
+import com.mvvm.kien2111.mvvmapplication.model.Resource;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -14,14 +19,19 @@ import javax.inject.Inject;
  */
 
 public class UserEditProfileViewModel extends BaseViewModel {
-    AdminRepository adminRepository;
+    private AdminRepository adminRepository;
+    private MutableLiveData<Resource<List<User>>> resourceMutableLiveData = new MutableLiveData<>();
+
+
     @Inject
-    public UserEditProfileViewModel(EventBus eventBus) {
+    public UserEditProfileViewModel(EventBus eventBus,AdminRepository adminRepository) {
         super(eventBus);
+        this.adminRepository=adminRepository;
     }
 
-    void callUpdteUser(User user){
-        adminRepository.insertUser(user)
+    //update profie user
+    void callUpdteUser(User userUpdate){
+        adminRepository.editProfileUser(userUpdate)
                 .subscribe(() -> {
                     eventBus.post(new ResponseUpdateServer("Update success"));
                 }, throwable -> {

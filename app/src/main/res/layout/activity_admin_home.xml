@@ -198,7 +198,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:onClick="gotoSatisticalActivity">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -226,6 +227,7 @@
                     android:background="@drawable/admin_sharp_screen_home__layout"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:onClick="toUpgradeAccount"
                     android:paddingLeft="30dp"
                     android:layout_weight="1">
                     <ImageView
@@ -256,26 +258,26 @@
                     android:background="@drawable/admin_sharp_screen_home__layout"
                     android:orientation="horizontal"
                     android:gravity="center"
+                    android:onClick="toAppointment"
                     android:layout_weight="1">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="center"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/icon_admin_information"/>
+                        android:background="@drawable/icon_admin_apointment_cooperate"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Show"/>
+                            android:text="Setup"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Information"/>
+                            android:text="Appointment"/>
                     </LinearLayout>
 
                 </LinearLayout>

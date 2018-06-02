@@ -1,12 +1,9 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
@@ -15,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import com.mvvm.kien2111.mvvmapplication.BuildConfig;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.authenticate.AccountAuthenticator;
-import com.mvvm.kien2111.mvvmapplication.data.local.pref.PreferenceHelper;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AppointmentService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.ProfileService;
@@ -28,11 +24,15 @@ import com.mvvm.kien2111.mvvmapplication.retrofit.RxErrorHandlingCallAdapterFact
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Logger;
+
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -42,7 +42,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -118,7 +117,7 @@ public class NetModule {
                 .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)*/
                 .addInterceptor(new Interceptor() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
+                    public Response intercept(Chain chain) throws IOException,SocketTimeoutException {
                         Request request = chain.request();
                         request = request.newBuilder()
                                 .addHeader("authorization",auth_token[0]+" "+auth_token[1])

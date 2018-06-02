@@ -47,6 +47,10 @@
         <activity android:name=".ui.admin.profile.AdminManageProfileActivity"/>
         <activity android:name=".ui.listappointment.ListAppointmentActivity"/>
         <activity android:name=".ui.userprofile.UserProfileActivity" />
+        <activity android:name=".ui.admin.user.fragment.addnewuser.AddUserActivity"/>
+        <activity android:name=".ui.admin.apointment.AdminAppointmentActivity"/>
+        <activity android:name=".ui.admin.user.fragment.edituser.UserEditProfileActivity"/>
+        <activity android:name=".ui.admin.upgradeacount.UpgradeAccountActivity"/>
     </application>
 
 </manifest>

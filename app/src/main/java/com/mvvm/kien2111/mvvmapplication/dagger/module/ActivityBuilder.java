@@ -2,18 +2,22 @@ package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
 import com.mvvm.kien2111.mvvmapplication.dagger.Scope.PerActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.SplashActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.apointment.AdminAppointmentActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.apointment.AdminAppointmentModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.main.AdminMainModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalModule;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.upgradeacount.UpgradeAccountActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.addnewuser.AddUserModule;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.edituser.UserEditProfileModule;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.user.fragment.upgradeuser.UngradeUserModule;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.listappointment.ListAppointmentModule;
 import com.mvvm.kien2111.mvvmapplication.ui.login.LoginActivity;
@@ -69,6 +73,14 @@ public abstract class ActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector (modules = {UserEditProfileModule.class})
     abstract UserEditProfileActivity binUserEditProfileActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector (modules = {UngradeUserModule.class})
+    abstract UpgradeAccountActivity binUpgradeAccountActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector (modules = {AdminAppointmentModule.class})
+    abstract AdminAppointmentActivity binAdminAppointmentActivity();
 
     @PerActivity
     @ContributesAndroidInjector

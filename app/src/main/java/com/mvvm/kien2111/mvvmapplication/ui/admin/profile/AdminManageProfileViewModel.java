@@ -1,7 +1,9 @@
 package com.mvvm.kien2111.mvvmapplication.ui.admin.profile;
 
+import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.base.BaseViewModel;
-import com.mvvm.kien2111.mvvmapplication.data.UserRepository;
+import com.mvvm.kien2111.mvvmapplication.data.AdminRepository;
+import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -13,8 +15,33 @@ import javax.inject.Inject;
 
 public class AdminManageProfileViewModel extends BaseViewModel {
 
+    AdminRepository adminRepository;
     @Inject
-    public  AdminManageProfileViewModel(EventBus eventBus, UserRepository userRepository){
+    public  AdminManageProfileViewModel(EventBus eventBus, AdminRepository adminRepository){
         super(eventBus);
+        this.adminRepository=adminRepository;
     }
+
+    //update profie user
+    void callUpdteProfile(User userUpdate){
+        adminRepository.editProfileUser(userUpdate)
+                .subscribe(() -> {
+                    eventBus.post(new ResponseUpdateServer("Update success"));
+                }, throwable -> {
+                    eventBus.post(new ResponseUpdateServer(throwable));
+                });
+    }
+
+    public static class TriggerUpdateServer extends BaseMessage {
+    }
+    public static class ResponseUpdateServer extends BaseMessage {
+        String message;
+        public ResponseUpdateServer(Throwable errorMess){
+            super(errorMess);
+        }
+        public ResponseUpdateServer(String message){
+            this.message = message;
+        }
+    }
+
 }

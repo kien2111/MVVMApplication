@@ -3,8 +3,14 @@ package com.mvvm.kien2111.mvvmapplication.data;
 import com.mvvm.kien2111.mvvmapplication.data.remote.AdminService;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.admin.AdminCreatedUserResponse;
 import com.mvvm.kien2111.mvvmapplication.data.remote.model.admin.UserFilterRequest;
+import com.mvvm.kien2111.mvvmapplication.model.AccountUpgrade;
+import com.mvvm.kien2111.mvvmapplication.model.AdminAppointment;
 import com.mvvm.kien2111.mvvmapplication.model.BlockUser;
+import com.mvvm.kien2111.mvvmapplication.model.ImpactApointment;
+import com.mvvm.kien2111.mvvmapplication.model.Income;
+import com.mvvm.kien2111.mvvmapplication.model.RequestStaticfy;
 import com.mvvm.kien2111.mvvmapplication.model.Resource;
+import com.mvvm.kien2111.mvvmapplication.model.UpgradeAccount;
 import com.mvvm.kien2111.mvvmapplication.model.User;
 
 import java.io.File;
@@ -13,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -69,6 +76,67 @@ public class AdminRepository {
 
     public Completable blockUser(List<BlockUser> listblockUser){
         return adminService.blockuser(listblockUser)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable editProfileUser(User userUpdate){
+        return adminService.editProfileUser(userUpdate)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+
+    /*public Single<Resource<List<Income>>> getAllStatisfy(List<Income> listIncome) {
+        return adminService.getstatisfy(List <RequestStaticfy> list>)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(incomes -> Resource.success(incomes));
+    }*/
+
+    public Flowable<List<Income>> getAllStatisfy(RequestStaticfy requestStaticfy) {
+        return adminService.getstatisfy(requestStaticfy.getOption(),
+                requestStaticfy.getStarttime(),
+                requestStaticfy.getEndtime())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .toFlowable();
+    }
+
+   /* public Completable getAllStatisfy(RequestStaticfy requestStaticfy){
+        return adminService.getstatisfy(requestStaticfy)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }*/
+
+    public Single<Resource<List<AdminAppointment>>> getAllAppointment() {
+        return adminService.getAllAppointment()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(adminappointment -> Resource.success(adminappointment));
+    }
+
+    public Completable acceptAppointment(ImpactApointment impactApointment){
+        return adminService.acceptAppointment(impactApointment)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable skipAppointment(ImpactApointment impactApointment){
+        return adminService.skipAppointment(impactApointment)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Single<Resource<List<UpgradeAccount>>> getAllUpgradeAccount() {
+        return adminService.getAllUpgradeAccount()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(appointment -> Resource.success(appointment));
+    }
+
+    public Completable upgradeAccount(List<AccountUpgrade> list){
+        return adminService.upgadeAccount(list)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

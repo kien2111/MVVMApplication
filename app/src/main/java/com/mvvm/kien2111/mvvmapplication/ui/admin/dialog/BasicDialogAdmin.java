@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import javax.inject.Inject;
+
 /**
  * Created by donki on 4/19/2018.
  */
@@ -14,6 +16,9 @@ public class BasicDialogAdmin {
     BasicDialogAdminListener mListener;
     AlertDialog.Builder builder;
 
+    AlertDialog dialog;
+
+    @Inject
     public BasicDialogAdmin(Context context) {
         builder = new AlertDialog.Builder(context);
     }
@@ -46,6 +51,7 @@ public class BasicDialogAdmin {
             public void onClick(DialogInterface dialog, int which) {
                 if (mListener != null) {
                     mListener.onClickOK();
+                    dialog.dismiss();
                 }
             }
         });
@@ -55,6 +61,19 @@ public class BasicDialogAdmin {
             public void onClick(DialogInterface dialog, int which) {
                 if (mListener != null) {
                     mListener.onClickCancel();
+                    dialog.dismiss();
+                }
+            }
+        });
+        return this;
+    }
+    public BasicDialogAdmin setSigleTitleButton(String titleOK) {
+        this.builder.setNegativeButton(titleOK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mListener != null) {
+                    mListener.onClickOK();
+                    dialog.dismiss();
                 }
             }
         });
@@ -62,8 +81,19 @@ public class BasicDialogAdmin {
     }
 
     public void show() {
-        this.builder.create().show();
+        dialog = builder.create();
+        dialog.show();
     }
-
-
+    public void cancel() {
+        if(dialog == null){
+            dialog = builder.create();
+        }
+        dialog.cancel();
+    }
+    public void dismiss(){
+        if(dialog == null){
+            dialog = builder.create();
+        }
+        dialog.dismiss();
+    }
 }

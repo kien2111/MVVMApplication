@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -105,10 +106,6 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
                 item.setIcon(R.drawable.icon_admin_block);
                 callBlockUser();
                 break;
-            case R.id.action_promoted:
-                item.setIcon(R.drawable.icon_admin_promoted);
-                callPromoteUser();
-                break;
             case R.id.action_unlock:
                 item.setIcon(R.drawable.icon_admin_unblock);
                 callUnlockUer();
@@ -131,12 +128,6 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
         if (allUserFragment != null) {
             allUserFragment.callBlockUser();
         }
-    }
-
-
-    //function promote user
-    void callPromoteUser() {
-
     }
 
     //event scroll viewpager
@@ -199,8 +190,17 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
 
     //set new user
     public void gotoAddnewUser(View view) {
-        Intent inten1 = new Intent(this, AddUserActivity.class);
-        startActivity(inten1);
+        Intent inten = new Intent(this, AddUserActivity.class);
+        startActivityForResult(inten,111);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==111){
+            allUserFragment.getData();
+            Log.d("asdfasdf","fasdfasdf");
+        }
     }
 
     //finish activity

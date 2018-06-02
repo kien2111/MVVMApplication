@@ -4,11 +4,11 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mvvm.kien2111.mvvmapplication.BR;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -259,7 +259,6 @@ public class User extends BaseObservable implements Parcelable {
         phone_company = in.readString();
         logo_company = in.readString();
         about_company = in.readString();
-
         account_balance = in.readDouble();
         username = in.readString();
         password = in.readString();
@@ -326,6 +325,5 @@ public class User extends BaseObservable implements Parcelable {
     public User(){
 
     }
-
 
 }

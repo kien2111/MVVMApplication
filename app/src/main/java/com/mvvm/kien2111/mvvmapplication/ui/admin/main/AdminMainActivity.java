@@ -12,9 +12,11 @@ import com.mvvm.kien2111.mvvmapplication.R;
 import com.mvvm.kien2111.mvvmapplication.base.BaseActivity;
 import com.mvvm.kien2111.mvvmapplication.base.BaseMessage;
 import com.mvvm.kien2111.mvvmapplication.databinding.ActivityAdminHomeBinding;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.apointment.AdminAppointmentActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.statistical.AdminStatisticalActivity;
+import com.mvvm.kien2111.mvvmapplication.ui.admin.upgradeacount.UpgradeAccountActivity;
 import com.mvvm.kien2111.mvvmapplication.ui.admin.user.ManageUserActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +49,10 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
         startActivity(mItent);
     }
 
+    public  void toUpgradeAccount(View view){
+        Intent mItent = new Intent(this, UpgradeAccountActivity.class);
+        startActivity(mItent);
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message) {
         if (message instanceof AdminMainViewModel.Message) {
@@ -108,6 +114,12 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
 
     private void handleError(String message) {
 
+    }
+
+    //goto activity Manage appointment
+    public  void toAppointment(View view){
+        Intent intent = new Intent(this, AdminAppointmentActivity.class);
+        startActivity(intent);
     }
 
     @Override

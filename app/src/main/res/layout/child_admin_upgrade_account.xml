@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/icon_admin_upgrade"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imv"
+        android:layout_toLeftOf="@+id/checkbox"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/admin_textsize_16dp"
+            android:text="Nguyễn Trung Kiêm"
+            android:textColor="@color/color_admin_black"/>
+        <TextView
+            android:id="@+id/tv_name_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cty Anh Dương"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"/>
+        <TextView
+            android:id="@+id/tv_name_createat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:paddingTop="10dp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>

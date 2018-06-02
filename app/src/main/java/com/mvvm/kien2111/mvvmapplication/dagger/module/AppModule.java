@@ -1,10 +1,5 @@
 package com.mvvm.kien2111.mvvmapplication.dagger.module;
 
-import android.app.Application;
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
-
 import com.huma.room_for_asset.RoomAsset;
 import com.mvvm.kien2111.mvvmapplication.MyApplication;
 import com.mvvm.kien2111.mvvmapplication.data.local.db.RoomDb;
@@ -18,7 +13,6 @@ import com.mvvm.kien2111.mvvmapplication.data.local.db.dao.UserDao;
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,9 +23,9 @@ import dagger.Provides;
 public class AppModule {
     @Provides
     @Singleton
-    RoomDb provideDb(MyApplication myApplication){
+    RoomDb provideDb(MyApplication myApplication) {
         //return Room.databaseBuilder(myApplication,RoomDb.class,"roomdb").build();
-        return RoomAsset.databaseBuilder(myApplication,RoomDb.class,"mydb.db")
+        return RoomAsset.databaseBuilder(myApplication, RoomDb.class, "mydb.db")
                 .build();
     }
 
@@ -45,33 +39,43 @@ public class AppModule {
 
     @Provides
     @Singleton
-    UserDao provideUserDao(RoomDb roomDb){
+    UserDao provideUserDao(RoomDb roomDb) {
         return roomDb.userDao();
     }
 
     @Provides
     @Singleton
-    CategoryDao provideCategoryDao(RoomDb roomDb){
+    CategoryDao provideCategoryDao(RoomDb roomDb) {
         return roomDb.categoryDao();
     }
 
     @Provides
     @Singleton
-    ProfileDao provideProfileDao(RoomDb roomDb){return roomDb.profileDao();}
+    ProfileDao provideProfileDao(RoomDb roomDb) {
+        return roomDb.profileDao();
+    }
 
     @Provides
     @Singleton
-    RateDao provideRateDao(RoomDb roomDb){return roomDb.rateDao();}
+    RateDao provideRateDao(RoomDb roomDb) {
+        return roomDb.rateDao();
+    }
 
     @Provides
     @Singleton
-    AppointmentDao provideAppointmentDao(RoomDb roomDb){return roomDb.appointmentDao();}
+    AppointmentDao provideAppointmentDao(RoomDb roomDb) {
+        return roomDb.appointmentDao();
+    }
 
     @Provides
     @Singleton
-    CityDao provideCityDao(RoomDb roomDb){return roomDb.cityDao();}
+    CityDao provideCityDao(RoomDb roomDb) {
+        return roomDb.cityDao();
+    }
 
     @Provides
     @Singleton
-    DistrictDao provideDistrictDao(RoomDb roomDb){return roomDb.districtDao();}
+    DistrictDao provideDistrictDao(RoomDb roomDb) {
+        return roomDb.districtDao();
+    }
 }
