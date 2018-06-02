@@ -76,15 +76,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-<<<<<<< HEAD:app/src/main/java/com/mvvm/kien2111/fastjob/dagger/module/AppModule.java
     DistrictDao provideDistrictDao(RoomDb roomDb){return roomDb.districtDao();}
 
     @Provides
     @Singleton
     RecentSearchDao provideRecentDao(RoomDb roomDb){return roomDb.recentSearchDao();}
-=======
-    DistrictDao provideDistrictDao(RoomDb roomDb) {
-        return roomDb.districtDao();
-    }
->>>>>>> 7d9d37ea497a9950919b13ef77226f28c6950b65:app/src/main/java/com/mvvm/kien2111/mvvmapplication/dagger/module/AppModule.java
 }
