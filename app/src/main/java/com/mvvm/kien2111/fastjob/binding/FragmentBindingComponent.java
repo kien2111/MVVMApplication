@@ -8,9 +8,16 @@ import android.support.v4.app.Fragment;
 
 public class FragmentBindingComponent implements android.databinding.DataBindingComponent {
     private final FragmentBindingAdapter fragmentBindingAdapter;
+    private Fragment fragment;
     public FragmentBindingComponent(Fragment fragment){
+        this.fragment = fragment;
         this.fragmentBindingAdapter = new FragmentBindingAdapter(fragment);
     }
+
+    public Fragment getFragment() {
+        return fragment;
+    }
+
     @Override
     public FragmentBindingAdapter getFragmentBindingAdapter() {
         return fragmentBindingAdapter;

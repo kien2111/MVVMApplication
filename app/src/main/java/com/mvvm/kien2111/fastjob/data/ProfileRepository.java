@@ -12,8 +12,11 @@ import com.mvvm.kien2111.fastjob.data.remote.model.ApprovePublishRequest;
 import com.mvvm.kien2111.fastjob.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.fastjob.model.Pakage_Upgrade;
 import com.mvvm.kien2111.fastjob.model.Priority;
+import com.mvvm.kien2111.fastjob.model.Profile;
+import com.mvvm.kien2111.fastjob.ui.universal.FilterMapController;
 import com.mvvm.kien2111.fastjob.ui.universal.detail_category.ProfileRequest;
 import com.mvvm.kien2111.fastjob.ui.universal.detail_category.ProfileWrapper;
+import com.mvvm.kien2111.fastjob.ui.universal.feed.map.FilterMapModel;
 import com.mvvm.kien2111.fastjob.ui.universal.search.SearchResult;
 import com.mvvm.kien2111.fastjob.ui.upgrade.common.RequestUpgradeModel;
 
@@ -85,6 +88,16 @@ public class ProfileRepository{
 
     public Flowable<RequestUpgradeModel> getLastestOnProcessRequestUpgradeProfile(final String iduser){
         return service.getLastestOnProcessRequestUpgradeProfile(iduser)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Flowable<List<ProfileModel>> getMapProfile(final FilterMapModel filterMapModel){
+        return service.getMapProfiles(filterMapModel.getLat(),
+                filterMapModel.getLong(),
+                filterMapModel.getPriority().getType(),
+                filterMapModel.getDistance(),
+                filterMapModel.getUnit().ordinal())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

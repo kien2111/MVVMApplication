@@ -44,14 +44,15 @@ public class FragmentBindingAdapter {
                 .load(BuildConfig.IMG_URL+url)
                 .apply(new RequestOptions()
                         .fitCenter()
-                .error(error)
-                .placeholder(defaultImg)
-                .dontAnimate())
+                        .error(error)
+                        .placeholder(defaultImg)
+                        .dontAnimate())
                 .into(new SimpleTarget<PaletteBitmap>() {
                     @Override
                     public void onResourceReady(@NonNull PaletteBitmap resource, @Nullable Transition<? super PaletteBitmap> transition) {
                         imageView.setBackgroundColor(resource.palette.getDarkMutedColor(ContextCompat.getColor(fragment.getContext(),android.R.color.white)));
                         imageView.setImageBitmap(resource.bitmap);
+
                     }
                 });
     }

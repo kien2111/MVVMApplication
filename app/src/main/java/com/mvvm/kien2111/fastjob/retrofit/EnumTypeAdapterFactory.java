@@ -12,6 +12,7 @@ import com.mvvm.kien2111.fastjob.model.Gender;
 import com.mvvm.kien2111.fastjob.model.Priority;
 import com.mvvm.kien2111.fastjob.model.Role;
 import com.mvvm.kien2111.fastjob.ui.listappointment.common.AppointmentModel;
+import com.mvvm.kien2111.fastjob.ui.universal.FilterMapController;
 import com.mvvm.kien2111.fastjob.ui.upgrade.common.RequestUpgradeModel;
 
 import java.io.IOException;
@@ -43,6 +44,9 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory {
         }
         if(Deposit_Fee.Apply.class ==rawtype){
             return (TypeAdapter<T>)new ApplyTypeAdapter();
+        }
+        if(UnitTypeAdapter.class == rawtype){
+            return (TypeAdapter<T>)new UnitTypeAdapter();
         }
         return null;
     }
@@ -112,6 +116,19 @@ public class EnumTypeAdapterFactory implements TypeAdapterFactory {
             return Priority.mapPriority(in.nextInt());
         }
     }
+
+    static class UnitTypeAdapter extends TypeAdapter<FilterMapController.Unit>{
+        @Override
+        public void write(JsonWriter out, FilterMapController.Unit value) throws IOException {
+            out.value(value.ordinal());
+        }
+
+        @Override
+        public FilterMapController.Unit read(JsonReader in) throws IOException {
+            return FilterMapController.Unit.values()[in.nextInt()];
+        }
+    }
+
     static class StatusAppointmentAdapter extends TypeAdapter<AppointmentModel.StatusAppointment>{
 
         @Override

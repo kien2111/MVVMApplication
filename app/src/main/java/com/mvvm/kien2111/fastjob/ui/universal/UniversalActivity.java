@@ -2,17 +2,23 @@ package com.mvvm.kien2111.fastjob.ui.universal;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.appinvite.FirebaseAppInvite;
@@ -26,6 +32,7 @@ import com.mvvm.kien2111.fastjob.data.local.db.entity.RecentSearch;
 import com.mvvm.kien2111.fastjob.databinding.ActivityUniversalBinding;
 import com.mvvm.kien2111.fastjob.ui.universal.common.NavigationController;
 import com.mvvm.kien2111.fastjob.ui.universal.search.searchresult.SearchActivity;
+import com.mvvm.kien2111.fastjob.util.AnimationUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -41,7 +48,7 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
     @Inject
     NavigationController navigationController;
 
-
+    FilterMapController filterMapController;
 
     @Override
     protected int getLayoutRes() {
@@ -62,6 +69,18 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         }
     }
 
+    public void bottomBarColorMapActive(){
+        mActivityBinding.bnve.setItemIconTintList(ContextCompat.getColorStateList(this,R.color.bnv_tab_item_foreground_map_acive));
+        mActivityBinding.bnve.setItemTextColor(ContextCompat.getColorStateList(this,R.color.bnv_tab_item_foreground_map_acive));
+        mActivityBinding.bnve.setBackgroundColor(Color.WHITE);
+    }
+
+    public void bottomBarColorMapInActive(){
+        mActivityBinding.bnve.setItemIconTintList(ContextCompat.getColorStateList(this,R.color.bnv_tab_item_foreground));
+        mActivityBinding.bnve.setItemTextColor(ContextCompat.getColorStateList(this,R.color.bnv_tab_item_foreground));
+        mActivityBinding.bnve.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
+    }
+
     @Override
     protected int getBindVariable() {
         return BR.VMuniversal;
@@ -77,7 +96,32 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
             handleSearchPick(getIntent());
         }
         setupNavigationBottomBar();
+        setupFilterMapController();
         setUpListenFireBase();
+    }
+
+    private void setupFilterMapController() {
+        filterMapController = new FilterMapController(
+                this,mActivityBinding.spinnerSelectLevel,
+                mActivityBinding.spinnerSelectUnit,
+                mActivityBinding.filterBtn,
+                mActivityBinding.txtCurrentDistance,
+                mActivityBinding.value10,
+                mActivityBinding.value100,
+                mActivityBinding.value1000,
+                mActivityBinding.txtLat,
+                mActivityBinding.txtLong,
+                mActivityBinding.seekbarDistance,
+                mActivityBinding.hideBtn
+        );
+    }
+
+    public boolean isFilterControllerVisible(){
+        return mActivityBinding.filterContainer.getVisibility()==View.VISIBLE;
+    }
+
+    public FilterMapController getFilterMapController() {
+        return filterMapController;
     }
 
     private void setUpListenFireBase() {
@@ -120,6 +164,22 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
                 });
     }
 
+
+    public void showFilterMap(){
+        if(mActivityBinding.filterContainer.getVisibility()==View.GONE){
+            AnimationUtil.slide_in_up(mActivityBinding.filterContainer);
+        }
+    }
+
+    public void hideFilterMap(){
+        if(mActivityBinding.filterContainer.getVisibility()==View.VISIBLE){
+            AnimationUtil.slide_out_down(mActivityBinding.filterContainer);
+        }
+    }
+
+    public void filterMap(){
+
+    }
 
     private void handleSearchPick(final Intent data) {
         RecentSearch recentSearch = data.getParcelableExtra(SearchActivity.KEY_PICK_SEARCH_ITEM);
@@ -184,4 +244,5 @@ public class UniversalActivity extends BaseActivity<UniversalViewModel,ActivityU
         public String query;
         public SubmitQueryMessage(String query){this.query = query;}
     }
+
 }

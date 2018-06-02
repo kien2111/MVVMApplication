@@ -71,4 +71,10 @@ public final class PermissionUtil {
                 Manifest.permission_group.STORAGE
         },requestCode);
     }
+
+    public static void requestLocationPermission(@NonNull Activity activity,int requestCode){
+        ActivityCompat.requestPermissions(activity,new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+        },requestCode);
+    }
 }

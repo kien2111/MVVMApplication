@@ -1,12 +1,15 @@
 package com.mvvm.kien2111.fastjob.data.local.db.entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.maps.android.clustering.ClusterItem;
 import com.mvvm.kien2111.fastjob.data.local.db.converter.AppConverter;
 import com.mvvm.kien2111.fastjob.model.Profile;
 
@@ -15,7 +18,32 @@ import com.mvvm.kien2111.fastjob.model.Profile;
  */
 @Entity(primaryKeys = {"idprofile"},tableName = "profiles")
 @TypeConverters(AppConverter.class)
-public class ProfileModel extends Profile implements Parcelable {
+public class ProfileModel extends Profile implements Parcelable,ClusterItem {
+    @Override
+    public LatLng getPosition() {
+        return new LatLng(mLat,mLong);
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
+    }
+
+    @Override
+    public String getSnippet() {
+        return getSummary();
+    }
+
+    @Expose
+    @SerializedName("lat")
+    @ColumnInfo(name = "lat")
+    private double mLat;
+
+    @Expose
+    @SerializedName("long")
+    @ColumnInfo(name = "long")
+    private double mLong;
+
     @Expose
     @SerializedName("avatar")
     private String avatar;
@@ -33,6 +61,8 @@ public class ProfileModel extends Profile implements Parcelable {
         avatar = in.readString();
         name = in.readString();
         rating = in.readFloat();
+        mLat = in.readDouble();
+        mLong = in.readDouble();
     }
     public ProfileModel(){
         super();
@@ -43,6 +73,8 @@ public class ProfileModel extends Profile implements Parcelable {
         dest.writeString(avatar);
         dest.writeString(name);
         dest.writeFloat(rating);
+        dest.writeDouble(mLat);
+        dest.writeDouble(mLong);
     }
 
     public float getRating() {
@@ -82,4 +114,19 @@ public class ProfileModel extends Profile implements Parcelable {
         this.avatar = avatar;
     }
 
+    public double getLat() {
+        return mLat;
+    }
+
+    public void setLat(double mLat) {
+        this.mLat = mLat;
+    }
+
+    public double getLong() {
+        return mLong;
+    }
+
+    public void setLong(double mLong) {
+        this.mLong = mLong;
+    }
 }

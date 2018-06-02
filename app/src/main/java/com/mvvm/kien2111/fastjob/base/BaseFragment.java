@@ -72,6 +72,15 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewDataBindi
 
     }
 
+    protected int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
     protected abstract @LayoutRes int getLayoutId();
 
     @Override

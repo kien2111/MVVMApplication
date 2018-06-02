@@ -210,6 +210,33 @@ public final class AnimationUtil {
         });
     }
 
+    public static void slide_in_up(View v){
+        v.setVisibility(View.VISIBLE);
+        Animation animation = AnimationUtils.loadAnimation(v.getContext(),R.anim.slide_in_up);
+        v.startAnimation(animation);
+    }
+
+    public static void slide_out_down(View v){
+        Animation animation = AnimationUtils.loadAnimation(v.getContext(),R.anim.slide_out_down);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                v.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        v.startAnimation(animation);
+    }
+
     public static void fade_content_in(View v){
         v.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(v.getContext(),R.anim.fade_in_fragment);

@@ -25,6 +25,7 @@ import com.mvvm.kien2111.fastjob.ui.universal.detail_profile.about.AboutViewMode
 import com.mvvm.kien2111.fastjob.ui.universal.detail_profile.rate.ListRateViewModel;
 import com.mvvm.kien2111.fastjob.ui.universal.feed.FeedViewModel;
 import com.mvvm.kien2111.fastjob.ui.universal.feed.category.CategoryViewModel;
+import com.mvvm.kien2111.fastjob.ui.universal.feed.map.MapViewModel;
 import com.mvvm.kien2111.fastjob.ui.universal.search.SearchViewModel;
 import com.mvvm.kien2111.fastjob.ui.universal.user.UserViewModel;
 import com.mvvm.kien2111.fastjob.ui.upgrade.businessupgrade.BusinessUpgradeViewModel;
@@ -185,6 +186,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(BusinessUpgradeViewModel.class)
     abstract ViewModel bindBusinessUpgradeViewModel(BusinessUpgradeViewModel businessUpgradeViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MapViewModel.class)
+    abstract ViewModel bindMapViewModel(MapViewModel mapViewModel);
 
     @Binds
     @Singleton

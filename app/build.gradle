@@ -75,6 +75,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-invites:15.0.1'
 
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
     implementation "com.github.humazed:RoomAsset:$assetRoomDbVersion"
     implementation 'com.github.esafirm.android-image-picker:imagepicker:1.12.0'

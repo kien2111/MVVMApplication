@@ -2,6 +2,7 @@ package com.mvvm.kien2111.fastjob.ui.universal.feed.category;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -67,8 +68,9 @@ public class CategoryFragment extends BaseFragment<CategoryViewModel,FragmentCat
         //if(mFragmentBinding.recycleViewCategories.getLayoutManager()==null)
         mFragmentBinding.recycleViewCategories.setLayoutManager(gridLayoutManager.get());
         mViewModel.getResourceCategoriesLiveData().observe(this,listResource -> {
-            categoryAdapter.changeDataSet(listResource.data==null?Collections.emptyList():listResource.data);
-
+            new Handler().postDelayed(()->{
+                categoryAdapter.changeDataSet(listResource.data==null?Collections.emptyList():listResource.data);
+            },600);
         });
     }
 

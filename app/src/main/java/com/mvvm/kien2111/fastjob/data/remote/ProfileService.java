@@ -3,6 +3,7 @@ package com.mvvm.kien2111.fastjob.data.remote;
 import com.mvvm.kien2111.fastjob.data.local.db.entity.ProfileModel;
 import com.mvvm.kien2111.fastjob.data.remote.model.ApprovePublishRequest;
 import com.mvvm.kien2111.fastjob.model.Pakage_Upgrade;
+import com.mvvm.kien2111.fastjob.ui.universal.FilterMapController;
 import com.mvvm.kien2111.fastjob.ui.universal.detail_category.ProfileWrapper;
 import com.mvvm.kien2111.fastjob.ui.universal.search.SearchResult;
 import com.mvvm.kien2111.fastjob.ui.upgrade.common.RequestUpgradeModel;
@@ -39,6 +40,14 @@ public interface ProfileService {
                                          @Query("salaryFrom") Double salaryfrom,
                                          @Query("salaryTo")Double salaryTo,
                                          @Query("level")int priority);
+
+    @GET("/Profiles/getmapprofile")
+    Flowable<List<ProfileModel>> getMapProfiles(@Query("lat") double mLat,
+                                                @Query("long") double mLong,
+                                                @Query("level")int priority,
+                                                @Query("distance")double distance,
+                                                @Query("unit")int unit);
+
 
     @GET("/Profiles/search")
     Flowable<SearchResult> getSearchResult(@Query("query") String query);
