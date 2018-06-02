@@ -26,4 +26,5 @@ public class AddUserModule {
     SimpleDateFormat provideSimpleDateForMat(){
         return new SimpleDateFormat("dd/MM/yyyy");
     }
+
 }

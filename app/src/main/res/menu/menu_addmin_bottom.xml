@@ -6,9 +6,9 @@
         android:icon="@drawable/icon_admin_block"
         android:title="Block"
         app:showAsAction="always" />
-    <item
+</menu>
+    <!--  <item
         android:id="@+id/action_promoted"
         android:icon="@drawable/icon_admin_promoted"
         android:title="Promoted"
-        app:showAsAction="always" />
-</menu>
+        app:showAsAction="always" />-->

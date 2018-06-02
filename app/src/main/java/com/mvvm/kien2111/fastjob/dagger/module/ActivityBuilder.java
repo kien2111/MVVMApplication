@@ -1,6 +1,7 @@
 package com.mvvm.kien2111.fastjob.dagger.module;
 
 import com.mvvm.kien2111.fastjob.dagger.Scope.PerActivity;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.upgradeuser.UngradeUserModule;
 import com.mvvm.kien2111.fastjob.ui.universal.search.searchresult.SearchActivity;
 import com.mvvm.kien2111.fastjob.ui.SplashActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.main.AdminMainActivity;
@@ -34,7 +35,9 @@ import com.mvvm.kien2111.fastjob.ui.upgrade.freelancerupgrade.FreelancerUpgradeA
 import com.mvvm.kien2111.fastjob.ui.upgrade.freelancerupgrade.FreelancerUpgradeModule;
 import com.mvvm.kien2111.fastjob.ui.userprofile.UserProfileActivity;
 import com.mvvm.kien2111.fastjob.ui.userprofile.UserProfileModule;
-
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentActivity;
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentModule;
+import com.mvvm.kien2111.fastjob.ui.admin.upgradeacount.UpgradeAccountActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -107,6 +110,14 @@ public abstract class ActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector(modules = {BusinessUpgradeModule.class})
     abstract BusinessUpgradeActivity bindBusinessUpgradeActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector (modules = {UngradeUserModule.class})
+    abstract UpgradeAccountActivity binUpgradeAccountActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector (modules = {AdminAppointmentModule.class})
+    abstract AdminAppointmentActivity binAdminAppointmentActivity();
 
     @PerActivity
     @ContributesAndroidInjector(modules = {SearchResultModule.class})

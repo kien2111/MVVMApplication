@@ -52,7 +52,6 @@
                 android:resource="@xml/authenticator"/>
         </service>
 
-
         <activity android:name="com.mvvm.kien2111.fastjob.ui.universal.UniversalActivity">
 
            <!-- <intent-filter>
@@ -85,7 +84,10 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-
+        <activity android:name=".ui.admin.user.fragment.addnewuser.AddUserActivity"/>
+        <activity android:name=".ui.admin.apointment.AdminAppointmentActivity"/>
+        <activity android:name=".ui.admin.user.fragment.edituser.UserEditProfileActivity"/>
+        <activity android:name=".ui.admin.upgradeacount.UpgradeAccountActivity"/>
         <activity android:name="com.mvvm.kien2111.fastjob.ui.login.LoginActivity"/>
         <activity android:name="com.mvvm.kien2111.fastjob.ui.admin.main.AdminMainActivity"/>
         <activity android:name="com.mvvm.kien2111.fastjob.ui.signup.SignUpActivity"/>

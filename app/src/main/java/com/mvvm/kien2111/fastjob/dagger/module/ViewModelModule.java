@@ -4,11 +4,15 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.mvvm.kien2111.fastjob.AppViewModelFactory;
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentViewModel;
 import com.mvvm.kien2111.fastjob.ui.admin.main.AdminMainViewModel;
 import com.mvvm.kien2111.fastjob.ui.admin.profile.AdminManageProfileViewModel;
 import com.mvvm.kien2111.fastjob.ui.admin.statistical.AdminStatisticalViewModel;
+import com.mvvm.kien2111.fastjob.ui.admin.upgradeacount.UpgradeAccountViewModle;
 import com.mvvm.kien2111.fastjob.ui.admin.user.ManageUserViewModel;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.addnewuser.AddUserViewModel;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.alluser.AllUserViewModel;
+import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.edituser.UserEditProfileViewModel;
 import com.mvvm.kien2111.fastjob.ui.admin.user.fragment.upgradeuser.UngradeUserViewModel;
 import com.mvvm.kien2111.fastjob.ui.createappointment.CreateAppointmentViewModel;
 import com.mvvm.kien2111.fastjob.ui.depositfund.DepositFundViewModel;
@@ -33,7 +37,6 @@ import com.mvvm.kien2111.fastjob.ui.upgrade.freelancerupgrade.FreelancerUpgradeV
 import com.mvvm.kien2111.fastjob.ui.userprofile.UserProfileViewModel;
 import com.mvvm.kien2111.fastjob.ui.userprofile.bussiness.BussinessProfileViewModel;
 import com.mvvm.kien2111.fastjob.ui.userprofile.invidual.IndividualProfileViewModel;
-
 import javax.inject.Singleton;
 
 import dagger.Binds;
@@ -100,10 +103,31 @@ public abstract class ViewModelModule {
     @ViewModelKey(AdminStatisticalViewModel.class)
     abstract ViewModel bindAdminStatisticalViewModel(AdminStatisticalViewModel allAdminStatisticalViewModel);
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddUserViewModel.class)
+    abstract ViewModel bindAddUserViewModel(AddUserViewModel addUserViewModel);
+
     @Binds
     @IntoMap
     @ViewModelKey(AdminManageProfileViewModel.class)
     abstract ViewModel bindAdminManageProfileViewModel(AdminManageProfileViewModel allAdminManageProfileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AdminAppointmentViewModel.class)
+    abstract ViewModel bindAdminAppointmentViewModel(AdminAppointmentViewModel adminAppointmentViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserEditProfileViewModel.class)
+    abstract ViewModel bindUserEditProfileViewModel(UserEditProfileViewModel userEditProfileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpgradeAccountViewModle.class)
+    abstract ViewModel bindUpgradeAccountViewModle(UpgradeAccountViewModle upgradeAccountViewModle);
 
     @Binds
     @IntoMap

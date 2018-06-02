@@ -164,8 +164,23 @@
                         android:drawableStart="@drawable/icon_admin_revendue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< HEAD
                         android:text="Statistical \nRevenue"
                         tools:targetApi="m" />
+=======
+                        android:orientation="vertical"
+                        android:onClick="gotoSatisticalActivity">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Statistical"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Revenue"/>
+                    </LinearLayout>
+
+>>>>>>> 7d9d37ea497a9950919b13ef77226f28c6950b65
                 </LinearLayout>
 
             </LinearLayout>
@@ -181,7 +196,13 @@
                     android:layout_height="0dp"
                     android:background="#e91e63"
                     android:orientation="horizontal"
+<<<<<<< HEAD
                     android:gravity="center"
+=======
+                    android:gravity="center_vertical"
+                    android:onClick="toUpgradeAccount"
+                    android:paddingLeft="30dp"
+>>>>>>> 7d9d37ea497a9950919b13ef77226f28c6950b65
                     android:layout_weight="1">
                     <TextView
                         android:drawableTint="@android:color/white"
@@ -199,7 +220,9 @@
                     android:background="#ff5722"
                     android:orientation="horizontal"
                     android:gravity="center"
+                    android:onClick="toAppointment"
                     android:layout_weight="1">
+<<<<<<< HEAD
                     <TextView
                         android:drawablePadding="10dp"
                         android:drawableTint="@android:color/white"
@@ -209,6 +232,28 @@
                         android:layout_height="wrap_content"
                         android:text="Show \nInformation"
                         tools:targetApi="m" />
+=======
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="center"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/icon_admin_apointment_cooperate"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Setup"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Appointment"/>
+                    </LinearLayout>
+
+>>>>>>> 7d9d37ea497a9950919b13ef77226f28c6950b65
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

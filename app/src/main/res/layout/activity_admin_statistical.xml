@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/icon_admin_home"
                 android:layout_alignParentLeft="true"
-                android:onClick="@{() -> vm.finishActivity()}"
+                android:onClick="finish"
                 android:paddingRight="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -45,11 +45,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dp"/>
         </RelativeLayout>
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,9 +67,71 @@
                 android:gravity="center"
                 android:textColor="@color/admin_text_black"/>
 
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/admin_textsize_12dp"/>
+                <TextView
+                    android:id="@+id/tv_starttime"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:textSize="@dimen/admin_textsize_14dp"
+                    android:background="@drawable/admin_edittext_border"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_user_calendar"
+                    android:paddingLeft="10dp"
+                    android:onClick="setstarttime"
+                    android:paddingTop="5dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="to"
+                android:gravity="center"
+                android:layout_marginRight="10dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_endtime"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:textSize="@dimen/admin_textsize_14dp"
+                    android:background="@drawable/admin_edittext_border"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_user_calendar"
+                    android:onClick="setendtime"
+                    android:paddingTop="5dp"/>
+            </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="getDataServer"
+                android:text="Filter"/>
         </LinearLayout>
-
-
 
         <RelativeLayout
             android:id="@+id/tab_view_chart"

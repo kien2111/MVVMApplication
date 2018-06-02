@@ -11,16 +11,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.bumptech.glide.Glide;
+import com.mvvm.kien2111.fastjob.BuildConfig;
 import com.mvvm.kien2111.fastjob.R;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
 import com.mvvm.kien2111.fastjob.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -36,6 +37,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ItemClickListener mClickListener;
     private IUserClickItemList iUserClickItemList;
     public SparseBooleanArray itemStateArray = new SparseBooleanArray();
+    private Context context;
 
 
     // data is passed into the constructor
@@ -45,6 +47,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.mFilteredList = listUser;
         this.item_list = new ArrayList<>();
         this.iUserClickItemList= iUserClickItemList;
+        this.context=context;
     }
 
     // inflates the row layout from xml when needed
@@ -80,6 +83,13 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder instanceof ViewHolder) {
             ((ViewHolder) holder).tv_personname.setText("" + mFilteredList.get(position - 1).getUserName().toString());
             ((ViewHolder) holder).tv_email.setText("" + mFilteredList.get(position - 1).getUserId());
+
+            if(mFilteredList.get(position-1).getAvatar()!=null) {
+                Glide.with(context).load(BuildConfig.IMG_URL +mFilteredList.get(position-1).getAvatar())
+                        .into(((ViewHolder) holder).imageView);
+
+            }
+
             ((ViewHolder) holder).checkbox_user.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -165,7 +175,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     //list user to block
-    public List<BlockUser> getlistBlockUser() {
+    public List<BlockUser> getListBlockUser() {
         return item_list;
     }
 
@@ -187,7 +197,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-        ImageView imageView;
+        CircleImageView imageView;
         TextView tv_personname, tv_email;
         CheckBox checkbox_user;
         LinearLayout tab_edituser;
@@ -196,7 +206,7 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             tv_personname = itemView.findViewById(R.id.tv_personname);
             tv_email = itemView.findViewById(R.id.tv_email);
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.cicle_imv);
             checkbox_user = itemView.findViewById(R.id.checkbox_user);
             checkbox_user.setOnCheckedChangeListener(this);
             tab_edituser = itemView.findViewById(R.id.tab_edituser);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
@@ -12,16 +12,11 @@
         android:layout_marginTop="3dp"
         android:background="@drawable/admin_sharp_screen_home__layout"
         android:gravity="center_vertical">
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cicle_imv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/icon_admin_avatar_user"/>
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            app:border_width="0.1dp"/>
         <LinearLayout
             android:id="@+id/tab_edituser"
             android:layout_width="wrap_content"
@@ -34,7 +29,6 @@
                 android:id="@+id/tv_personname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nguyen Van Khanh"
                 android:paddingTop="5dp"
                 android:textSize="@dimen/admin_textsize_16dp"
                 android:textColor="@color/admin_background_notibar"
@@ -43,7 +37,6 @@
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="khanhnv@gmail.com"
                 android:paddingTop="5dp"
                 android:textSize="@dimen/admin_textsize_12dp"
                 android:textColor="@color/admin_background_notibar"

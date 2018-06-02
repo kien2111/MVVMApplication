@@ -20,14 +20,17 @@ import com.mvvm.kien2111.fastjob.data.remote.UserService;
 import com.mvvm.kien2111.fastjob.retrofit.EnumTypeAdapterFactory;
 import com.mvvm.kien2111.fastjob.retrofit.EnvelopeConverterFactory;
 import com.mvvm.kien2111.fastjob.retrofit.RxErrorHandlingCallAdapterFactory;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Logger;
+
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -115,7 +118,7 @@ public class NetModule {
                 .writeTimeout(BuildConfig.WRITE_TIMEOUT,TimeUnit.MILLISECONDS)*/
                 .addInterceptor(new Interceptor() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
+                    public Response intercept(Chain chain) throws IOException,SocketTimeoutException {
                         Request request = chain.request();
                         request = request.newBuilder()
                                 .addHeader("authorization",auth_token[0]+" "+auth_token[1])

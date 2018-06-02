@@ -18,11 +18,12 @@ import com.mvvm.kien2111.fastjob.base.BaseActivity;
 import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.databinding.ActivityAdminHomeBinding;
 import com.mvvm.kien2111.fastjob.ui.SplashActivity;
+import com.mvvm.kien2111.fastjob.ui.admin.apointment.AdminAppointmentActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.dialog.BasicDialogAdmin;
 import com.mvvm.kien2111.fastjob.ui.admin.profile.AdminManageProfileActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.statistical.AdminStatisticalActivity;
+import com.mvvm.kien2111.fastjob.ui.admin.upgradeacount.UpgradeAccountActivity;
 import com.mvvm.kien2111.fastjob.ui.admin.user.ManageUserActivity;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -55,6 +56,10 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
         startActivity(mItent);
     }
 
+    public  void toUpgradeAccount(View view){
+        Intent mItent = new Intent(this, UpgradeAccountActivity.class);
+        startActivity(mItent);
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message) {
         if (message instanceof AdminMainViewModel.Message) {
@@ -116,7 +121,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     }
 
     private void setOnClick() {
-        mActivityBinding.
+        //mActivityBinding.
     }
 
     private void handleError(String message) {
@@ -156,15 +161,20 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     }
 
     private void successRemoveAccount(){
-        Intent intent = new Intent(getActivity().getApplicationContext(), SplashActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     private void failRemoveAccount(){
-        ((BaseActivity)getActivity()).showDialog("Error","Can't log out");
+        ((BaseActivity)this).showDialog("Error","Can't log out");
     }
 
+    //goto activity Manage appointment
+    public  void toAppointment(View view){
+        Intent intent = new Intent(this, AdminAppointmentActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onClickOK() {
         Log.d("dá", "OK");

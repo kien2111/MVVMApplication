@@ -5,12 +5,13 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.mvvm.kien2111.fastjob.BR;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -338,7 +339,6 @@ public class User extends BaseObservable implements Parcelable {
     @SerializedName("iduser")
     private String userId;
 
-
     @Bindable
     public List<Role> getRole_list() {
         return role_list;
@@ -509,5 +509,4 @@ public class User extends BaseObservable implements Parcelable {
             this.userId = userId;return this;
         }
     }
-
 }

@@ -1,5 +1,5 @@
-package com.mvvm.kien2111.fastjob.dagger.module;
 
+package com.mvvm.kien2111.fastjob.dagger.module;
 import com.huma.room_for_asset.RoomAsset;
 import com.mvvm.kien2111.fastjob.MyApplication;
 import com.mvvm.kien2111.fastjob.data.local.db.RoomDb;
@@ -24,9 +24,9 @@ import dagger.Provides;
 public class AppModule {
     @Provides
     @Singleton
-    RoomDb provideDb(MyApplication myApplication){
+    RoomDb provideDb(MyApplication myApplication) {
         //return Room.databaseBuilder(myApplication,RoomDb.class,"roomdb").build();
-        return RoomAsset.databaseBuilder(myApplication,RoomDb.class,"mydb.db")
+        return RoomAsset.databaseBuilder(myApplication, RoomDb.class, "mydb.db")
                 .build();
     }
 
@@ -40,37 +40,51 @@ public class AppModule {
 
     @Provides
     @Singleton
-    UserDao provideUserDao(RoomDb roomDb){
+    UserDao provideUserDao(RoomDb roomDb) {
         return roomDb.userDao();
     }
 
     @Provides
     @Singleton
-    CategoryDao provideCategoryDao(RoomDb roomDb){
+    CategoryDao provideCategoryDao(RoomDb roomDb) {
         return roomDb.categoryDao();
     }
 
     @Provides
     @Singleton
-    ProfileDao provideProfileDao(RoomDb roomDb){return roomDb.profileDao();}
+    ProfileDao provideProfileDao(RoomDb roomDb) {
+        return roomDb.profileDao();
+    }
 
     @Provides
     @Singleton
-    RateDao provideRateDao(RoomDb roomDb){return roomDb.rateDao();}
+    RateDao provideRateDao(RoomDb roomDb) {
+        return roomDb.rateDao();
+    }
 
     @Provides
     @Singleton
-    AppointmentDao provideAppointmentDao(RoomDb roomDb){return roomDb.appointmentDao();}
+    AppointmentDao provideAppointmentDao(RoomDb roomDb) {
+        return roomDb.appointmentDao();
+    }
 
     @Provides
     @Singleton
-    CityDao provideCityDao(RoomDb roomDb){return roomDb.cityDao();}
+    CityDao provideCityDao(RoomDb roomDb) {
+        return roomDb.cityDao();
+    }
 
     @Provides
     @Singleton
+<<<<<<< HEAD:app/src/main/java/com/mvvm/kien2111/fastjob/dagger/module/AppModule.java
     DistrictDao provideDistrictDao(RoomDb roomDb){return roomDb.districtDao();}
 
     @Provides
     @Singleton
     RecentSearchDao provideRecentDao(RoomDb roomDb){return roomDb.recentSearchDao();}
+=======
+    DistrictDao provideDistrictDao(RoomDb roomDb) {
+        return roomDb.districtDao();
+    }
+>>>>>>> 7d9d37ea497a9950919b13ef77226f28c6950b65:app/src/main/java/com/mvvm/kien2111/mvvmapplication/dagger/module/AppModule.java
 }

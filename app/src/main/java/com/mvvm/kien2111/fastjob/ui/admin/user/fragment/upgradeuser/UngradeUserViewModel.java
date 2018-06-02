@@ -1,7 +1,6 @@
 package com.mvvm.kien2111.fastjob.ui.admin.user.fragment.upgradeuser;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.base.BaseViewModel;
@@ -16,8 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 /**
  * Created by donki on 3/7/2018.
@@ -42,7 +39,6 @@ public class UngradeUserViewModel extends BaseViewModel {
                 .subscribe(listResource -> {
                     resourceMutableLiveData.setValue(listResource);
                 }, error -> {
-                    Log.d("DATA","fasdfsadfsd"+error);
                     resourceMutableLiveData.setValue(Resource.error(error.getMessage(), null));
                 })
         );
@@ -54,11 +50,9 @@ public class UngradeUserViewModel extends BaseViewModel {
         compositeDisposable.add(adminRepository
                 .blockUser(listblock)
                 .subscribe(() -> {
-                    Timber.d("OOKKKKKKKKKKKK");
-                    eventBus.post(new ResponseBlockServer("Unlock success"));
+                    eventBus.post(new ResponseUnBlockServer("Unlock success"));
                 }, error -> {
-                    Timber.tag("THU").d("error: "+error);
-                    eventBus.post(new ResponseBlockServer(error));
+                    eventBus.post(new ResponseUnBlockServer(error));
                 })
         );
     }
@@ -67,12 +61,12 @@ public class UngradeUserViewModel extends BaseViewModel {
     public MutableLiveData<Resource<List<User>>> getResourceMutableLiveData() {
         return resourceMutableLiveData;
     }
-    public static class ResponseBlockServer extends BaseMessage {
-        public ResponseBlockServer(Throwable errorMess) {
+    public static class ResponseUnBlockServer extends BaseMessage {
+        public ResponseUnBlockServer(Throwable errorMess) {
             super(errorMess);
         }
         public String message;
-        public ResponseBlockServer(String message){
+        public ResponseUnBlockServer(String message){
             this.message = message;
         }
     }

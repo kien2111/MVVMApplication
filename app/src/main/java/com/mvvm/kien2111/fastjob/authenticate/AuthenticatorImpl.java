@@ -13,9 +13,7 @@ import com.mvvm.kien2111.fastjob.data.UserRepository;
 import com.mvvm.kien2111.fastjob.data.remote.model.LoginRequest;
 import com.mvvm.kien2111.fastjob.data.remote.model.LoginResponse;
 import com.mvvm.kien2111.fastjob.model.LoggedInMode;
-
 import com.mvvm.kien2111.fastjob.ui.login.LoginActivity;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 

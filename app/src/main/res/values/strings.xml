@@ -194,8 +194,11 @@
 
     edit account
     <string name="admin_edit_myinfo">Change Profile</string>
+    <string name="admin_title_appointment">Setup Appointment</string>
     edit file
     <string name="admin_manage_file">Manage File</string>
+    <string name="admin_title_upgradeaccount">Upgrade Account</string>
+
 
     upadate profile user
     <string name="admin_title_update_profile_user">Update User</string>

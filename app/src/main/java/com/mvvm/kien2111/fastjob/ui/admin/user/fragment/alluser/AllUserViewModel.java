@@ -16,8 +16,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 
 /**
  * Created by donki on 3/7/2018.
@@ -54,10 +52,8 @@ public class AllUserViewModel extends BaseViewModel {
         compositeDisposable.add(adminRepository
                 .blockUser(listblock)
                 .subscribe(() -> {
-                    Timber.d("OOKKKKKKKKKKKK");
                     eventBus.post(new ResponseBlockServer("Success blocked"));
                 }, error -> {
-                    Timber.tag("THU").d("error: "+error);
                     eventBus.post(new ResponseBlockServer(error));
                 })
         );
