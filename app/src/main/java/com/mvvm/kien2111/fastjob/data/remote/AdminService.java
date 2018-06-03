@@ -1,7 +1,6 @@
 package com.mvvm.kien2111.fastjob.data.remote;
 
 import com.mvvm.kien2111.fastjob.data.remote.model.admin.AdminCreatedUserResponse;
-import com.mvvm.kien2111.fastjob.data.remote.model.admin.UserFilterRequest;
 import com.mvvm.kien2111.fastjob.model.AccountUpgrade;
 import com.mvvm.kien2111.fastjob.model.AdminAppointment;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
@@ -32,8 +31,8 @@ public interface AdminService {
     @GET("/Admins/fetchuser")
     Single<List<User>> getAllUser();
 
-    @POST("/Admins/getuserblock")
-    Single<List<User>> getUserBlock(@Body UserFilterRequest status);
+    @GET("/Admins/getuserblock")
+    Single<List<User>> getUserBlock(@Query("status") int status);
 
     @POST("/Admins/getuserblock")
     Single<AdminCreatedUserResponse> updateUser(@Body User user);

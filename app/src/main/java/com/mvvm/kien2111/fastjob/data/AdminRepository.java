@@ -2,7 +2,6 @@ package com.mvvm.kien2111.fastjob.data;
 
 import com.mvvm.kien2111.fastjob.data.remote.AdminService;
 import com.mvvm.kien2111.fastjob.data.remote.model.admin.AdminCreatedUserResponse;
-import com.mvvm.kien2111.fastjob.data.remote.model.admin.UserFilterRequest;
 import com.mvvm.kien2111.fastjob.model.AccountUpgrade;
 import com.mvvm.kien2111.fastjob.model.AdminAppointment;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
@@ -44,11 +43,11 @@ public class AdminRepository {
                 .subscribeOn(Schedulers.io())
                 .map(users -> Resource.success(users));
     }
-    public Single<Resource<List<User>>> getUserBlock(UserFilterRequest status) {
+    public Single<Resource<List<User>>> getUserBlock(int status) {
         return adminService.getUserBlock(status)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .map(users -> Resource.success(users));
+                .map(Resource::success);
     }
     public Single<AdminCreatedUserResponse> updateUser(User user) {
         return adminService.updateUser(user)

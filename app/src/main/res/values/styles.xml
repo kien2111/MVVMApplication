@@ -146,4 +146,8 @@
         <item name="colorControlHighlight">@color/indigo_material</item>
         <item name="colorButtonNormal">@color/indigo_material</item>
     </style>
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#e91e63</item>
+        <item name="colorButtonNormal">#8e24aa</item>
+    </style>
 </resources>

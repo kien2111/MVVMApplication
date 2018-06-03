@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
-
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <variable
+            name="user"
+            type="com.mvvm.kien2111.fastjob.model.User"/>
         <variable
             name="vm"
             type="com.mvvm.kien2111.fastjob.ui.admin.main.AdminMainViewModel"/>
     </data>
-
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -16,83 +18,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/admin_background_notibar"
-            android:gravity="center_vertical"
+            android:background="#3C3F41"
+            android:gravity="center|bottom"
             android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:scaleType="centerCrop"
+                app:cirleImageUrl="@{user.avatar}"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
             <TextView
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.mObservableString}"
+                android:text="@{user.realname}"
                 android:textColor="@color/admin_color_text_screen_notibar"
-                android:textSize="@dimen/admim_textsize_screen_notibar"
-                android:layout_marginStart="20dp"/>
-            <RelativeLayout
+                android:textSize="20sp"/>
+            <Button
+                android:layout_gravity="bottom"
+                android:id="@+id/btn_logout"
+                android:textStyle="bold"
+                android:drawablePadding="10dp"
+                android:background="#8e24aa"
+                android:foreground="?attr/selectableItemBackground"
+                android:textColor="@android:color/white"
+                android:text="LOG OUT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingRight="7dp">
-                <ImageView
-                    android:contentDescription="@null"
-                    android:id="@+id/imv_evaluate_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/icon_admin_star"/>
-                <ImageView
-                    android:contentDescription="@null"
-                    android:id="@+id/imv_evaluate_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_toLeftOf="@+id/imv_evaluate_1"
-                    android:background="@drawable/icon_admin_star"/>
-                <ImageView
-                    android:contentDescription="@null"
-                    android:id="@+id/imv_evaluate_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_toLeftOf="@+id/imv_evaluate_2"
-                    android:background="@drawable/icon_admin_star"/>
-                <ImageView
-                    android:contentDescription="@null"
-                    android:id="@+id/imv_evaluate_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_toLeftOf="@+id/imv_evaluate_3"
-                    android:background="@drawable/icon_admin_star"/>
-                <ImageView
-                    android:contentDescription="@null"
-                    android:id="@+id/imv_evaluate_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_toLeftOf="@+id/imv_evaluate_4"
-                    android:background="@drawable/icon_admin_star"/>
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VanKhanh"
-                    android:textColor="@color/admin_color_text_screen_notibar"
-                    android:textSize="16sp"
-                    android:layout_marginStart="20dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/admin_color_text_screen_notibar"
-                    android:textSize="@dimen/admin_textsize_13dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
-                    android:text="Logout"/>
-            </RelativeLayout>
+                tools:targetApi="m" />
         </LinearLayout>
 
         <!--<LinearLayout
@@ -102,7 +54,6 @@
             android:orientation="horizontal">
 
         </LinearLayout>-->
-
         <LinearLayout
             android:baselineAligned="true"
             android:layout_width="match_parent"

@@ -103,18 +103,20 @@ public class AllUserFragment extends BaseFragment<AllUserViewModel, FragmentAdmi
 
     public void getData(){
         mViewModel.getResourceMutableLiveData().observe(this, listResource -> {
-            switch (listResource.status) {
-                case SUCCESS:
-                    if(listResource.getData().size()>0 && listResource.getData()!=null) {
-                        listUser= listResource.getData();
-                        adapterUser();
-                    }
-                    break;
-                case LOADING:
-                    break;
-                case ERROR:
-                    handleError(listResource.message);
-                    break;
+            if(listResource!=null){
+                switch (listResource.status) {
+                    case SUCCESS:
+                        if(listResource.getData()!=null && listResource.getData().size()>0) {
+                            listUser= listResource.getData();
+                            adapterUser();
+                        }
+                        break;
+                    case LOADING:
+                        break;
+                    case ERROR:
+                        handleError(listResource.message);
+                        break;
+                }
             }
         });
     }

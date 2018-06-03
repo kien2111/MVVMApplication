@@ -8,6 +8,7 @@ import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.base.BaseViewModel;
 import com.mvvm.kien2111.fastjob.data.AdminRepository;
 import com.mvvm.kien2111.fastjob.data.UserRepository;
+import com.mvvm.kien2111.fastjob.data.local.pref.PreferenceLiveData;
 import com.mvvm.kien2111.fastjob.model.Resource;
 import com.mvvm.kien2111.fastjob.model.User;
 
@@ -23,17 +24,19 @@ import javax.inject.Inject;
 
 
 public class AdminMainViewModel extends BaseViewModel {
-    public ObservableField<String> mObservableString = new ObservableField("vbmbvnvb");
     private MutableLiveData<Resource<List<User>>> resourceMutableLiveData = new MutableLiveData<>();
     private UserRepository userRepository;
     private final AdminRepository adminRepository;
+    private final PreferenceLiveData preferenceLiveData;
     @Inject
     public AdminMainViewModel(EventBus eventBus,
+                              PreferenceLiveData preferenceLiveData,
                               UserRepository userRepository,
                               AdminRepository adminRepository) {
         super(eventBus);
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
+        this.preferenceLiveData = preferenceLiveData;
 //        getData();
     }
 
@@ -51,6 +54,10 @@ public class AdminMainViewModel extends BaseViewModel {
                     resourceMutableLiveData.setValue(Resource.error(error.getMessage(),null));
                 })
         );
+    }
+
+    public PreferenceLiveData getPreferenceLiveData() {
+        return preferenceLiveData;
     }
 
     public MutableLiveData<Resource<List<User>>> getResourceMutableLiveData() {

@@ -28,6 +28,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by donki on 3/6/2018.
@@ -35,8 +37,8 @@ import java.lang.reflect.Field;
 
 public class ManageUserActivity extends BaseActivity<ManageUserViewModel, ActivityAdminManageUserBinding> implements IManageUserNagivator, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
-    public static AllUserFragment allUserFragment = new AllUserFragment();
-    public static UngradeUserFragment ungradeUserFragment = new UngradeUserFragment();
+    public AllUserFragment allUserFragment;
+    public UngradeUserFragment ungradeUserFragment;
 
     @Override
     protected int getLayoutRes() {
@@ -62,6 +64,7 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
         setupBottomnagivation();
         setupTabLayout();
     }
+
     //using event bus
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseMessage message) {
@@ -83,19 +86,26 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_schedules).setVisibility(View.VISIBLE);
+        mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_unlock).setVisibility(View.GONE);
         shiftingMode.setAccessible(false);
         mActivityBinding.mbottomNavigation.setOnNavigationItemSelectedListener(this);
-        mActivityBinding.mbottomNavigationUnblock.setOnNavigationItemSelectedListener(this);
+        //mActivityBinding.mbottomNavigationUnblock.setOnNavigationItemSelectedListener(this);
     }
 
     //setup viewpager and tablayout
     public void setupTabLayout() {
-        if (mActivityBinding.toolbar != null) {
+        /*if (mActivityBinding.toolbar != null) {
             setSupportActionBar(mActivityBinding.toolbar);
-        }
-        mActivityBinding.mpager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()) );
+        }*/
+        allUserFragment = new AllUserFragment();
+        ungradeUserFragment = new UngradeUserFragment();
+        SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
+        sectionPagerAdapter.addFragment(allUserFragment);
+        sectionPagerAdapter.addFragment(ungradeUserFragment);
+        mActivityBinding.mpager.setAdapter(sectionPagerAdapter);
         mActivityBinding.mtabLayout.setupWithViewPager(mActivityBinding.mpager);
-        mActivityBinding.toolbar.setVisibility(View.GONE);
+        //mActivityBinding.toolbar.setVisibility(View.GONE);
         mActivityBinding.mpager.addOnPageChangeListener(this);//onpage view pager
     }
 
@@ -103,11 +113,11 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_schedules:
-                item.setIcon(R.drawable.icon_admin_block);
+                //item.setIcon(R.drawable.icon_admin_block);
                 callBlockUser();
                 break;
             case R.id.action_unlock:
-                item.setIcon(R.drawable.icon_admin_unblock);
+                //item.setIcon(R.drawable.icon_admin_unblock);
                 callUnlockUer();
                 break;
         }
@@ -116,7 +126,6 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
 
     //fun callUnlockUser
     void callUnlockUer(){
-
         if(allUserFragment!=null){
             ungradeUserFragment.callUnlockUser();
         }
@@ -135,12 +144,16 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if(position==0)
         {
-            mActivityBinding.mbottomNavigation.setVisibility(View.VISIBLE);
-            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.GONE);
+            mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_schedules).setVisibility(View.VISIBLE);
+            mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_unlock).setVisibility(View.GONE);
+            /*mActivityBinding.mbottomNavigation.setVisibility(View.VISIBLE);
+            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.GONE);*/
         }
         else{
-            mActivityBinding.mbottomNavigation.setVisibility(View.GONE);
-            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.VISIBLE);
+            mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_schedules).setVisibility(View.GONE);
+            mActivityBinding.mbottomNavigation.getChildAt(0).findViewById(R.id.action_unlock).setVisibility(View.VISIBLE);
+            /*mActivityBinding.mbottomNavigation.setVisibility(View.GONE);
+            mActivityBinding.mbottomNavigationUnblock.setVisibility(View.VISIBLE);*/
         }
     }
 
@@ -152,27 +165,26 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
 
     //Custom viewpager and tablayout
     static class SectionPagerAdapter extends FragmentPagerAdapter {
-
+        List<Fragment> fragmentList;
 
         public SectionPagerAdapter(FragmentManager fm ) {
             super(fm);
+            fragmentList = new ArrayList<>();
+        }
+
+        public void addFragment(Fragment fragment){
+            if(fragment!=null){
+                fragmentList.add(fragment);
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    //iBotomNagivationView.showBotom();
-                    return allUserFragment;
-                case 1:
-                default:
-                    //iBotomNagivationView.hideBotom();
-                    return ungradeUserFragment;
-            }
+            return fragmentList.get(position);
         }
         @Override
         public int getCount() {
-            return 2;
+            return fragmentList.size();
         }
 
         @Nullable
@@ -199,7 +211,6 @@ public class ManageUserActivity extends BaseActivity<ManageUserViewModel, Activi
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==111){
             allUserFragment.getData();
-            Log.d("asdfasdf","fasdfasdf");
         }
     }
 

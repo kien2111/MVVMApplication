@@ -83,8 +83,8 @@ public class AdapterListAllUser extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
         } else if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).tv_personname.setText("" + mFilteredList.get(position - 1).getUserName().toString());
-            ((ViewHolder) holder).tv_email.setText("" + mFilteredList.get(position - 1).getUserId());
+            ((ViewHolder) holder).tv_personname.setText(mFilteredList.get(position - 1).getUserName());
+            ((ViewHolder) holder).tv_email.setText(mFilteredList.get(position - 1).getEmail());
 
             if(mFilteredList.get(position-1).getAvatar()!=null) {
                 GlideApp.with(context).load(BuildConfig.IMG_URL +mFilteredList.get(position-1).getAvatar())

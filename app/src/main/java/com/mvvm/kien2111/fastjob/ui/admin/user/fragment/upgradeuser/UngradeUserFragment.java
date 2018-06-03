@@ -123,9 +123,7 @@ public class UngradeUserFragment extends BaseFragment<UngradeUserViewModel, Frag
 
     //call unlock user
     public void callUnlockUser() {
-
         if (adapterListAllUser != null) {
-
             basicDialogAdminProgress= new BasicDialogAdmin(getContext());
             View view = LayoutInflater.from(getContext()).inflate(R.layout.admin_dialog_progressbar,null,false);
             basicDialogAdminProgress.setView(view)

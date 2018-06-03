@@ -35,7 +35,7 @@ import java.io.IOException;
  * Created by VAKHANHPR on 2/26/2018.
  */
 
-public class AdminMainActivity extends BaseActivity<AdminMainViewModel, ActivityAdminHomeBinding> implements BasicDialogAdmin.BasicDialogAdminListener {
+public class AdminMainActivity extends BaseActivity<AdminMainViewModel, ActivityAdminHomeBinding> implements BasicDialogAdmin.BasicDialogAdminListener, View.OnClickListener {
 
     //go to activity Manage Account
     //@Override
@@ -94,6 +94,7 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setOnClick();
+        setUpAdminData();
         //mViewModel.setmNavigator(this);
        /* mViewModel.getResourceMutableLiveData().observe(this,listResource -> {
             switch (listResource.status){
@@ -121,8 +122,16 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
                 .show();*/
     }
 
+    private void setUpAdminData() {
+        mViewModel.getPreferenceLiveData().observe(this,user -> {
+            if(user!=null){
+                mActivityBinding.setUser(user);
+            }
+        });
+    }
+
     private void setOnClick() {
-        //mActivityBinding.
+        mActivityBinding.btnLogout.setOnClickListener(this);
     }
 
     private void handleError(String message) {
@@ -184,5 +193,14 @@ public class AdminMainActivity extends BaseActivity<AdminMainViewModel, Activity
     @Override
     public void onClickCancel() {
         Log.d("dá", "Cancle");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_logout:
+                logoutHandle();
+                break;
+        }
     }
 }

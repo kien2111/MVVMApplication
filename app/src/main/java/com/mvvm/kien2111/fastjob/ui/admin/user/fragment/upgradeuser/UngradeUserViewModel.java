@@ -5,9 +5,9 @@ import android.arch.lifecycle.MutableLiveData;
 import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.base.BaseViewModel;
 import com.mvvm.kien2111.fastjob.data.AdminRepository;
-import com.mvvm.kien2111.fastjob.data.remote.model.admin.UserFilterRequest;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
 import com.mvvm.kien2111.fastjob.model.Resource;
+import com.mvvm.kien2111.fastjob.model.Role;
 import com.mvvm.kien2111.fastjob.model.User;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,11 +28,10 @@ public class UngradeUserViewModel extends BaseViewModel {
     public UngradeUserViewModel(EventBus eventBus,AdminRepository adminRepository){
         super(eventBus);
         this.adminRepository = adminRepository;
-        UserFilterRequest status = new UserFilterRequest(0);
-        getUserBlock(status);
+        getUserBlock(Role.RoleStatus.BLOCKED.getType());
     }
 
-    private void getUserBlock(UserFilterRequest status){
+    private void getUserBlock(int status){
         resourceMutableLiveData.setValue(Resource.loading(null));
         compositeDisposable.add(adminRepository
                 .getUserBlock(status)

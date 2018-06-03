@@ -5,9 +5,9 @@ import android.arch.lifecycle.MutableLiveData;
 import com.mvvm.kien2111.fastjob.base.BaseMessage;
 import com.mvvm.kien2111.fastjob.base.BaseViewModel;
 import com.mvvm.kien2111.fastjob.data.AdminRepository;
-import com.mvvm.kien2111.fastjob.data.remote.model.admin.UserFilterRequest;
 import com.mvvm.kien2111.fastjob.model.BlockUser;
 import com.mvvm.kien2111.fastjob.model.Resource;
+import com.mvvm.kien2111.fastjob.model.Role;
 import com.mvvm.kien2111.fastjob.model.User;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,14 +29,12 @@ public class AllUserViewModel extends BaseViewModel {
     public AllUserViewModel(EventBus eventBus, AdminRepository adminRepository) {
         super(eventBus);
         this.adminRepository = adminRepository;
-        UserFilterRequest status = new UserFilterRequest(1);
-        getData(status);
+        getData(Role.RoleStatus.ACTIVE.getType());
     }
 
 
     //Get all data from server
-    private void getData(UserFilterRequest status) {
-        resourceMutableLiveData.setValue(Resource.loading(null));
+    private void getData(int status) {
         compositeDisposable.add(adminRepository
                 .getUserBlock(status)
                 .subscribe(listResource -> {

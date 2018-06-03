@@ -12,47 +12,37 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:weightSum="12">
-
         <LinearLayout
+            android:weightSum="5"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal"
-            android:background="@color/color_admin_background_title"
+            android:background="@color/colorPrimary"
             android:gravity="center_vertical">
             <ImageView
-                android:layout_width="wrap_content"
+                android:contentDescription="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:scaleType="center"
-                android:background="@drawable/icon_admin_home"
-                android:layout_marginLeft="10dp"
-                android:onClick="finish"
-                android:layout_marginRight="30dp"/>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingTop="15dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Manager account"
-                    android:gravity="center"
-                    android:textSize="@dimen/admin_textsize_18dp"
-                    android:textColor="@color/color_admin_text_title"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="40dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:background="@drawable/icon_admin_add_new"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:paddingTop="20dp"
-                    android:onClick="gotoAddnewUser"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"/>
-            </RelativeLayout>
-
+                android:src="@drawable/ic_home_24dp"
+                android:onClick="finish" />
+            <TextView
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Manage account"
+                android:gravity="center"
+                android:textSize="@dimen/admin_textsize_18dp"
+                android:textColor="@color/color_admin_text_title" />
+            <ImageView
+                android:contentDescription="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:tint="@android:color/white"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_circle_24dp"
+                android:onClick="gotoAddnewUser"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -63,14 +53,15 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/mbottom_navigation"
                 android:orientation="vertical">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary" />
-
                 <android.support.design.widget.TabLayout
+                    app:tabBackground="@android:color/transparent"
+                    app:tabGravity="fill"
+                    app:tabPaddingEnd="0dp"
+                    android:background="@color/colorPrimary"
+                    app:tabPaddingStart="0dp"
+                    app:tabMode="fixed"
+                    style="@style/MyTabLayoutStyle"
+                    app:tabTextColor="@android:color/white"
                     android:id="@+id/mtab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -90,7 +81,7 @@
                 app:itemIconTint="#FFFFFF"
                 app:itemTextColor="@color/admin_color_textbottomnagivation"
                 app:menu="@menu/menu_addmin_bottom"/>
-            <android.support.design.widget.BottomNavigationView
+           <!-- <android.support.design.widget.BottomNavigationView
                 android:id="@+id/mbottom_navigation_unblock"
                 android:layout_width="fill_parent"
                 android:visibility="gone"
@@ -99,8 +90,7 @@
                 android:background="@color/colorPrimary"
                 app:itemIconTint="#FFFFFF"
                 app:itemTextColor="@color/admin_color_textbottomnagivation"
-                app:menu="@menu/menu_admin_bottom_unlock"/>
-
+                app:menu="@menu/menu_admin_bottom_unlock"/>-->
         </RelativeLayout>
     </LinearLayout>
 </layout>

@@ -14,15 +14,16 @@
         android:gravity="center_vertical">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cicle_imv"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            app:border_width="0.1dp"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:border_color="@android:color/white"
+            app:border_width="1dp"/>
         <LinearLayout
             android:id="@+id/tab_edituser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/cicle_imv"
-            android:layout_toLeftOf="@+id/checkbox_user"
+            android:layout_toEndOf="@+id/cicle_imv"
+            android:layout_toStartOf="@+id/checkbox_user"
             android:padding="5dp"
             android:orientation="vertical">
             <TextView
@@ -47,7 +48,7 @@
             android:id="@+id/checkbox_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_margin="5dp"/>
     </RelativeLayout>
 
